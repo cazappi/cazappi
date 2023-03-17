@@ -1,8 +1,11 @@
 import React from 'react';
+import { H1 } from './style';
 
 const Home = () => {
   return (
-    <h1>Bem-vindo à minha página inicial!</h1>
+    <div>
+      <H1>Bem-vindo à minha página inicial!</H1>
+    </div>
   );
 };
 
