@@ -1,10 +1,7 @@
 import React from 'react';
-import { LOGOIMAGE, LINK, FLEXROW, FLEXCOLUMN, BUTTON } from './style';
-import logoText from '../../assets/logoText.svg';
+import { FLEXROW, FLEXCOLUMN, BUTTON } from './style';
 import logoImg from '../../assets/logoImg.png';
 import cellphonesHome from '../../assets/cellphonesHome.png';
-import { THEME } from '../../theme/index';
-import { Icon } from '@iconify-icon/react';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import {responsiveWidth as rw,
