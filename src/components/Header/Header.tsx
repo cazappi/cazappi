@@ -11,7 +11,7 @@ const Header: React.FC = () => {
       }}>
         <LINK href="">Home</LINK>
         <LINK href="">Quem somos</LINK>
-        <LINK href="">Login</LINK>
+        <LINK href="/login">Login</LINK>
         <LINK href="">Cadastre-se</LINK>
       </FLEXROW>
     </HEADER>

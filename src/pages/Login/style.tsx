@@ -5,9 +5,7 @@ import {responsiveWidth as rw,
   responsiveFontSize as rf } from '../../utils/responsive-functions';
 
 export const LOGOIMAGE = styled.img`
-  height: min(6.13vh, 90px);
-  padding-bottom: min(2.38vh, 35px);
-  margin-left: ${rw(20)};
+  height: ${rh(213.59)}
 `;
 
 export const FLEXROW = styled.div`
@@ -37,7 +35,24 @@ export const LINK = styled.a`
   }
 `;
 
-export const BUTTON = styled.button`
+export const BUTTONPRIMARY = styled.button`
+  background-color: ${THEME.COLORS.PRIMARY};
+  cursor: pointer;
+  border: none;
+  width: ${rw(220)};
+  height: ${rh(150)};
+  border-radius: 16px;
+  color: ${THEME.COLORS.WHITE};
+  font-size: ${rf(24)};
+  font-weight: bold;
+  font-family: 'Roboto';
+  transition-duration: 0.3s;
+  &:hover {
+    opacity: 0.8;
+  }
+`;
+
+export const BUTTONSECONDARY = styled.button`
   background-color: ${THEME.COLORS.PRIMARY};
   cursor: pointer;
   border: none;
@@ -65,4 +80,6 @@ export const CONTAINER = styled.div`
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    margin-top: ${rh(79)};
+    margin-bottom: ${rh(79)};
 `;
