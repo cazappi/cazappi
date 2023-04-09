@@ -1,4 +1,4 @@
-import React, { ButtonHTMLAttributes } from "react";
+import React from "react";
 import { THEME } from '../../theme/index';
 import {responsiveWidth as rw,
   responsiveHeight as rh,
@@ -8,6 +8,7 @@ import styled, { css } from 'styled-components';
 
 const Button = styled.button<{type: 'red' | 'white' | 'warning'}>`
     border: none;
+    text-decoration: none;
     border-radius: 32px;
     padding: ${rh(10)} 30.5px;
     min-height: ${rh(64)};
@@ -18,6 +19,10 @@ const Button = styled.button<{type: 'red' | 'white' | 'warning'}>`
     align-items: center;
     justify-content: center;
     cursor: pointer;
+    transition-duration: 0.3s;
+    &:hover {
+        opacity: 0.8;
+    }
     ${({ type }) => {
         switch (type) {
         case 'red':

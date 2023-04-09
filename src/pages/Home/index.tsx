@@ -25,7 +25,7 @@ const Home = () => {
             justifyContent: 'initial'
           }}>
             <img src={cellphonesHome} alt="" style={{
-              width: rw(539)
+              width: rw(552)
             }}/>
             <div style={{
               fontSize: rf(24), 
@@ -45,8 +45,8 @@ const Home = () => {
               <div style={{
                 fontSize: rf(32), 
                 textAlign: "center", 
-                marginBottom: rh(120
-              )}}>
+                marginBottom: rh(120)
+              }}>
                 Tem um estabelecimento comercial e ficou interessado no Cazzapi?
               </div>
               <BUTTON>Registre-se agora</BUTTON>

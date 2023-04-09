@@ -4,17 +4,6 @@ import {responsiveWidth as rw,
   responsiveHeight as rh,
   responsiveFontSize as rf } from '../../utils/responsive-functions';
 
-export const LOGOIMAGE = styled.img`
-  height: ${rh(213.59)}
-`;
-
-export const FLEXROW = styled.div`
-  display: flex;
-  flex-direction: row;
-  align-items: center;
-  justify-content: space-between;
-`;
-
 export const FLEXCOLUMN = styled.div`
   display: flex;
   flex-direction: column;
@@ -22,19 +11,9 @@ export const FLEXCOLUMN = styled.div`
   justify-content: center;
 `;
 
-export const LINK = styled.a`
-  color: ${THEME.COLORS.PRIMARY};
-  font-size: min(${rf(18)}, 15px);
-  text-decoration: none;
-  transition-duration: 0.3s;
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
 export const TITLE = styled.text`
     font-size: ${rf(48)};
-    color: ${THEME.COLORS.PRIMARY};
+    color: ${THEME.COLORS.BLACK};
     text-align: center;
 `;
 

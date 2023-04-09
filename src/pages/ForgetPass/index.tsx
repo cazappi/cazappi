@@ -1,5 +1,5 @@
 import React from 'react';
-import { LOGOIMAGE, LINK, FLEXROW, FLEXCOLUMN, TITLE, CONTAINER, INPUTTEXT } from './style';
+import { FLEXCOLUMN, TITLE, CONTAINER, INPUTTEXT } from './style';
 import logoImg from '../../assets/logoImgWithoutCircles.png';
 import { THEME } from '../../theme/index';
 import { Icon } from '@iconify-icon/react';
@@ -11,7 +11,7 @@ import {responsiveWidth as rw,
   responsiveHeight as rh,
   responsiveFontSize as rf } from '../../utils/responsive-functions';
 
-const Login = () => {
+const ForgetPass = () => {
     return (
         <div>
             {/* ----------------------- HEADER ----------------------- */}
@@ -20,11 +20,11 @@ const Login = () => {
             {/* ----------------------- Container ----------------------- */}
             <CONTAINER>
                 <TITLE style={{
+                    marginBottom: rh(10),
+                }}>Esqueceu sua senha?</TITLE>
+                <TITLE style={{
                     marginBottom: rh(90),
-                }}>Bem vindo(a) de volta</TITLE>
-                <LOGOIMAGE src={logoImg} style={{
-                    marginBottom: rh(55),
-                }}></LOGOIMAGE>
+                }}>Redefina ela agora mesmo!</TITLE>
                 <form action="">
                     <FLEXCOLUMN>
                         <div style={{
@@ -32,27 +32,24 @@ const Login = () => {
                         }}>
                             <INPUTTEXT type="normal" style={{
                                 marginBottom: rh(17),
-                            }}>E-mail ou usuário</INPUTTEXT>
-                            <Input type="text" placeholder='email@email.com' />
+                            }}>Nova senha</INPUTTEXT>
+                            <Input type="password" placeholder='**********' />
                         </div>
                         <div style={{
                             marginBottom: rh(59),
                         }}>
                             <INPUTTEXT type="normal" style={{
                                 marginBottom: rh(17),
-                            }}>Senha</INPUTTEXT>
+                            }}>Confirmar nova senha</INPUTTEXT>
                             <Input type="password" placeholder='**********' />
-                            <INPUTTEXT type="forget" style={{
-                                marginTop: rh(7),
-                            }}>Esqueceu a senha? <LINK href="/forgetPass">Alterar senha</LINK></INPUTTEXT>
                         </div>
                         <FLEXCOLUMN style={{
                             marginBottom: rh(94),
                         }}>
                             <Button as="a" type="red" style={{
                                 marginBottom: rh(26),
-                            }}>Entrar</Button>
-                            <Button as="a" type="white">Registrar outra conta</Button>
+                            }}>Salvar senha</Button>
+                            <Button as="a" href="/login" type="white">Ir para o login</Button>
                         </FLEXCOLUMN>
                     </FLEXCOLUMN>
                 </form>
@@ -64,4 +61,4 @@ const Login = () => {
     )
 }
 
-export default Login;
+export default ForgetPass;

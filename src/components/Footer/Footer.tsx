@@ -9,15 +9,15 @@ import { Icon } from '@iconify-icon/react';
 
 const Footer: React.FC = () => {
   return (
-    <footer>
       <FLEXCOLUMN style={{
         backgroundColor: THEME.COLORS.PRIMARY,
+        width: "100%",
+        position: "absolute",
         paddingTop: rh(16),
         paddingBottom: rh(16)
-
       }}>
         <LOGOIMAGE src={logoText} alt="logo" style={{
-          width: rw(200),
+          width: "min(${rw(200)}, 50px)",
           marginBottom: "10px",
           padding: 0
         }}/>
@@ -43,7 +43,8 @@ const Footer: React.FC = () => {
           <a href="" style={{
             fontSize: rf(20),
             color: THEME.COLORS.WHITE,
-            textDecoration: "none"
+            textDecoration: "none",
+            textAlign: "center"
           }}>
             Política de privacidade | 
           </a>
@@ -51,7 +52,8 @@ const Footer: React.FC = () => {
             fontSize: rf(20),
             color: THEME.COLORS.WHITE,
             textDecoration: "none",
-            marginLeft: "2px"
+            marginLeft: "2px",
+            textAlign: "center"
           }}>
             Termos de uso
           </a>
@@ -59,11 +61,11 @@ const Footer: React.FC = () => {
         <div style={{
           fontSize: rf(20),
           color: THEME.COLORS.WHITE,
+          textAlign: "center"
         }}>
           © 2023. MSE Cazzapi - Delivery app | Desenvolvido por CATI Jr.
         </div>
       </FLEXCOLUMN>
-    </footer>
   );
 };
 
