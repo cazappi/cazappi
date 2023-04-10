@@ -1,10 +1,7 @@
 import React from 'react';
-import { LOGOIMAGE, LINK, FLEXROW, FLEXCOLUMN, BUTTON } from './style';
-import logoText from '../../assets/logoText.svg';
+import { FLEXROW, FLEXCOLUMN, BUTTON } from './style';
 import logoImg from '../../assets/logoImg.png';
 import cellphonesHome from '../../assets/cellphonesHome.png';
-import { THEME } from '../../theme/index';
-import { Icon } from '@iconify-icon/react';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import {responsiveWidth as rw,
@@ -28,7 +25,7 @@ const Home = () => {
             justifyContent: 'initial'
           }}>
             <img src={cellphonesHome} alt="" style={{
-              width: rw(539)
+              width: rw(552)
             }}/>
             <div style={{
               fontSize: rf(24), 
@@ -48,8 +45,8 @@ const Home = () => {
               <div style={{
                 fontSize: rf(32), 
                 textAlign: "center", 
-                marginBottom: rh(120
-              )}}>
+                marginBottom: rh(120)
+              }}>
                 Tem um estabelecimento comercial e ficou interessado no Cazzapi?
               </div>
               <BUTTON>Registre-se agora</BUTTON>

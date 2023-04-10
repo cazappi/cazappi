@@ -7,7 +7,6 @@ import {responsiveWidth as rw,
 export const LOGOIMAGE = styled.img`
   height: min(6.13vh, 90px);
   padding-bottom: min(2.38vh, 35px);
-  margin-left: ${rw(20)};
 `;
 
 export const FLEXROW = styled.div`
