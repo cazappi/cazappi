@@ -25,6 +25,12 @@ export const Section = styled.section`
   flex-direction: column;
 `;
 
+export const EmailImage = styled.img`
+  width: 200px
+  height: 200px
+
+`;
+
 export const Ready = styled.h2`
   margin-bottom: 8vh;
   font-family: "Roboto";
@@ -39,7 +45,6 @@ export const LoginContainer = styled.div`
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
-  margin-top: 12vh;
 `;
 
 export const LoginButton = styled.button`
@@ -58,7 +63,7 @@ export const H1 = styled.h1`
   font-weight: bolder;
   font-family: "Roboto";
   font-weight: 700;
-  font-size: 40px;
+  font-size: 36px;
   text-align: center;
 `;
 
@@ -76,7 +81,7 @@ export const ContainerParagraph = styled.div`
 
 export const Paragraph = styled.p`
   width: 537px;
-  font-size: 30px;
+  font-size: 22px;
   margin-left: 30px;
   margin: 0;
   text-align: center;

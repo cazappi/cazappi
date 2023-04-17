@@ -17,7 +17,6 @@ import {
   responsiveHeight as rh,
   responsiveFontSize as rf,
 } from "../../utils/responsive-functions";
-import axios from "axios";
 
 const EmailVerification = () => {
   return (
