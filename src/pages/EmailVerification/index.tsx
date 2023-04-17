@@ -2,7 +2,6 @@ import React from "react";
 import {
   Section,
   LoginContainer,
-  Ready,
   H1,
   ContainerBody,
   ContainerParagraph,
