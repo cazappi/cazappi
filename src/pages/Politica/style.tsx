@@ -66,3 +66,18 @@ export const BUTTON = styled.button`
   }
   margin-bottom: ${rh(30)};
 `;
+
+export const SUBTITLE = styled.div`
+font-weight: 700;
+font-size: 28px;
+align-items: flex-start;
+margin-left: ${rw(60)};
+`;
+
+export const POLITICA = styled.div`
+margin-left: ${rw(60)};
+margin-bottom: ${rh(20)};
+margin-top: ${rh(10)};
+font-weight: 400;
+
+`;
