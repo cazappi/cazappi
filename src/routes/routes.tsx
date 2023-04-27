@@ -6,6 +6,7 @@ import ForgetPass from "../pages/ForgetPass";
 import MailConfirmation from "../pages/Desktop-4";
 import EmailVerification from "../pages/EmailVerification";
 import Advertising from "../pages/Advertising";
+import BusinessType from "../pages/BusinessType";
 
 const AppRoutes = () => (
   <Routes>
@@ -16,6 +17,7 @@ const AppRoutes = () => (
     <Route path="/forgetPass" element={<ForgetPass />} />
     <Route path="/EmailVerification" element={<EmailVerification />} />
     <Route path="/Advertising" element={<Advertising />} />
+    <Route path="/BusinessType" element={<BusinessType />} />
   </Routes>
 );
 
