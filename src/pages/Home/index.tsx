@@ -1,9 +1,10 @@
 import React from 'react';
-import { FLEXROW, FLEXCOLUMN, BUTTON } from './style';
+import { FLEXROW, FLEXCOLUMN } from './style';
 import logoImg from '../../assets/logoImg.png';
 import cellphonesHome from '../../assets/cellphonesHome.png';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
+import Button from "../../components/Button/Button";
 import {responsiveWidth as rw,
   responsiveHeight as rh,
   responsiveFontSize as rf } from '../../utils/responsive-functions';
@@ -49,7 +50,7 @@ const Home = () => {
               }}>
                 Tem um estabelecimento comercial e ficou interessado no Cazzapi?
               </div>
-              <BUTTON>Registre-se agora</BUTTON>
+              <Button as="a" type="home">Registre-se agora</Button>
             </FLEXCOLUMN>
             <img src={logoImg} alt="" style={{
               width: rw(436)

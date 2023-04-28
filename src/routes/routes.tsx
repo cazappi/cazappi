@@ -7,6 +7,7 @@ import MailConfirmation from "../pages/Desktop-4";
 import EmailVerification from "../pages/EmailVerification";
 import Advertising from "../pages/Advertising";
 import BusinessType from "../pages/BusinessType";
+import ShopConditions from "../pages/ShopConditions";
 
 const AppRoutes = () => (
   <Routes>
@@ -18,6 +19,7 @@ const AppRoutes = () => (
     <Route path="/EmailVerification" element={<EmailVerification />} />
     <Route path="/Advertising" element={<Advertising />} />
     <Route path="/BusinessType" element={<BusinessType />} />
+    <Route path="/ShopConditions" element={<ShopConditions />} />
   </Routes>
 );
 
