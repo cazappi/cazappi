@@ -22,11 +22,18 @@ const Header: React.FC = () => {
 
   React.useEffect(() => {
     function handleResize() {
-      if(window.innerWidth > 620){
+      if(window.innerWidth > 710){
         if(!showOptions){
           changeShowOptions();
+          document.body.style.overflow = "scroll";
+        }
+      } else {
+        if(showOptions){
+          changeShowOptions();
+          document.body.style.overflow = "scroll";
         }
       }
+      
     }
     window.addEventListener('resize', handleResize)
   })
