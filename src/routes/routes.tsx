@@ -9,6 +9,7 @@ import EmailVerification from "../pages/EmailVerification";
 import Advertising from "../pages/Advertising";
 import BusinessType from "../pages/BusinessType";
 import ShopConditions from "../pages/ShopConditions";
+import DadosBancariosRevisao from "../pages/DadosBancariosRevisao";
 
 const AppRoutes = () => (
   <Routes>
@@ -19,6 +20,7 @@ const AppRoutes = () => (
     <Route path="/login" element={<Login />} />
     <Route path="/forgetPass" element={<ForgetPass />} />
     <Route path="/EmailVerification" element={<EmailVerification />} />
+    <Route path="/DadosBancariosRevisao" element={<DadosBancariosRevisao />} />
     <Route path="/Advertising" element={<Advertising />} />
     <Route path="/BusinessType" element={<BusinessType />} />
     <Route path="/ShopConditions" element={<ShopConditions />} />
