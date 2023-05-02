@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { LOGOIMAGE, LINK, FLEXROW, FLEXCOLUMN, BUTTON, TEXT, INPUT, UNSELECTEDBUTTON, SELECTEDBUTTON } from './style';
 import logoText from '../../assets/logoText.svg';
 import mailImg from '../../assets/mail.svg';
@@ -13,9 +13,9 @@ import {
 } from '../../utils/responsive-functions';
 import { header, footer } from '../../utils/generics';
 
-const pf = false;
 
 const SignUp = () => {
+    const [pf, setPF] = useState(false)
     return (
         <div>
             {/* ----------------------- HEADER ----------------------- */}
@@ -46,14 +46,14 @@ const SignUp = () => {
                                 Pessoa física
                             </SELECTEDBUTTON>
                             :
-                            <UNSELECTEDBUTTON>
+                            <UNSELECTEDBUTTON onClick={() => setPF(true)}>
                                 Pessoa física
                             </UNSELECTEDBUTTON>
                     }
                     <div style={{ width: rw(25) }}></div>
                     {
                         pf ?
-                            <UNSELECTEDBUTTON>
+                            <UNSELECTEDBUTTON onClick={() => setPF(false)}>
                                 Pessoa Juridica
                             </UNSELECTEDBUTTON>
                             :
@@ -66,10 +66,37 @@ const SignUp = () => {
                     width: rw(569),
                     marginTop: rh(140),
                 }}>
+                    {pf &&
+                        <div>
+                            <TEXT>
+                                {"Nome Completo"}
+                            </TEXT>
+                            <INPUT type='text' />
+                        </div>
+                    }
+
                     <TEXT>
                         {pf ? "CPF" : "CNPJ" /* Change true to a variable */}
                     </TEXT>
                     <INPUT type="text" />
+
+                    {pf &&
+                        <div>
+                            <TEXT>
+                                {"RG"}
+                            </TEXT>
+                            <INPUT type='text' />
+                        </div>
+                    }
+
+                    {pf &&
+                        <div>
+                            <TEXT>
+                                {"Orgão Emissor"}
+                            </TEXT>
+                            <INPUT type='text' />
+                        </div>
+                    }
 
                     <TEXT>
                         {"E-mail"}
@@ -95,7 +122,7 @@ const SignUp = () => {
                             {
                                 border: 2,
                                 borderColor: THEME.COLORS.SECONDARY,
-                                color:THEME.COLORS.SECONDARY,
+                                color: THEME.COLORS.SECONDARY,
                                 borderRadius: 5,
                             }
                         } />
@@ -106,9 +133,17 @@ const SignUp = () => {
 
 
                     <BUTTON style={{ marginTop: rh(150) }}>
-                        <FLEXROW>
+                        <FLEXROW style = {{
+                            justifyItems: 'center',
+                            marginLeft: rw(40),
+                        }}>
                             <div> Avançar </div>
-                            <div> Icon </div>
+                            <a href="" style={{
+                                marginTop: rh(8),
+                                marginRight: rw(10)
+                            }}><Icon icon="mdi:arrow-right" width={25} style={{
+                                color: THEME.COLORS.WHITE
+                            }} /></a>
                         </FLEXROW>
                     </BUTTON>
                 </FLEXCOLUMN>
