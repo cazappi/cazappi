@@ -62,10 +62,10 @@ const Header: React.FC = () => {
 
       {(showOptions) ?
         <OPTIONS>
-          <LINK href="">Home</LINK>
-          <LINK href="">Quem somos</LINK>
+          <LINK href="/">Home</LINK>
+          <LINK href="/Advertising">Quem somos</LINK>
           <LINK href="/login">Login</LINK>
-          <LINK href="">Cadastre-se</LINK>
+          <LINK href="/">Cadastre-se</LINK>
         </OPTIONS>
         :
         <div style={{display: "none"}}></div>

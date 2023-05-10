@@ -21,4 +21,28 @@ export const FLEXCOLUMN = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  width: 100%;
+  position: absolute;
+  height: 9rem;
+  bottom: 0;
+`;
+
+
+export const TEXT = styled.div`
+  font-size: ${rf(20)};
+  color: ${THEME.COLORS.WHITE};
+  text-align: center;
+  @media (max-width: 710px) {
+    font-size: 12px;
+  }
+`;
+
+export const LINK = styled.a`
+  font-size: ${rf(20)};
+  color: ${THEME.COLORS.WHITE};
+  text-decoration: none;
+  text-align: center;
+  @media (max-width: 710px) {
+    font-size: 10px;
+  }
 `;
