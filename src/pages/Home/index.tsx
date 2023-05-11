@@ -50,7 +50,7 @@ const Home = () => {
               }}>
                 Tem um estabelecimento comercial e ficou interessado no Cazzapi?
               </div>
-              <Button as="a" type="home">Registre-se agora</Button>
+              <Button as="a" type="home" href="/SignUp">Registre-se agora</Button>
             </FLEXCOLUMN>
             <img src={logoImg} alt="" style={{
               width: rw(436)

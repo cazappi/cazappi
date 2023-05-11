@@ -1,17 +1,16 @@
 import React, { useState } from 'react';
-import { LOGOIMAGE, LINK, FLEXROW, FLEXCOLUMN, BUTTON, TEXT, INPUT, UNSELECTEDBUTTON, SELECTEDBUTTON } from './style';
-import logoText from '../../assets/logoText.svg';
-import mailImg from '../../assets/mail.svg';
-import logoImg from '../../assets/logoImg.png';
-import cellphonesHome from '../../assets/cellphonesHome.png';
+import { LOGOIMAGE, TERMS, WRAP, FLEXROWTERMS, CHECK, LINK, TITLE, FLEXROW, FLEXCOLUMN, TEXT, INPUT, UNSELECTEDBUTTON, SELECTEDBUTTON } from './style';
 import { THEME } from '../../theme/index';
 import { Icon } from '@iconify-icon/react';
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import Button from "../../components/Button/Button";
+import Input from "../../components/Input/Input";
 import {
     responsiveWidth as rw,
     responsiveHeight as rh,
     responsiveFontSize as rf
 } from '../../utils/responsive-functions';
-import { header, footer } from '../../utils/generics';
 
 
 const SignUp = () => {
@@ -20,33 +19,32 @@ const SignUp = () => {
         <div>
             {/* ----------------------- HEADER ----------------------- */}
 
-            {header()}
+            <Header></Header>
 
             {/* ----------------------- Container ----------------------- */}
             <FLEXCOLUMN style={{
                 marginTop: rh(78),
-                marginBottom: rh(54)
+                marginBottom: rh(84)
             }}>
-                <div style={{
-                    fontSize: rf(48),
-                    fontWeight: 700,
-                    color: THEME.COLORS.PRIMARY,
-                }}>
-                    Crie sua conta
-                </div>
+                <TITLE>Crie sua conta</TITLE>
                 <FLEXROW style={{
-                    width: rw(1299),
-                    justifyContent: 'center',
                     marginTop: rh(95),
-
                 }}>
-                    {
+                    { 
                         pf ?
                             <SELECTEDBUTTON>
+                                <Icon icon="material-symbols:person" width={26} style={{
+                                    color: THEME.COLORS.PRIMARY,
+                                    marginRight: "10px"
+                                }}/>
                                 Pessoa física
                             </SELECTEDBUTTON>
                             :
                             <UNSELECTEDBUTTON onClick={() => setPF(true)}>
+                                <Icon icon="material-symbols:person" width={26} style={{
+                                    color: THEME.COLORS.GRAY_300,
+                                    marginRight: "10px"
+                                }}/>
                                 Pessoa física
                             </UNSELECTEDBUTTON>
                     }
@@ -54,98 +52,103 @@ const SignUp = () => {
                     {
                         pf ?
                             <UNSELECTEDBUTTON onClick={() => setPF(false)}>
+                                <Icon icon="ic:round-business-center" width={26} style={{
+                                    color: THEME.COLORS.GRAY_300,
+                                    marginRight: "10px"
+                                }}/>
                                 Pessoa Juridica
                             </UNSELECTEDBUTTON>
                             :
                             <SELECTEDBUTTON>
+                                <Icon icon="ic:round-business-center" width={26} style={{
+                                    color: THEME.COLORS.PRIMARY,
+                                    marginRight: "10px"
+                                }}/>
                                 Pessoa Juridica
                             </SELECTEDBUTTON>
                     }
                 </FLEXROW>
                 <FLEXCOLUMN style={{
                     width: rw(569),
-                    marginTop: rh(140),
+                    marginTop: rh(20),
                 }}>
                     {pf &&
-                        <div>
+                        <WRAP>
                             <TEXT>
-                                {"Nome Completo"}
+                                Nome Completo
                             </TEXT>
-                            <INPUT type='text' />
-                        </div>
+                            <Input type='text' placeholder='Seu Nome' />
+                        </WRAP>
                     }
-
-                    <TEXT>
-                        {pf ? "CPF" : "CNPJ" /* Change true to a variable */}
-                    </TEXT>
-                    <INPUT type="text" />
+                    <WRAP>
+                        <TEXT>
+                            {pf ? "CPF" : "CNPJ" /* Change true to a variable */}
+                        </TEXT>
+                        <Input type="text" placeholder='123.456.789-10' />
+                    </WRAP>
 
                     {pf &&
-                        <div>
+                        <WRAP>
                             <TEXT>
                                 {"RG"}
                             </TEXT>
-                            <INPUT type='text' />
-                        </div>
+                            <Input type='text' placeholder='12.345.678-9' />
+                        </WRAP>
                     }
 
                     {pf &&
-                        <div>
+                        <WRAP>
                             <TEXT>
                                 {"Orgão Emissor"}
                             </TEXT>
-                            <INPUT type='text' />
-                        </div>
+                            <Input type='text' placeholder='texto' />
+                        </WRAP>
                     }
 
-                    <TEXT>
-                        {"E-mail"}
-                    </TEXT>
-                    <INPUT type="text" />
+                    <WRAP>
+                        <TEXT>
+                            {"E-mail"}
+                        </TEXT>
+                        <Input type="text" placeholder='seuemail@email.com' />
+                    </WRAP>
 
-                    <TEXT>
-                        {"Senha"}
-                    </TEXT>
-                    <INPUT type="text" />
+                    <WRAP>
+                        <TEXT>
+                            {"Senha"}
+                        </TEXT>
+                        <Input type="password" placeholder='*************' />
+                    </WRAP>
 
-                    <TEXT>
-                        {"Confirmar senha"}
-                    </TEXT>
-                    <INPUT type="text" />
+                    <WRAP>
+                        <TEXT>
+                            {"Confirmar senha"}
+                        </TEXT>
+                        <Input type="password" placeholder='*************' />
+                    </WRAP>
 
-                    <FLEXROW style={{
-                        width: rw(1299),
-                        justifyContent: 'center',
-                        marginTop: rh(95),
+                    <FLEXROWTERMS style={{
+                        marginTop: rh(95)
                     }}>
-                        <input type='checkbox' style={
-                            {
-                                border: 2,
-                                borderColor: THEME.COLORS.SECONDARY,
-                                color: THEME.COLORS.SECONDARY,
-                                borderRadius: 5,
-                            }
-                        } />
-                        <div>
+                        <CHECK type='checkbox' />
+                        <TERMS>
                             Eu aceito o uso dos meus dados de acordo com a Declaração de Privacidade e aceito os Termos e Condições.
-                        </div>
-                    </FLEXROW>
+                        </TERMS>
+                    </FLEXROWTERMS>
 
 
-                    <BUTTON style={{ marginTop: rh(150) }}>
+                    <Button as="a" type="red" style={{ marginTop: rh(150) }}>
                         <FLEXROW style = {{
-                            justifyItems: 'center',
-                            marginLeft: rw(40),
+                            justifyItems: 'center'
                         }}>
                             <div> Avançar </div>
                             <a href="" style={{
                                 marginTop: rh(8),
-                                marginRight: rw(10)
+                                marginLeft: rw(10)
                             }}><Icon icon="mdi:arrow-right" width={25} style={{
                                 color: THEME.COLORS.WHITE
                             }} /></a>
                         </FLEXROW>
-                    </BUTTON>
+                    </Button>
                 </FLEXCOLUMN>
 
             </FLEXCOLUMN>
@@ -153,7 +156,7 @@ const SignUp = () => {
 
             {/* ----------------------- FOOTER ----------------------- */}
 
-            {footer()}
+            <Footer></Footer>
         </div>
 
     );
