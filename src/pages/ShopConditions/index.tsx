@@ -24,14 +24,14 @@ const ShopConditions = () => {
                     marginTop: rh(80)
                 }}>
                     <FLEXROW style={{
-                        width: rw(936)
+                        width: "60%"
                     }}>
-                    <img src={logoImg} alt="" style={{
-                        
-                    }}/>
-                    <img src={chefImg} alt="" style={{
-                        
-                    }}/>
+                        <img src={logoImg} alt="" style={{
+                            width: rw(426),
+                        }}/>
+                        <img src={chefImg} alt="" style={{
+                            width: rw(426),
+                        }}/>
                     </FLEXROW>
                     
                     <TITLE style={{
@@ -44,54 +44,62 @@ const ShopConditions = () => {
                     }}>
                         <FLEXROW style={{
                             width: rw(960),
-                            marginBottom: rh(30)
+                            marginBottom: rh(48),
+                            alignItems: 'initial'
                         }}>
                             <Icon icon="material-symbols:check-circle-rounded" height={rh(32.5)} style={{
                                 marginRight: rw(13.25),
+                                marginTop: rh(12),
                                 color: THEME.COLORS.PRIMARY
                             }}/>
-                            <div>
+                            <TEXT>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar eleifend ipsum, sed sodales erat consectetur eget. Etiam maximus, leo ut dapibus euismod, ipsum ipsum fringilla massa, ac vehicula tellus neque sit amet risus. Aliquam pretium arcu sagittis mauris vehicula, eu suscipit quam ultrices. Proin venenatis risus libero, at viverra massa fringilla in. 
-                            </div>
+                            </TEXT>
                         </FLEXROW>
 
                         <FLEXROW style={{
                             width: rw(960),
-                            marginBottom: rh(30)
+                            marginBottom: rh(48),
+                            alignItems: 'initial'
                         }}>
                             <Icon icon="material-symbols:check-circle-rounded" height={rh(32.5)} style={{
                                 marginRight: rw(13.25),
+                                marginTop: rh(12),
                                 color: THEME.COLORS.PRIMARY
                             }}/>
-                            <div>
+                            <TEXT>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar eleifend ipsum, sed sodales erat consectetur eget. Etiam maximus, leo ut dapibus euismod, ipsum ipsum fringilla massa, ac vehicula tellus neque sit amet risus. Aliquam pretium arcu sagittis mauris vehicula, eu suscipit quam ultrices. Proin venenatis risus libero, at viverra massa fringilla in. 
-                            </div>
+                            </TEXT>
                         </FLEXROW>
 
                         <FLEXROW style={{
                             width: rw(960),
-                            marginBottom: rh(30)
+                            marginBottom: rh(48),
+                            alignItems: 'initial'
                         }}>
                             <Icon icon="material-symbols:check-circle-rounded" height={rh(32.5)} style={{
                                 marginRight: rw(13.25),
+                                marginTop: rh(12),
                                 color: THEME.COLORS.PRIMARY
                             }}/>
-                            <div>
+                            <TEXT>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar eleifend ipsum, sed sodales erat consectetur eget. Etiam maximus, leo ut dapibus euismod, ipsum ipsum fringilla massa, ac vehicula tellus neque sit amet risus. Aliquam pretium arcu sagittis mauris vehicula, eu suscipit quam ultrices. Proin venenatis risus libero, at viverra massa fringilla in. 
-                            </div>
+                            </TEXT>
                         </FLEXROW>
 
                         <FLEXROW style={{
                             width: rw(960),
-                            marginBottom: rh(48)
+                            marginBottom: rh(48),
+                            alignItems: 'initial'
                         }}>
                             <Icon icon="material-symbols:check-circle-rounded" height={rh(32.5)} style={{
                                 marginRight: rw(13.25),
+                                marginTop: rh(12),
                                 color: THEME.COLORS.PRIMARY
                             }}/>
-                            <div>
+                            <TEXT>
                             Lorem ipsum dolor sit amet, consectetur adipiscing elit. Proin pulvinar eleifend ipsum, sed sodales erat consectetur eget. Etiam maximus, leo ut dapibus euismod, ipsum ipsum fringilla massa, ac vehicula tellus neque sit amet risus. Aliquam pretium arcu sagittis mauris vehicula, eu suscipit quam ultrices. Proin venenatis risus libero, at viverra massa fringilla in. 
-                            </div>
+                            </TEXT>
                         </FLEXROW>
                     </FLEXCOLUMN>
 

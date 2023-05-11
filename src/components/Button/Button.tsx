@@ -44,9 +44,14 @@ const Button = styled.button<{ type: "red" | "white" | "home" }>`
           width: ${rw(220)};
           height: ${rh(150)};
           border-radius: 16px;
-          font-size: ${rf(24)};
+          font-size: 24px;
           font-weight: bold;
           font-family: 'Roboto';
+          @media (max-width: 710px) {
+            height: ${rh(33)};
+            width: ${rw(460)};
+            font-size: 12px;
+          }
         `;
       default:
         return css`

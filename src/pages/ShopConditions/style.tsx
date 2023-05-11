@@ -26,11 +26,22 @@ export const TITLE = styled.text`
     color: ${THEME.COLORS.PRIMARY};
     text-align: center;
     font-family: 'Inter';
+    @media (max-width: 710px) {
+      font-size: ${rf(20)};
+      line-height: 23.44px;
+      font-weight: 500;
+    }
 `;
 
 export const TEXT = styled.p`
+    margin: 0;
     font-family: 'Inter';
     font-size: ${rf(24)};
     font-weight: 400;
     line-height: 29px;
+    text-align: justify;
+    @media (max-width: 710px) {
+      font-size: ${rf(12)};
+      line-height: 14.06px;
+    }
 `;

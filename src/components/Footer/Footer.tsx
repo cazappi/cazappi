@@ -1,5 +1,5 @@
 import React from "react";
-import { LOGOIMAGE, FLEXROW, FLEXCOLUMN } from "./style";
+import { LOGOIMAGE, FLEXROW, FLEXCOLUMN, TEXT, LINK } from "./style";
 import logoText from '../../assets/logoText.png';
 import { THEME } from '../../theme/index';
 import {responsiveWidth as rw,
@@ -9,10 +9,11 @@ import { Icon } from '@iconify-icon/react';
 
 const Footer: React.FC = () => {
   return (
+    <div style={{
+      paddingTop: "9rem"
+    }}>
       <FLEXCOLUMN style={{
         backgroundColor: THEME.COLORS.PRIMARY,
-        width: "100%",
-        position: "absolute",
         paddingTop: rh(16),
         paddingBottom: rh(16)
       }}>
@@ -40,32 +41,22 @@ const Footer: React.FC = () => {
         <div style={{
           marginBottom: "10px"
         }}>
-          <a href="" style={{
-            fontSize: rf(20),
-            color: THEME.COLORS.WHITE,
-            textDecoration: "none",
-            textAlign: "center"
+          <LINK href="" style={{
+            
           }}>
             Política de privacidade | 
-          </a>
-          <a href="" style={{
-            fontSize: rf(20),
-            color: THEME.COLORS.WHITE,
-            textDecoration: "none",
+          </LINK>
+          <LINK href="" style={{
             marginLeft: "2px",
-            textAlign: "center"
           }}>
             Termos de uso
-          </a>
+          </LINK>
         </div>
-        <div style={{
-          fontSize: rf(20),
-          color: THEME.COLORS.WHITE,
-          textAlign: "center"
-        }}>
+        <TEXT>
           © 2023. MSE Cazzapi - Delivery app | Desenvolvido por CATI Jr.
-        </div>
+        </TEXT>
       </FLEXCOLUMN>
+    </div>
   );
 };
 
