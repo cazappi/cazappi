@@ -42,6 +42,7 @@ const Home = () => {
               <SPACE>
                 <Button as="a" type="home">Registre-se agora</Button>
               </SPACE>
+
             </FLEXCOLUMN>
             <IMAGE src={logoImg} alt=""/>
           </REGISTER>

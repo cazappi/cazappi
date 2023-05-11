@@ -65,7 +65,7 @@ const Header: React.FC = () => {
           <LINK href="/">Home</LINK>
           <LINK href="/Advertising">Quem somos</LINK>
           <LINK href="/login">Login</LINK>
-          <LINK href="/">Cadastre-se</LINK>
+          <LINK href="/SignUp">Cadastre-se</LINK>
         </OPTIONS>
         :
         <div style={{display: "none"}}></div>
