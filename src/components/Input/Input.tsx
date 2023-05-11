@@ -22,6 +22,11 @@ const StyledInput = styled.input`
     color: ${THEME.COLORS.GRAY_600};
     padding-left: ${rw(14.5)};
     padding-right: ${rw(40)};
+    transition: 0.4s;
+    &:focus {
+        outline: none;
+        box-shadow: 2px 2px 2px ${THEME.COLORS.PRIMARY};
+    }
 `;
 
 const ShowPasswordButton = styled.button`
