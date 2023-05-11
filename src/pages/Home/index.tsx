@@ -1,5 +1,5 @@
 import React from 'react';
-import { FLEXROW, FLEXCOLUMN } from './style';
+import { FLEXROW, FLEXCOLUMN, TEXT, TEXTINT, IMAGE, REGISTER, SPACE } from './style';
 import logoImg from '../../assets/logoImg.png';
 import cellphonesHome from '../../assets/cellphonesHome.png';
 import Header from "../../components/Header/Header";
@@ -22,40 +22,30 @@ const Home = () => {
           marginBottom: rh(54)
         }}>
           <FLEXROW style={{
-            width: rw(1299), 
-            justifyContent: 'initial'
+            width: rw(1299),
           }}>
-            <img src={cellphonesHome} alt="" style={{
-              width: rw(552)
-            }}/>
-            <div style={{
-              fontSize: rf(24), 
-              marginLeft: rw(41), 
-              width: rw(569)
-            }}>
+            <IMAGE src={cellphonesHome} alt=""/>
+            <TEXT>
               Cazzapi é um app de delivery inovador, que busca atender principalmente aos pequenos negocios
   Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vestibulum rutrum justo a pellentesque. Aenean vel sem a mi ornare luctus a quis erat. Nullam porttitor efficitur dictum. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vestibulum rutrum justo a pellentesque. Aenean vel sem a mi ornare luctus a quis erat. Nullam porttitor efficitur dictum. Lorem ipsum dolor sit amet.
-            </div>
+            </TEXT>
           </FLEXROW>
-          <FLEXROW style={{
+          <REGISTER style={{
             width: rw(1099)
           }}>
             <FLEXCOLUMN style={{
               width: rw(569)
             }}>
-              <div style={{
-                fontSize: rf(32), 
-                textAlign: "center", 
-                marginBottom: rh(120)
-              }}>
+              <TEXTINT>
                 Tem um estabelecimento comercial e ficou interessado no Cazzapi?
-              </div>
-              <Button as="a" type="home">Registre-se agora</Button>
+              </TEXTINT>
+              <SPACE>
+                <Button as="a" type="home">Registre-se agora</Button>
+              </SPACE>
+
             </FLEXCOLUMN>
-            <img src={logoImg} alt="" style={{
-              width: rw(436)
-            }}/>
-          </FLEXROW>
+            <IMAGE src={logoImg} alt=""/>
+          </REGISTER>
         </FLEXCOLUMN>
       </div>
           

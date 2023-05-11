@@ -11,6 +11,8 @@ import BusinessType from "../pages/BusinessType";
 import ShopConditions from "../pages/ShopConditions";
 import DadosBancariosRevisao from "../pages/DadosBancariosRevisao";
 import DadosBancariosPreenchimento from "../pages/DadosBancariosPreenchimento";
+import BankAccount from "../pages/BankAccount";
+import SignUp from "../pages/SignUp";
 
 const AppRoutes = () => (
   <Routes>
@@ -26,6 +28,8 @@ const AppRoutes = () => (
     <Route path="/Advertising" element={<Advertising />} />
     <Route path="/BusinessType" element={<BusinessType />} />
     <Route path="/ShopConditions" element={<ShopConditions />} />
+    <Route path="/BankAccount" element={<BankAccount />} />
+    <Route path="/SignUp" element={<SignUp />} />
   </Routes>
 );
 
