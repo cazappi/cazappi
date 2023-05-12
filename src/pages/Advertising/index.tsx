@@ -8,6 +8,7 @@ import {
   MiddleContainerImg,
   Restaurante,
   Repasses,
+  RetangleContainer,
   InternetLogoStyle,
   ContainerMain,
   ContainerInfos,
@@ -15,9 +16,12 @@ import {
   ContainerInternetLogoP,
   ContainerCarrinho,
   GlobalCarrinho,
+  CarrinhoLogoContainer,
   GlobalPagamento,
   ContainerCarrinhoP,
+  ContainerCelularP,
   TituloCarrinho,
+  CelularLogoContainer,
   TituloPagamento,
   Cazappi,
 } from "./style";
@@ -76,7 +80,7 @@ const Advertising = () => {
               </ContainerInternetLogoP>
             </ContainerInternetLogo>
           </ContainerInfos>
-          <img src={Retangle} alt="Retangle" />
+          <RetangleContainer src={Retangle} alt="Retangle" />
         </ContainerMain>
 
         <MiddleContainer>
@@ -91,7 +95,7 @@ const Advertising = () => {
 
         <ContainerCarrinho>
           <GlobalCarrinho>
-            <img src={CarrinhoLogo} alt="Carrinho" />
+            <CarrinhoLogoContainer src={CarrinhoLogo} alt="Carrinho" />
             <TituloCarrinho>
               <Restaurante>Via Restaurante</Restaurante>
               <ContainerCarrinhoP>
@@ -104,15 +108,15 @@ const Advertising = () => {
           </GlobalCarrinho>
 
           <GlobalPagamento>
-            <img src={CelularLogo} alt="Celular" />
+            <CelularLogoContainer src={CelularLogo} alt="Celular" />
             <TituloPagamento>
               <Cazappi>Via Cazappi</Cazappi>
-              <ContainerCarrinhoP>
+              <ContainerCelularP>
                 Lorem ipsum dolor sit amet, consectetur adipisicing elit. Illum
                 fugit ad, doloremque placeat provident reprehenderit fuga
                 reiciendis aliquid ut consequuntur delectus odit eum harum
                 voluptatibus consequatur possimus aut nihil rem?
-              </ContainerCarrinhoP>
+              </ContainerCelularP>
             </TituloPagamento>
           </GlobalPagamento>
         </ContainerCarrinho>
