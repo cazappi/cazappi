@@ -136,7 +136,7 @@ const SignUp = () => {
                     </FLEXROWTERMS>
 
 
-                    <Button as="a" type="red" style={{ marginTop: rh(150) }}>
+                    <Button as="a" type="red" href="/Politica" style={{ marginTop: rh(150) }}>
                         <FLEXROW style = {{
                             justifyItems: 'center'
                         }}>

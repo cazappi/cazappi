@@ -9,7 +9,7 @@ import {
   Forms,
   Form,
   Input1,
-  RadioInput,
+  RADIO,
   Input2,
   LineContainer,
   ButtonContainer,
@@ -39,24 +39,19 @@ const BusinessType = () => {
         <Forms>
           <Form>
             <Input1>
-              <RadioInput
-                type="radio"
-                id="MEI"
-                name="tipo_negocio"
-                value="MEI"
-              />
+            <RADIO type="radio" name="radio-group" id="r1" checked />
               <label htmlFor="MEI">MEI (Microempreendedor individual)</label>
               <br />
             </Input1>
             <Input2>
-              <RadioInput type="radio" id="ME" name="tipo_negocio" value="ME" />
+            <RADIO type="radio" name="radio-group" id="r2" />
               <label htmlFor="ME">ME (Microempresa) e outros</label>
               <br />
             </Input2>
           </Form>
         </Forms>
         <ButtonContainer>
-          <Button as="a" href="/DataBank" type="red">
+          <Button as="a" href="/BankAccount" type="red">
             Continuar
           </Button>
         </ButtonContainer>

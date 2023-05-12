@@ -1,6 +1,6 @@
 import { Routes, Route } from "react-router-dom";
 
-import Politica from '../pages/Politica';
+import Politica from "../pages/Politica";
 import Home from "../pages/Home/index";
 import Login from "../pages/Login/index";
 import ForgetPass from "../pages/ForgetPass";
