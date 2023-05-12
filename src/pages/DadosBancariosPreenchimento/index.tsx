@@ -123,33 +123,16 @@ const DadosBancariosRevisao = () => {
                         <SUBTITLE>
                             Banco
                         </SUBTITLE>
-                        <input style={{
-                            height: rh(48),
-                            width: rw(670),
-                            minWidth: 120,
-                            fontSize: rf(13),
-                            borderRadius: rh(16),
-                            border: 0,
-                            backgroundColor: THEME.COLORS.GRAY_300,
-                            color: THEME.COLORS.GRAY_600,
-                        }} />                    </ITEM>
+                        <Input type="text" placeholder='' />
+                    </ITEM>
 
                     <FLEXROW>
 
                         <ITEM>
                             <SUBTITLE>
-                                Agencia
+                                Agência
                             </SUBTITLE>
-                            <input style={{
-                                height: rh(48),
-                                width: rw(180),
-                                minWidth: 120,
-                                fontSize: rf(13),
-                                borderRadius: rh(16),
-                                border: 0,
-                                backgroundColor: THEME.COLORS.GRAY_300,
-                                color: THEME.COLORS.GRAY_600,
-                            }} />
+                            <Input type="text" placeholder='' size={rw(80)} />
                         </ITEM>
 
 
@@ -157,16 +140,7 @@ const DadosBancariosRevisao = () => {
                             <SUBTITLE>
                                 Conta
                             </SUBTITLE>
-                            <input style={{
-                                height: rh(48),
-                                width: rw(180),
-                                minWidth: 120,
-                                fontSize: rf(13),
-                                borderRadius: rh(16),
-                                border: 0,
-                                backgroundColor: THEME.COLORS.GRAY_300,
-                                color: THEME.COLORS.GRAY_600,
-                            }} />
+                            <Input type="text" placeholder='' size={rw(80)} />
                         </ITEM>
 
 
@@ -174,16 +148,7 @@ const DadosBancariosRevisao = () => {
                             <SUBTITLE>
                                 Dígito
                             </SUBTITLE>
-                            <input style={{
-                                height: rh(48),
-                                width: rw(80),
-                                minWidth: 40,
-                                fontSize: rf(13),
-                                borderRadius: rh(16),
-                                border: 0,
-                                backgroundColor: THEME.COLORS.GRAY_300,
-                                color: THEME.COLORS.GRAY_600,
-                            }} />
+                            <Input type="text" placeholder='' size={rw(80)} />
                         </ITEM>
                     </FLEXROW>
 
