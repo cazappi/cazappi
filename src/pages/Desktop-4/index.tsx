@@ -48,7 +48,7 @@ const MailConfirmation = () => {
                     }}>
                         Confirme seu e-mail para acessar sua conta pela primeira vez
                     </DIVTEXTMAIN>
-                    <Button as="a" type="red">Fazer login</Button>
+                    <Button as="a" type="red" href="/login">Fazer login</Button>
                     <DIVTEXT style={{
                         marginTop: "15px",
                     }}>

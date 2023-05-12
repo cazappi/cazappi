@@ -79,5 +79,19 @@ margin-left: ${rw(60)};
 margin-bottom: ${rh(20)};
 margin-top: ${rh(10)};
 font-weight: 400;
+`;
 
+export const CHECK = styled.input`
+  -webkit-appearance: none;
+  -moz-appearance: none;
+  margin-right: 10px;
+  box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
+  width: 24px;
+  height: 24px;
+  border: 2px solid ${THEME.COLORS.PRIMARY};
+  color: ${THEME.COLORS.SECONDARY};
+  border-radius: 5px;
+  &:focus{
+    background-color: ${THEME.COLORS.PRIMARY};
+  }
 `;
