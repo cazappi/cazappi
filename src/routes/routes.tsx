@@ -7,6 +7,7 @@ import MailConfirmation from "../pages/Desktop-4";
 import EmailVerification from "../pages/EmailVerification";
 import Advertising from "../pages/Advertising";
 import BusinessType from "../pages/BusinessType";
+import EmailTemplate from "../pages/EmailTemplate";
 
 const AppRoutes = () => (
   <Routes>

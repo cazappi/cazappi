@@ -12,7 +12,8 @@ import {
   HeaderContainer,
   LinkEmail,
 } from "./style";
-import LogoImg from "../../assets/logoText.png";
+
+import LogoImg from "../../assets/logoText.svg";
 
 interface Props {
   name: string;
@@ -37,11 +38,9 @@ const EmailTemplate: React.FC<Props> = ({ name }) => (
             Redefinir Senha
           </Button>
         </ButtonContainer>
-        <p>Se o botão acima não funcionar, copie e cole o link no navegador</p>
+        <p>Se o botão acima não funcionar:</p>
         <LinkEmail>
-          <a>
-            https://aaaaaaaaaaaaaaa.com.br/aaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaaa
-          </a>
+          <a href="aaaaaaaaaaaaa.com/aaaaaaaaaaaaaaaa">Clique aqui</a>
         </LinkEmail>
         <p>Se você não solicitou a redefinição de senha, ignore este e-mail.</p>
       </Redefinition>
