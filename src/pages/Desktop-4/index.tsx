@@ -1,5 +1,5 @@
 import React from 'react';
-import { LOGOIMAGE, LINK, FLEXROW, FLEXCOLUMN, BUTTON } from './style';
+import { LOGOIMAGE, LINK, EMAIL, IMAGE, FLEXROW, FLEXCOLUMN, TITLE, GROUP, DIVTEXT, DIVTEXTMAIN } from './style';
 import logoText from '../../assets/logoText.svg';
 import mailImg from '../../assets/mail.svg';
 import logoImg from '../../assets/logoImg.png';
@@ -11,78 +11,62 @@ import {
     responsiveHeight as rh,
     responsiveFontSize as rf
 } from '../../utils/responsive-functions';
-import { header, footer } from '../../utils/generics';
+import Button from "../../components/Button/Button";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
 
 const MailConfirmation = () => {
     return (
         <div>
             {/* ----------------------- HEADER ----------------------- */}
-
-            {header()}
+            <Header></Header>
 
             {/* ----------------------- Container ----------------------- */}
             <FLEXCOLUMN style={{
                 marginTop: rh(78),
                 marginBottom: rh(54)
             }}>
-                <div style={{
-                    fontSize: rf(48),
-                    fontWeight: 700,
-                    color: THEME.COLORS.PRIMARY,
-                }}>
+                <TITLE>
                     Quase lá
-                </div>
+                </TITLE>
                 <FLEXROW style={{
                     width: rw(1299),
                     justifyContent: 'center',
-                    marginTop: rh(95),
                 }}>
-                    <img src={mailImg} alt="" style={{
-                        width: rw(200)
-                    }} />
-                    <div style={{
-                        fontSize: rf(36),
-                        marginLeft: rw(41),
-                        width: rw(545)
-                    }}>
-                        Enviamos uma confirmação para ok*****@gmail.com
-                    </div>
+                    <IMAGE src={mailImg} alt=""/>
+                    <DIVTEXTMAIN>
+                        Enviamos uma confirmação para 
+                        <EMAIL>ok*****@gmail.com</EMAIL> 
+                    </DIVTEXTMAIN>
                 </FLEXROW>
-                <FLEXCOLUMN style={{
-                    width: rw(569),
+                <GROUP style={{
                     marginTop: rh(140),
                 }}>
-                    <div style={{
-                        fontSize: rf(36),
+                    <DIVTEXTMAIN style={{
                         textAlign: "center",
                         marginBottom: rh(120)
                     }}>
                         Confirme seu e-mail para acessar sua conta pela primeira vez
-                    </div>
-                    <BUTTON>Fazer login</BUTTON>
-                    <div style={{
-                        fontSize: rf(24)
+                    </DIVTEXTMAIN>
+                    <Button as="a" type="red">Fazer login</Button>
+                    <DIVTEXT style={{
+                        marginTop: "15px",
                     }}>
                         Não recebeu o e-mail?
-                        <button style={{
+                        <LINK style={{
                             marginLeft: rw(5),
-                            cursor: 'pointer',
-                            border: 0,
-                            color: THEME.COLORS.PRIMARY,
-                            fontSize: rf(24),
-                            textDecorationLine: 'underline',
                         }}>
                             Enviar novamente
-                        </button>
-                    </div>
-                </FLEXCOLUMN>
+                        </LINK>
+                    </DIVTEXT>
+                </GROUP>
 
             </FLEXCOLUMN>
 
 
             {/* ----------------------- FOOTER ----------------------- */}
 
-            {footer()}
+            <Footer></Footer>
         </div>
 
     );
