@@ -13,8 +13,6 @@ const InputWrapper = styled.div`
 
 const StyledInput = styled.input`
     height: ${rh(68)};
-    width: ${rw(240)};
-    min-width: 210px;
     font-size: max(${rw(13)}, 10px);
     border-radius: ${rh(16)};
     border: none;
@@ -42,10 +40,11 @@ const ShowPasswordButton = styled.button`
 interface InputProps {
     type?: string;
     placeholder?: string;
+    size?: string;
     onChange?: (event: React.ChangeEvent<HTMLInputElement>) => void;
 }
 
-const Input: React.FC<InputProps> = ({ type = "text", placeholder, onChange }) => {
+const Input: React.FC<InputProps> = ({ type = "text", size = rw(240), placeholder, onChange }) => {
     const [showPassword, setShowPassword] = useState(false);
 
     const togglePasswordVisibility = (e: React.MouseEvent<HTMLButtonElement>) => {
@@ -57,7 +56,9 @@ const Input: React.FC<InputProps> = ({ type = "text", placeholder, onChange }) =
 
     return (
         <InputWrapper>
-        <StyledInput type={inputType} placeholder={placeholder} onChange={onChange} />
+        <StyledInput type={inputType} placeholder={placeholder} onChange={onChange} style={{
+            width: size,
+        }}/>
         {type === "password" && (
             <ShowPasswordButton onClick={togglePasswordVisibility}>
             {showPassword ? 

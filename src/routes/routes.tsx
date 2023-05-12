@@ -9,6 +9,8 @@ import EmailVerification from "../pages/EmailVerification";
 import Advertising from "../pages/Advertising";
 import BusinessType from "../pages/BusinessType";
 import ShopConditions from "../pages/ShopConditions";
+import DadosBancariosRevisao from "../pages/DadosBancariosRevisao";
+import DadosBancariosPreenchimento from "../pages/DadosBancariosPreenchimento";
 import BankAccount from "../pages/BankAccount";
 import SignUp from "../pages/SignUp";
 
@@ -21,6 +23,8 @@ const AppRoutes = () => (
     <Route path="/login" element={<Login />} />
     <Route path="/forgetPass" element={<ForgetPass />} />
     <Route path="/EmailVerification" element={<EmailVerification />} />
+    <Route path="/DadosBancariosRevisao" element={<DadosBancariosRevisao />} />
+    <Route path="/DadosBancariosPreenchimento" element={<DadosBancariosPreenchimento />} />
     <Route path="/Advertising" element={<Advertising />} />
     <Route path="/BusinessType" element={<BusinessType />} />
     <Route path="/ShopConditions" element={<ShopConditions />} />
