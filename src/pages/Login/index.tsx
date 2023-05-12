@@ -52,7 +52,7 @@ const Login = () => {
                             <Button as="a" type="red" style={{
                                 marginBottom: rh(26),
                             }}>Entrar</Button>
-                            <Button as="a" type="white">Registrar outra conta</Button>
+                            <Button as="a" type="white" href="/SignUp">Registrar outra conta</Button>
                         </FLEXCOLUMN>
                     </FLEXCOLUMN>
                 </form>

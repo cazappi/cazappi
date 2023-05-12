@@ -40,7 +40,7 @@ const Home = () => {
                 Tem um estabelecimento comercial e ficou interessado no Cazzapi?
               </TEXTINT>
               <SPACE>
-                <Button as="a" type="home">Registre-se agora</Button>
+                <Button as="a" type="home" href="/SignUp">Registre-se agora</Button>
               </SPACE>
 
             </FLEXCOLUMN>

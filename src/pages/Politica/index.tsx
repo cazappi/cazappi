@@ -1,5 +1,5 @@
 import React from 'react';
-import { LOGOIMAGE, LINK, FLEXROW, FLEXCOLUMN, BUTTON, SUBTITLE, POLITICA } from './style';
+import { LOGOIMAGE, LINK, CHECK, FLEXROW, FLEXCOLUMN, BUTTON, SUBTITLE, POLITICA } from './style';
 import logoText from '../../assets/logoText.svg';
 import mailImg from '../../assets/mail.svg';
 import logoImg from '../../assets/logoImg.png';
@@ -95,25 +95,18 @@ const Politica = () => {
                 </div>
                 
                 <FLEXROW>
-                    <input type='checkbox' style={
-                        {
-                            border: 2,
-                            borderColor: THEME.COLORS.SECONDARY,
-                            color: THEME.COLORS.SECONDARY,
-                            borderRadius: 5,
-                        }
-                    } />
+                    <CHECK type='checkbox' />
 
                     <div style={{
                         fontWeight: "600",
                         marginTop: rh(50),
-                        marginBottom: rh(26),
+                        marginBottom: rh(50),
                     }}>
                         Declaro que li e aceito as Condições de Venda e Pagamento, e tenho ciência das boas práticas para o varejo.
                     </div>
                 </FLEXROW>
 
-                <Button as="a" type="red" style={{
+                <Button as="a" type="red" href="/BusinessType" style={{
                     marginTop: rh(26),
                     marginBottom: rh(70),
                 }}>Confirmar Assinatura</Button>
