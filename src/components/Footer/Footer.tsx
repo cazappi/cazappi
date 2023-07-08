@@ -1,6 +1,6 @@
 import React from "react";
-import { LOGOIMAGE, FLEXROW, FLEXCOLUMN, TEXT, LINK } from "./style";
-import logoText from '../../assets/logoText.png';
+// import { LOGOIMAGE, FLEXROW, FLEXCOLUMN, TEXT, LINK } from "./style";
+import logoBranca from '../../assets/logoBranca.svg';
 import { THEME } from '../../theme/index';
 import {responsiveWidth as rw,
   responsiveHeight as rh,
@@ -9,53 +9,35 @@ import { Icon } from '@iconify-icon/react';
 
 const Footer: React.FC = () => {
   return (
-    <div style={{
-      paddingTop: "9rem"
-    }}>
-      <FLEXCOLUMN style={{
-        backgroundColor: THEME.COLORS.PRIMARY,
-        paddingTop: rh(16),
-        paddingBottom: rh(16)
-      }}>
-        <LOGOIMAGE src={logoText} alt="logo" style={{
-          width: "min(${rw(200)}, 50px)",
-          marginBottom: "10px",
-          padding: 0
-        }}/>
-        <FLEXROW style={{
-          width: "136px"
-        }}>
-          <a href=""><Icon icon="mdi:instagram" width={24} style={{
-            color: THEME.COLORS.WHITE
-          }}/></a>
-          <a href=""><Icon icon="mdi:linkedin" width={24} style={{
-            color: THEME.COLORS.WHITE
-          }}/></a>
-          <a href=""><Icon icon="ic:baseline-whatsapp" width={24} style={{
-            color: THEME.COLORS.WHITE
-          }}/></a>
-          <a href=""><Icon icon="ic:baseline-call" width={24} style={{
-            color: THEME.COLORS.WHITE
-          }}/></a>
-        </FLEXROW>
-        <div style={{
-          marginBottom: "10px"
-        }}>
-          <LINK href="" style={{
-            
-          }}>
-            Política de privacidade | 
-          </LINK>
-          <LINK href="" style={{
-            marginLeft: "2px",
-          }}>
-            Termos de uso
-          </LINK>
+    <div className="bg-GRAY_600 text-WHITE flex flex-col items-center justify-center py-10">
+      <div className="flex flex-row justify-between text-sm w-2/3">
+        <div className="flex flex-col mb-10">
+          <img src={logoBranca} alt="" className="" />
+          <a href="">Fale com a gente</a>
+          <a href="">Termos de uso</a>
+          <a href="">Privacidade</a>
+          <a href="">Aplicativo</a>
         </div>
-        <TEXT>
-          © 2023. MSE Cazzapi - Delivery app | Desenvolvido por CATI Jr.
-        </TEXT>
-      </FLEXCOLUMN>
+        <div className="flex flex-col">
+          <div className="text-lg font-bold">Conheça mais</div>
+          <a href="">Termos de uso</a>
+          <a href="">Privacidade</a>
+          <a href="">Aplicativo</a>
+        </div>
+        <div className="text-4xl flex flex-col">
+          <div className="text-lg font-bold">Social</div>
+          <Icon icon="mdi:instagram"></Icon>
+          <Icon icon="mdi:youtube"></Icon>
+        </div>
+      </div>
+      <div className="flex flex-row">
+        <a className="mr-1">Política de privacidade</a>
+        | 
+        <a className="ml-1">Termos de uso</a>
+      </div>
+      <div>
+        ©. MSE Cazappi - Delivery app | Desenvolvido por CATI Jr.
+      </div>
     </div>
   );
 };

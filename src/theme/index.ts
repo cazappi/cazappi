@@ -5,8 +5,9 @@ export const THEME = {
     },
 
     COLORS : {
-        PRIMARY : '#BB2649',
-        SECONDARY: '#C1547A',
+        PRIMARY : '#FF0000',
+        SECONDARY: '#39FF14',
+        YELLOW: '#F2BD00',
         
         BLACK: '#1E1E1E',
         WHITE: '#FEFEFE',

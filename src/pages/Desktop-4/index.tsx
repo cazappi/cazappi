@@ -19,7 +19,6 @@ const MailConfirmation = () => {
     return (
         <div>
             {/* ----------------------- HEADER ----------------------- */}
-            <Header></Header>
 
             {/* ----------------------- Container ----------------------- */}
             <FLEXCOLUMN style={{

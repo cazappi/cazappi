@@ -1,57 +1,76 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { FLEXROW, FLEXCOLUMN, TEXT, TEXTINT, IMAGE, REGISTER, SPACE } from './style';
-import logoImg from '../../assets/logoImg.png';
-import cellphonesHome from '../../assets/cellphonesHome.png';
+import padariaImage from '../../assets/padariaImage.png';
+import verdurasImage from '../../assets/verdurasImage.png';
+import pizzaImage from '../../assets/pizzaImage.png';
+import mercadoImage from '../../assets/mercadoImage.png';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import Button from "../../components/Button/Button";
+import Carousel from '../../components/Carousel/Carousel';
 import {responsiveWidth as rw,
   responsiveHeight as rh,
   responsiveFontSize as rf } from '../../utils/responsive-functions';
 
 const Home = () => {
+  const [selectedOption, setSelectedOption] = useState(0);
+
+  const handleOptionChange = (option: number) => {
+    setSelectedOption(option);
+  };
+
   return (
-    <div>
+    <>
       {/* ----------------------- HEADER ----------------------- */}
-      <Header />
+      <Header handleOptionChange={handleOptionChange} />
 
-      {/* ----------------------- Container ----------------------- */}
-      <div>
-        <FLEXCOLUMN style={{
-          marginTop: rh(78),
-          marginBottom: rh(54)
-        }}>
-          <FLEXROW style={{
-            width: rw(1299),
-          }}>
-            <IMAGE src={cellphonesHome} alt=""/>
-            <TEXT>
-              Cazzapi é um app de delivery inovador, que busca atender principalmente aos pequenos negocios
-  Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vestibulum rutrum justo a pellentesque. Aenean vel sem a mi ornare luctus a quis erat. Nullam porttitor efficitur dictum. Lorem ipsum dolor sit amet. Lorem ipsum dolor sit amet, consectetur adipiscing elit. Fusce vestibulum rutrum justo a pellentesque. Aenean vel sem a mi ornare luctus a quis erat. Nullam porttitor efficitur dictum. Lorem ipsum dolor sit amet.
-            </TEXT>
-          </FLEXROW>
-          <REGISTER style={{
-            width: rw(1099)
-          }}>
-            <FLEXCOLUMN style={{
-              width: rw(569)
-            }}>
-              <TEXTINT>
-                Tem um estabelecimento comercial e ficou interessado no Cazzapi?
-              </TEXTINT>
-              <SPACE>
-                <Button as="a" type="home" href="/SignUp">Registre-se agora</Button>
-              </SPACE>
+      {/* ----------------------- Content ----------------------- */}
+      {/* ------- Carousel ------- */}
+      <Carousel optionChange={selectedOption} />
 
-            </FLEXCOLUMN>
-            <IMAGE src={logoImg} alt=""/>
-          </REGISTER>
-        </FLEXCOLUMN>
-      </div>
+      {/* ------- Second section ------- */}
+      <section className="flex flex-col items-center justify-center py-5">
+
+        <div className="text-3xl my-10">Aqui você encontra!</div>
+
+        <div className="italic text-center w-3/5 mb-10">
+          O Cazappi é uma empresa brasileira de tecnologia que oferece soluções de comércio de alimentos
+          para que pessoas e empresas possam comprar, vender, pagar, anunciar e entregar produtos por meio
+          da internet.
+        </div>
+
+        <div className="flex flex-col md:flex-row items-center justify-between text-center md:my-10">
+          <div className="flex flex-col items-center justify-center my-10 md:my-0 w-2/3 md:w-1/5">
+            <div className="h-36">
+              <img src={padariaImage} alt="pães" />
+            </div>
+            <div>Uma padaria completa com doces, pães e bolos.</div>
+          </div>
+          <div className="flex flex-col items-center justify-center my-10 md:my-0 w-2/3 md:w-1/5">
+            <div className="h-36">
+              <img src={verdurasImage} alt="verduras" />
+            </div>
+            <div>Todos os tipos de verduras, legumes e frutas.</div>
+          </div>
+          <div className="flex flex-col items-center justify-center my-10 md:my-0 w-2/3 md:w-1/5">
+            <div className="h-36">
+              <img src={pizzaImage} alt="pizza" />
+            </div>
+            <div>Variedade de lanches, pizzas e porções.</div>
+          </div>
+          <div className="flex flex-col items-center justify-center my-10 md:my-0 w-2/3 md:w-1/5">
+            <div className="h-36">
+              <img src={mercadoImage} alt="mercado" />
+            </div>
+            <div>Um mercado completo ao seu lado.</div>
+          </div>
+        </div>
+
+      </section>
+
           
       {/* ----------------------- FOOTER ----------------------- */}    
       <Footer />
-    </div>
+    </>
 
   );
 };

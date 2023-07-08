@@ -1,77 +1,71 @@
 import React, { useState, useEffect } from "react";
 import { THEME } from '../../theme/index';
-import { HEADER, LOGOIMAGE, OPTIONS, LINK, OPT, BACK } from "./style";
+// import { HEADER, LOGOIMAGE, OPTIONS, LINK, OPT, BACK } from "./style";
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
-import logoText from '../../assets/logoText.png';
+import logoText from '../../assets/logoText.svg';
 import { Icon } from '@iconify-icon/react';
 
-const Header: React.FC = () => {
-  const [showOptions, setShowOptions] = useState(true);
+interface HeaderProps {
+  handleOptionChange: (option: number) => void;
+}
 
-  const changeShowOptions = () => {
-    setShowOptions(!showOptions);
+const Header: React.FC<HeaderProps> = ({ handleOptionChange }) => {
+  const [responsive, setResponsive] = useState(false);
+
+  const handleClick = () => {
+    handleOptionChange(2); // Define a opção selecionada para a terceira imagem (índice 2)
+  };
+
+  const changeResponsive = (value: boolean) => {
+    setResponsive(value);
   }
-
-  useEffect(() => {
-    if(showOptions && document.body.clientWidth <= 620){
-      document.body.style.overflow = "hidden";
-    } else {
-      document.body.style.overflow = "scroll";
-    }
-  });
 
   React.useEffect(() => {
     function handleResize() {
-      if(window.innerWidth > 710){
-        if(!showOptions){
-          changeShowOptions();
-          document.body.style.overflow = "scroll";
-        }
+      if(window.innerWidth > 920){
+        changeResponsive(false);
       } else {
-        if(showOptions){
-          changeShowOptions();
-          document.body.style.overflow = "scroll";
-        }
+        changeResponsive(true);
       }
-      
     }
     window.addEventListener('resize', handleResize)
+    window.addEventListener('load', handleResize)
   })
 
-  return (
-    <HEADER>
-      <a href="/">
-        <LOGOIMAGE src={logoText} alt="logo"></LOGOIMAGE>
-      </a>
-      <OPT onClick={changeShowOptions}>
-          {showOptions ?
-            <Icon icon="ic:round-close" width={24} style={{
-              color: THEME.COLORS.WHITE,
-            }}/>
-            :
-            <Icon icon="mdi:hamburger-menu" width={24} style={{
-              color: THEME.COLORS.WHITE,
-            }}/> 
-          }
-      </OPT>
-      {(showOptions) ?
-      <BACK onClick={changeShowOptions}></BACK>
-      :
-      <div style={{display: "none"}}></div>
-      }
-
-      {(showOptions) ?
-        <OPTIONS>
-          <LINK href="/">Home</LINK>
-          <LINK href="/Advertising">Quem somos</LINK>
-          <LINK href="/login">Login</LINK>
-          <LINK href="/SignUp">Cadastre-se</LINK>
-        </OPTIONS>
+  return ( 
+    <div className="bg-gradient-to-b from-BLACKT to-transparent flex md:fixed w-full top-0 z-10">
+      {(responsive) ?
+        <div className="w-full h-auto py-7 justify-center items-center flex flex-col">
+          <a href="/" className="w-56 py-2">
+            <img src={logoText} alt="logo" className="w-56"></img>
+          </a>
+          <div className="w-full px-10 py-2 text-base inline-flex justify-between">
+            <a href="/" className="text-white font-black">Home</a>
+            <a href="/" className="text-white font-black">Como funciona</a>
+            <a href="/" className="text-white font-black">Quem somos</a>
+          </div>
+          <button className="w-24 h-8 my-2 bg-SECONDARY rounded-lg justify-center items-center flex">
+            <div className="text-white text-base font-bold">Login</div>
+          </button>
+        </div>
         :
-        <div style={{display: "none"}}></div>
+        <div className="w-full h-24 px-8 py-7 justify-between items-center inline-flex">
+          <a href="/" className="w-56 h-9">
+            <img src={logoText} alt="logo" className="w-56"></img>
+          </a>
+          <div className="w-1/3 flex text-xl justify-between">
+            <a href="" className="text-white font-black">Home</a>
+            <a href="" className="text-white font-black">Como funciona</a>
+            <a href="" className="text-white font-black">Quem somos</a>
+          </div>
+          <button className="w-24 h-8 bg-SECONDARY rounded-lg justify-center items-center flex">
+            <a onClick={handleClick}>
+              <div className="text-white text-xl font-bold">Login</div>
+            </a>
+          </button>
+        </div>
       }
-      
-    </HEADER>
+    </div>
   );
 };
 

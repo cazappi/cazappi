@@ -20,8 +20,6 @@ import {
 const EmailVerification = () => {
   return (
     <div>
-      <Header />
-
       <Section>
         <H1>
           <strong>Pronto!</strong>
