@@ -13,6 +13,7 @@ import {responsiveWidth as rw,
 
 const Home = () => {
   const [selectedOption, setSelectedOption] = useState(0);
+  const videoURL = "https://www.youtube.com/embed/yLgbyeFHd6k";
 
   const handleOptionChange = (option: number) => {
     setSelectedOption(option);
@@ -65,6 +66,18 @@ const Home = () => {
           </div>
         </div>
 
+      </section>
+
+      {/* ------- Video section ------- */}
+
+      <section className="flex flex-col items-center justify-center py-5">
+        <div className="text-3xl my-10">Quem somos</div>
+        <div  className="bg-SECONDARY w-full h-full flex flex-row items-center justify-center">
+          <div className="w-1/2 h-full flex items-center justify-center text-WHITE text-xl md:text-4xl text-center">Assista ao VÍDEO e entenda melhor!</div>
+          <div className='videoWrapper w-1/2 rounded-ss-3xl'>
+            <iframe className="rounded-ss-3xl w-full h-96" src={videoURL} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
+          </div>
+        </div>
       </section>
 
           
