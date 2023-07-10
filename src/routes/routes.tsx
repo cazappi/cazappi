@@ -13,6 +13,7 @@ import DadosBancariosRevisao from "../pages/DadosBancariosRevisao";
 import DadosBancariosPreenchimento from "../pages/DadosBancariosPreenchimento";
 import BankAccount from "../pages/BankAccount";
 import SignUp from "../pages/SignUp";
+import Register from "../pages/Register";
 
 const AppRoutes = () => (
   <Routes>
@@ -20,6 +21,7 @@ const AppRoutes = () => (
     <Route path="/MailConfirmation" element={<MailConfirmation />} />
     <Route path="/Politica" element={<Politica />} />
     <Route path="/" element={<Home />} />
+    <Route path="/register" element={<Register />} />
     <Route path="/login" element={<Login />} />
     <Route path="/forgetPass" element={<ForgetPass />} />
     <Route path="/EmailVerification" element={<EmailVerification />} />

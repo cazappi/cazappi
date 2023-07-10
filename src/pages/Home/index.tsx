@@ -1,5 +1,4 @@
 import React, { useState, useEffect, Children  } from 'react';
-import { FLEXROW, FLEXCOLUMN, TEXT, TEXTINT, IMAGE, REGISTER, SPACE } from './style';
 import padariaImage from '../../assets/padariaImage.png';
 import verdurasImage from '../../assets/verdurasImage.png';
 import pizzaImage from '../../assets/pizzaImage.png';
@@ -14,7 +13,6 @@ import { motion, useAnimation } from "framer-motion";
 import { useInView } from "react-intersection-observer";
 
 const Home = () => {
-  const [selectedOption, setSelectedOption] = useState(0);
   const videoURL = "https://www.youtube.com/embed/yLgbyeFHd6k";
   
   const boxVariant = {
@@ -44,18 +42,16 @@ const Home = () => {
     )
   }
 
-  const handleOptionChange = (option: number) => {
-    setSelectedOption(option);
-  };
+
 
   return (
     <>
       {/* ----------------------- HEADER ----------------------- */}
-      <Header handleOptionChange={handleOptionChange} />
+      <Header />
 
       {/* ----------------------- Content ----------------------- */}
       {/* ------- Carousel ------- */}
-      <Carousel optionChange={selectedOption} />
+      <Carousel />
 
       {/* ------- Second section ------- */}
       <section className="flex flex-col items-center justify-center py-5">
@@ -99,7 +95,7 @@ const Home = () => {
 
       {/* ------- Video section ------- */}
 
-      <section className="flex flex-col items-center justify-center pt-5">
+      <section id='quemsomos' className="flex flex-col items-center justify-center pt-5">
         <Animation className="text-3xl my-10">Quem somos</Animation>
         <Animation  className="bg-SECONDARY w-full h-full flex flex-col md:flex-row items-center justify-center">
           <Animation className="w-5/6 h-24 md:w-1/2 md:h-full flex items-center justify-center text-WHITE text-xl md:text-4xl text-center">Assista ao VÍDEO e entenda melhor!</Animation>

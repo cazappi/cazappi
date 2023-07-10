@@ -20,7 +20,9 @@ import {
 const EmailVerification = () => {
   return (
     <div>
-      <Section>
+      <Header />
+
+      <Section className="py-56">
         <H1>
           <strong>Pronto!</strong>
         </H1>

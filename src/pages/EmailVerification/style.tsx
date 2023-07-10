@@ -16,7 +16,6 @@ export const GlobalStyle = styled.div`
 `;
 
 export const Section = styled.section`
-  height: 69.2vh;
   display: flex;
   justify-items: center;
   justify-content: center;
@@ -26,7 +25,7 @@ export const Section = styled.section`
 `;
 
 export const EmailImage = styled.img`
-  width: 200px
+  width: 200px;
   height: 200px
 
 `;
