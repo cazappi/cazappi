@@ -23,6 +23,7 @@ module.exports = withMT({
         'GLASS': 'rgba(255, 255, 255, 0.45)',
         'BLACKT': 'rgba(0, 0, 0, 0.75)',
         'BLUE_LINK': '#0095E1',
+        'FUNCTION': '#E8E9E9'
       },
     },
   },

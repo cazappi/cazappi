@@ -1,4 +1,4 @@
-import React from "react";
+import react from "react";
 import {
   Section,
   LoginContainer,
@@ -7,6 +7,7 @@ import {
   ContainerParagraph,
   Paragraph,
 } from "./style";
+import axios from 'axios'
 import Button from "../../components/Button/Button";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
@@ -16,6 +17,7 @@ import {
   responsiveHeight as rh,
   responsiveFontSize as rf,
 } from "../../utils/responsive-functions";
+
 
 const EmailVerification = () => {
   return (
