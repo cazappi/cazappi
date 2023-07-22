@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState, useEffect, Children } from 'react';
 import { LOGOIMAGE, LINK, FLEXROW, FLEXCOLUMN, TITLE, CONTAINER, INPUTTEXT } from './style';
 import logoImg from '../../assets/logoImgWithoutCircles.png';
 import { THEME } from '../../theme/index';
@@ -7,11 +7,21 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
+import api from '../../services/api';
 import {responsiveWidth as rw,
   responsiveHeight as rh,
   responsiveFontSize as rf } from '../../utils/responsive-functions';
 
 const Login = () => {
+
+    const loginHook = () => {
+        api.post('/login', {
+            email: "testClieente@email.com",
+            password: "123412",
+        })
+            .then(response => console.log("Sucesso!"))
+            .catch(err => {console.log("Erro" + err)})
+    }
     return (
         <div>
             {/* ----------------------- HEADER ----------------------- */}
@@ -52,6 +62,7 @@ const Login = () => {
                                 marginBottom: rh(26),
                             }}>Entrar</Button>
                             <Button as="a" type="white" href="/SignUp">Registrar outra conta</Button>
+                            <button className="bg-PRIMARY text-WHITE p-3 rounded-lg text-xl m-4" onClick={loginHook}>Entrar</button>
                         </FLEXCOLUMN>
                     </FLEXCOLUMN>
                 </form>

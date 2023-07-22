@@ -6,6 +6,7 @@ import mercadoImage from '../../assets/mercadoImage.png';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Carousel from '../../components/Carousel/Carousel';
+import api from '../../services/api';
 import {responsiveWidth as rw,
   responsiveHeight as rh,
   responsiveFontSize as rf } from '../../utils/responsive-functions';
@@ -16,7 +17,7 @@ const Home = () => {
   const videoURL = "https://www.youtube.com/embed/yLgbyeFHd6k";
   
   const boxVariant = {
-    visible: { opacity: 1, scale: 1, transition: { duration: 0.5 } },
+    visible: { opacity: 1, scale: 1, transition: { duration: 1 } },
     hidden: { opacity: 0, scale: 0 },
   }
 

@@ -130,24 +130,32 @@ const Register = () => {
           </div>
 
 
-          <Cadastro></Cadastro>
+          {/* <Cadastro></Cadastro> */}
         </div>
       </div>
       {/* ------- Second section ------- */}
 
-      <div className="flex justify-between mx-20 my-10">
-        <div className="w-64 h-64 border shadow-lg flex flex-col justify-between mx-20">
-          <img src="caminho/para/imagem.jpg" alt="Imagem" className="w-full h-auto" />
-          <span className="text-center">Fica a sua escolha<br />entregar ou o cliente retira</span>
-        </div>
-        <div className="w-64 h-64 border shadow-lg flex flex-col justify-between">
-          <img src="caminho/para/imagem.jpg" alt="Imagem" className="w-full h-auto" />
-          <span className="text-center">Crie e realize, suas vendas<br />irão crescer com o Cazzapi</span>
-        </div>
-        <div className="w-64 h-64 border shadow-lg flex flex-col justify-between mx-20">
-          <img src="caminho/para/imagem.jpg" alt="Imagem" className="w-full h-auto" />
-          <span className="text-center">Liberdade financeira,<br />satisfação e motivação<br />você só encontra aqui</span>
-        </div>
+      <div className="flex flex-col items-center justify-center mb-24 w-full p-2">
+        <Animation className="w-full md:w-2/3 flex flex-col justify-center items-center my-24  text-center">
+          <div className="flex flex-col justify-center w-2/3">
+            <Animation className='p-2 w-2/3 text-center text-BLACK bg-YELLOW rounded-2xl font-medium text-xl md:text-3xl'>Cadastre e tenha</Animation>
+            <Animation className='p-2 ml-5 text-BLACK text-center bg-YELLOW rounded-2xl text-base md:text-xl'>a maior plataforma on-line de vendas</Animation>
+          </div>
+        </Animation>
+        <Animation className="w-4/5 flex flex-col md:flex-row items-center justify-between">
+          <Animation className="w-64 h-64 my-4 md:my-0 border p-2 shadow-lg flex flex-col items-center"> 
+            <img src="caminho/para/imagem.jpg" alt="Imagem" className="w-full h-1/2 bg-BLACK" />
+            <div className="text-center h-1/2 flex items-center justify-center">Fica a sua escolha<br />entregar ou o cliente retira</div>
+          </Animation>
+          <Animation className="w-64 h-64 my-4 md:my-0 border p-2 shadow-lg flex flex-col items-center">
+            <img src="caminho/para/imagem.jpg" alt="Imagem" className="w-full h-1/2 bg-BLACK" />
+            <div className="text-center h-1/2 flex items-center justify-center">Crie e realize, suas vendas<br />irão crescer com o Cazzapi</div>
+          </Animation>
+          <Animation className="w-64 h-64 my-4 md:my-0 border p-2 shadow-lg flex flex-col items-center">
+            <img src="caminho/para/imagem.jpg" alt="Imagem" className="w-full h-1/2 bg-BLACK" />
+            <div className="text-center h-1/2 flex items-center justify-center">Liberdade financeira,<br />satisfação e motivação<br />você só encontra aqui</div>
+          </Animation>
+        </Animation>
       </div>
 
 
@@ -157,26 +165,26 @@ const Register = () => {
 
       {/* ------- fourth section ------- */}
       <div className='flex items-center justify-center'>
-        <div className="container  mx-auto p-10 max-w-screen-lg bg-grey rounded-16">
-          <div className='min-h-screen bg-FUNCTION rounded shadow p-12'>
+        <div className="container  mx-auto p-10 max-w-screen-lg bg-grey rounded-3xl">
+          <div className='min-h-screen bg-FUNCTION rounded-3xl shadow p-12'>
 
             <div className="flex">
-              <p className="my-5">O que é o Cazzapi?</p>
+              <p className="my-5 font-semibold">O que é o Cazzapi?</p>
               <button className="text-SECONDARY rounded-full flex justify-center items-center ml-auto" onClick={ToggleCollapsible1}>
-              <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
+                <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
               </button>
             </div>
-            <p className='my-5 font-italic'> {isCollapsed1 ? "" : s_1}
+            <p className='my-5 font-italic text-BLACK'> {isCollapsed1 ? "" : s_1}
             </p>
             <hr className='border-black' />
 
             <div className="flex">
-              <p className="my-5">Como é a venda pelo Cazappi?</p>
+              <p className="my-5 font-semibold">Como é a venda pelo Cazappi?</p>
               <button className="text-SECONDARY rounded-full flex justify-center items-center ml-auto" onClick={ToggleCollapsible2}>
                 <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
               </button>
             </div>
-            <p className='my-5 font-italic'> {isCollapsed2 ? "" : (<ol className=''>
+            <p className='my-5 font-italic text-BLACK'> {isCollapsed2 ? "" : (<ol className=''>
               <li>1. Os clientes escolhem os produtos na sua loja no Cazappi;</li>
               <li>2. Te notificamos quando entra um novo pedido;</li>
               <li>3. Você prepara ou separa o produto para ser entregue;</li>
@@ -186,12 +194,12 @@ const Register = () => {
             <hr className='border-black' />
 
             <div className="flex">
-              <p className="my-5">Como é o processo de se cadastrar no Cazappi?</p>
+              <p className="my-5 font-semibold">Como é o processo de se cadastrar no Cazappi?</p>
               <button className="text-SECONDARY rounded-full flex justify-center items-center ml-auto" onClick={ToggleCollapsible3}>
                 <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
               </button>
             </div>
-            <p className='my-5 font-italic'> {isCollapsed3 ? "" : (<ol className=''>
+            <p className='my-5 font-italic text-BLACK'> {isCollapsed3 ? "" : (<ol className=''>
               <li>1. Rápido e fácil: você pode se inscrever em minutos. Preencha os seus dados, e cadastre seu negócio no cazappi;</li>
               <li>2. Analisaremos sua inscrição e verificaremos as informações que você nos enviou;</li>
               <li>3. Assim que sua inscrição for aprovada, você receberá um link para configurar sua loja, filiais, produtos, personalizar sua marca e ter acesso a ferramentas de gestão;</li>
@@ -201,12 +209,12 @@ const Register = () => {
             <hr className='border-black' />
 
             <div className="flex">
-              <p className="my-5">Quais requisitos para loja ser publicada no Cazappi?</p>
+              <p className="my-5 font-semibold">Quais requisitos para loja ser publicada no Cazappi?</p>
               <button className="text-SECONDARY rounded-full flex justify-center items-center ml-auto" onClick={ToggleCollapsible4}>
                 <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
               </button>
             </div>
-            <p className='my-5 font-italic'> {isCollapsed4 ? "" : (<ol className=''>
+            <p className='my-5 font-italic text-BLACK'> {isCollapsed4 ? "" : (<ol className=''>
               <li>1. Tenha sua própria loja onde você pode receber compradores, pontos de retirada, pontos de venda em outra loja e armazéns com retirada;</li>
               <li>2. Comprometa-se a manter o catálogo da loja atualizado com fotos e preços, bem como a disponibilidade dos produtos para que o found-rate semanal (percentual de produtos encontrados em relação aos pedidos) se mantenha acima de 85%;</li>
               <li>3. Ofereça os produtos que você vende na Cazappi pelo mesmo preço da sua loja;</li>
@@ -218,12 +226,12 @@ const Register = () => {
             <hr className='border-black' />
 
             <div className="flex">
-              <p className="my-5">Por que eu deveria estar no cazappi?</p>
+              <p className="my-5 font-semibold">Por que eu deveria estar no cazappi?</p>
               <button className="text-SECONDARY rounded-full flex justify-center items-center ml-auto" onClick={ToggleCollapsible5}>
                 <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
               </button>
             </div>
-            <p className='my-5 font-italic'> {isCollapsed5 ? "" : (<ol className=''>
+            <p className='my-5 font-italic text-BLACK'> {isCollapsed5 ? "" : (<ol className=''>
               <li>1. Você dará aos seus clientes um atendimento único e personalizado na hora que eles precisarem;</li>
               <li>2. Daremos a você as ferramentas para gerenciar seus produtos e filiais e ajudá-lo a vender mais;</li>
               <li>3. Você descobrirá quais são os produtos mais solicitados e os que os clientes não estão encontrando.</li>
@@ -232,82 +240,76 @@ const Register = () => {
             <hr className='border-black' />
 
             <div className="flex">
-              <p className="my-5">Quanto custa para publicar minha loja e quanto tempo posso demorar para vender?</p>
+              <p className="my-5 font-semibold">Quanto custa para publicar minha loja e quanto tempo posso demorar para vender?</p>
               <button className="text-SECONDARY rounded-full flex justify-center items-center ml-auto" onClick={ToggleCollapsible6}>
                 <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
               </button>
             </div>
-            <p className='my-5 font-italic'> {isCollapsed6 ? "" : s_6}
+            <p className='my-5 font-italic text-BLACK'> {isCollapsed6 ? "" : s_6}
             </p>
             <hr className='border-black' />
 
             <div className="flex">
-              <p className="my-5">Como é processado o pedido?</p>
+              <p className="my-5 font-semibold">Como é processado o pedido?</p>
               <button className="text-SECONDARY rounded-full flex justify-center items-center ml-auto" onClick={ToggleCollapsible7}>
                 <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
               </button>
             </div>
-            <p className='my-5 font-italic'> {isCollapsed7 ? "" : s_7}
+            <p className='my-5 font-italic text-BLACK'> {isCollapsed7 ? "" : s_7}
             </p>
             <hr className='border-black' />
 
             <div className="flex">
-              <p className="my-5">Como é feita a entrega do produto?</p>
+              <p className="my-5 font-semibold">Como é feita a entrega do produto?</p>
               <button className="text-SECONDARY rounded-full flex justify-center items-center ml-auto" onClick={ToggleCollapsible8}>
                 <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
               </button>
             </div>
-            <p className='my-5 font-italic'> {isCollapsed8 ? "" : s_8}
+            <p className='my-5 font-italic text-BLACK'> {isCollapsed8 ? "" : s_8}
             </p>
             <hr className='border-black' />
 
             <div className="flex">
-              <p className="my-5">Como e quanto eu recebo pelas minhas vendas?</p>
+              <p className="my-5 font-semibold">Como e quanto eu recebo pelas minhas vendas?</p>
               <button className="text-SECONDARY rounded-full flex justify-center items-center ml-auto" onClick={ToggleCollapsible9}>
                 <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
               </button>
             </div>
-            <p className='my-5 font-italic'> {isCollapsed9 ? "" : s_9}
+            <p className='my-5 font-italic text-BLACK'> {isCollapsed9 ? "" : s_9}
             </p>
             <hr className='border-black' />
 
             <div className="flex">
-              <p className="my-5">Qual a área de atuação que a minha loja poderá atingir?</p>
+              <p className="my-5 font-semibold">Qual a área de atuação que a minha loja poderá atingir?</p>
               <button className="text-SECONDARY rounded-full flex justify-center items-center ml-auto" onClick={ToggleCollapsible10}>
                 <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
               </button>
             </div>
-            <p className='my-5 font-italic'> {isCollapsed10 ? "" : s_10}
+            <p className='my-5 font-italic text-BLACK'> {isCollapsed10 ? "" : s_10}
             </p>
             <hr className='border-black' />
 
             <div className="flex">
-              <p className="my-5">Quais produtos posso vender?</p>
+              <p className="my-5 font-semibold">Quais produtos posso vender?</p>
               <button className="text-SECONDARY rounded-full flex justify-center items-center ml-auto" onClick={ToggleCollapsible11}>
                 <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
               </button>
             </div>
-            <p className='my-5 font-italic'> {isCollapsed11 ? "" : s_11}
+            <p className='my-5 font-italic text-BLACK'> {isCollapsed11 ? "" : s_11}
             </p>
             <hr className='border-black' />
 
             <div className="flex">
-              <p className="my-5">Quais formas de pagamentos são aceitas no Cazappi?</p>
+              <p className="my-5 font-semibold">Quais formas de pagamentos são aceitas no Cazappi?</p>
               <button className="text-SECONDARY rounded-full flex justify-center items-center ml-auto" onClick={ToggleCollapsible12}>
                 <div className="bg-GRAY_600 text-base font-bold rounded-full w-4 h-4 flex justify-center items-center">+</div>
               </button>
             </div>
-            <p className='my-5 font-italic'> {isCollapsed12 ? "" : s_12}
+            <p className='my-5 font-italic text-BLACK'> {isCollapsed12 ? "" : s_12}
             </p>
           </div>
         </div>
       </div>
-
-      <Animation className="w-full h-48 flex items-center justify-center">
-        <button className="p-4 rounded-3xl bg-YELLOW text-xl md:text-3xl">
-          Indique para um amigo!
-        </button>
-      </Animation>
 
       {/* ----------------------- FOOTER ----------------------- */}
       <Footer />
