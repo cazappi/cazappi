@@ -15,6 +15,13 @@ export const GlobalStyle = styled.div`
   }
 `;
 
+export const LogoContainer = styled.div`
+    display: flex;
+    @media (max-width: 750px) {
+      justify-content: center;
+    }
+`;
+
 export const Section = styled.section`
   display: flex;
   justify-items: center;
@@ -22,6 +29,7 @@ export const Section = styled.section`
   align-items: center;
   text-align: center;
   flex-direction: column;
+
 `;
 
 export const EmailImage = styled.img`
@@ -58,7 +66,7 @@ export const LoginButton = styled.button`
 `;
 
 export const H1 = styled.h1`
-  color: #bb2649;
+  color: #FF0000;
   font-weight: bolder;
   font-family: "Roboto";
   font-weight: 700;
@@ -69,6 +77,11 @@ export const H1 = styled.h1`
 export const ContainerBody = styled.div`
   display: flex;
   flex-direction: row;
+  margin-top: 5vh;
+  margin-bottom: 5vh;
+  @media (max-width: 750px) {
+    flex-direction: column;
+  }
 `;
 
 export const ContainerParagraph = styled.div`
@@ -85,3 +98,24 @@ export const Paragraph = styled.p`
   margin: 0;
   text-align: center;
 `;
+
+export const Button = styled.button`
+  border: none;
+  text-decoration: none;
+  border-radius: 32px;
+  padding: ${rh(10)} 30.5px;
+  min-height: ${rh(64)};
+  min-width: ${rw(100)};
+  font-weight: bold;
+  font-size: ${rf(20)};
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition-duration: 0.3s;
+  &:hover {
+    opacity: 0.8;
+  };
+  background-color: #39FF14;
+  color: white;
+  `;

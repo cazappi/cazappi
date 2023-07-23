@@ -1,4 +1,4 @@
-import react from "react";
+import react, { useEffect } from "react";
 import {
   Section,
   LoginContainer,
@@ -6,9 +6,10 @@ import {
   ContainerBody,
   ContainerParagraph,
   Paragraph,
+  Button,
+  LogoContainer
 } from "./style";
-import axios from 'axios'
-import Button from "../../components/Button/Button";
+import axios from "axios";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import EmailLogo from "../../assets/Email-logo.svg";
@@ -17,9 +18,27 @@ import {
   responsiveHeight as rh,
   responsiveFontSize as rf,
 } from "../../utils/responsive-functions";
+import api from "../../services/api";
+import { useParams } from "react-router-dom";
 
+const verifyUser = (token: string) => {
+  api
+    .get(`/user/email/${token}`)
+    .then((response) => {
+      console.log("Verificação concluida com sucesso" + response.data);
+    })
+    .catch((err) => {
+      console.log(err);
+    });
+};
 
 const EmailVerification = () => {
+  const { token } = useParams();
+
+  useEffect(() => {
+    verifyUser(token ? token : '');
+  }, []);
+
   return (
     <div>
       <Header />
@@ -30,9 +49,9 @@ const EmailVerification = () => {
         </H1>
         <br />
         <ContainerBody>
-          <div>
+          <LogoContainer>
             <img src={EmailLogo} alt="Email-logo" />
-          </div>
+          </LogoContainer>
           <ContainerParagraph>
             <Paragraph>
               <strong>Email verificado com sucesso!</strong>
