@@ -1,4 +1,7 @@
 import React, { useState, useEffect, Children } from 'react';
+import { useDispatch } from "react-redux";
+import { loginSuccess } from '../../redux/actions/authActions';
+import { useNavigate } from "react-router-dom"
 import { LOGOIMAGE, LINK, FLEXROW, FLEXCOLUMN, TITLE, CONTAINER, INPUTTEXT } from './style';
 import logoImg from '../../assets/logoImgWithoutCircles.png';
 import { THEME } from '../../theme/index';
@@ -14,14 +17,33 @@ import {responsiveWidth as rw,
 
 const Login = () => {
 
-    const loginHook = () => {
-        api.post('/login', {
-            email: "testClieente@email.com",
-            password: "123412",
-        })
-            .then(response => console.log("Sucesso!"))
-            .catch(err => {console.log("Erro" + err)})
-    }
+    const navigate = useNavigate();
+    const dispatch = useDispatch();
+
+    //integracao para fazer o login e salvar o token com Redux
+    //para pegar o token em outra tela, é necessário usar o useSelector e o RootState("../redux/types")
+    const loginHook = (event: React.MouseEvent<HTMLButtonElement>) => {
+        event.preventDefault();
+        console.log("teste");
+        api
+          .post('/login', {
+            email: "jaksonhuangz@gmail.com",
+            password: "123456",
+          })
+          .then(response => {
+            const tokenFromApi = response.data;
+    
+            // Despacha a ação para salvar o token no estado global (Redux)
+            dispatch(loginSuccess(tokenFromApi));
+            console.log("Sucesso!" + tokenFromApi);
+
+            //navegar para outra tela após salvar o TOKEN
+            navigate("/forgetPass");
+            })
+          .catch(err => {
+            console.log("Erro" + err);
+            });
+    };
     return (
         <div>
             {/* ----------------------- HEADER ----------------------- */}
@@ -62,7 +84,7 @@ const Login = () => {
                                 marginBottom: rh(26),
                             }}>Entrar</Button>
                             <Button as="a" type="white" href="/SignUp">Registrar outra conta</Button>
-                            <button className="bg-PRIMARY text-WHITE p-3 rounded-lg text-xl m-4" onClick={loginHook}>Entrar</button>
+                            <button className="bg-PRIMARY text-WHITE p-3 rounded-lg text-xl m-4" onClick={loginHook} >Entrar</button>
                         </FLEXCOLUMN>
                     </FLEXCOLUMN>
                 </form>
