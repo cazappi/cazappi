@@ -130,7 +130,7 @@ const Register = () => {
           </div>
 
 
-          {/* <Cadastro></Cadastro> */}
+          <Cadastro></Cadastro>
         </div>
       </div>
       {/* ------- Second section ------- */}

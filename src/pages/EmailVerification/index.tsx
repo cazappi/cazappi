@@ -22,8 +22,9 @@ import api from "../../services/api";
 import { useParams } from "react-router-dom";
 
 const verifyUser = (token: string) => {
+  //console.log(token);
   api
-    .get(`/user/email/${token}`)
+    .post(`/landPage/email/${token}`)
     .then((response) => {
       console.log("Verificação concluida com sucesso" + response.data);
     })

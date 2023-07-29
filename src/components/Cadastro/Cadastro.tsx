@@ -10,21 +10,20 @@ const Cadastro: React.FC = () => {
     
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        api.post('/user', {
-            "email": "danilo.sp03@gmail.com",
-            "name": "Danilo Silva",
-            "documentType": "cpf",
-            "document": "19055781487",
-            "password": "123124",
-            "confirmedEmail": false,
-            "isUserDeleted": false,
-            "image" : ""
+        api.post('/landPage/user', {
+            city: "sao 3",
+            state: "brasilia!",
+            name: "Jakson",
+            document: "53636637000135",
+            documentType: "cnpj",
+            email: "jaksonhuangz@gmail.com",
+            password: "123456"
         })
-            .then(response => {console.log("Adicionado com sucesso usuário! " + response.data)})
+            .then(response => {console.log("Adicionado com sucesso usuário!"); console.log(response.data)})
             .catch(err => {console.log(err)})
+
         // Após adicionar o cliente, precisamos adicionar um endereço com a cidade e estado dele pelo ID dele (criado)!
     }
-
     return ( 
         <div className="flex flex-col items-center justify-center w-96 px-5 bg-gradient-to-b from-BLACK/90 to-BLACK/10 rounded-3xl text-WHITE text-xs">
             <img src="" alt="" />
