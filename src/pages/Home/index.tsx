@@ -16,19 +16,59 @@ import { useInView } from "react-intersection-observer";
 const Home = () => {
   const videoURL = "https://www.youtube.com/embed/yLgbyeFHd6k";
   
-  const boxVariant = {
-    visible: { opacity: 1, scale: 1, transition: { duration: 1 } },
-    hidden: { opacity: 0, scale: 0 },
+  const boxVariantFromBottom = {
+    visible: {opacity: 1,
+      y: 0, transition: { duration: 1.2 } },
+    hidden: { opacity: 0,
+      y: 50 },
+  }
+  const boxVariantFromTop = {
+    visible: {opacity: 1,
+      y: 0, transition: { duration: 1.2 } },
+    hidden: { opacity: 0,
+      y: -50 },
+  }
+  const boxVariantFromLeft = {
+    visible: {opacity: 1,
+      x: 0, transition: { duration: 1.2 } },
+    hidden: { opacity: 0,
+      x: -50 },
+  }
+  const boxVariantFromRight = {
+    visible: {opacity: 1,
+      x: 0, transition: { duration: 1.2 } },
+    hidden: { opacity: 0,
+      x: 50 },
   }
 
   type Props = {
     className: string;
     children?: React.ReactNode;
+    type?: string;
   };
 
-  const Animation = ({children, className}: Props) => {
+  const Animation = ({children, className, type}: Props) => {
     const control = useAnimation()
     const [ref, inView] = useInView()
+    let box;
+
+    switch (type) {
+      case "fromBottom":
+        box = boxVariantFromBottom;
+        break;
+      case "fromLeft":
+        box = boxVariantFromLeft;
+        break;
+      case "fromTop":
+        box = boxVariantFromTop;
+        break;
+      case "fromRight":
+        box = boxVariantFromRight;
+        break;
+      default:
+        box = boxVariantFromBottom;
+        break;
+    }
 
     useEffect(() => {
       if (inView) {
@@ -37,18 +77,17 @@ const Home = () => {
     }, [control, inView]);
 
     return (
-      <motion.div className={className} ref={ref} variants={boxVariant} initial="hidden" animate={control}>
+      <motion.div className={className} ref={ref} variants={box} initial="hidden" animate={control}>
         {children}
       </motion.div>
     )
   }
 
 
-
   return (
     <>
       {/* ----------------------- HEADER ----------------------- */}
-      <Header />
+      <Header transparent={true} />
 
       {/* ----------------------- Content ----------------------- */}
       {/* ------- Carousel ------- */}
@@ -57,9 +96,9 @@ const Home = () => {
       {/* ------- Second section ------- */}
       <section className="flex flex-col items-center justify-center py-5">
 
-        <Animation className="text-3xl my-10">Aqui você encontra!</Animation>
+        <Animation type="fromTop" className="text-3xl my-10">Aqui você encontra!</Animation>
 
-        <Animation className="italic text-center w-3/5 mb-10">
+        <Animation type="fromBottom" className="italic text-center w-3/5 mb-10">
           O Cazappi é uma empresa brasileira de tecnologia que oferece soluções de comércio de alimentos
           para que pessoas e empresas possam comprar, vender, pagar, anunciar e entregar produtos por meio
           da internet.
@@ -97,10 +136,10 @@ const Home = () => {
       {/* ------- Video section ------- */}
 
       <section id='quemsomos' className="flex flex-col items-center justify-center pt-5">
-        <Animation className="text-3xl my-10">Quem somos</Animation>
+        <Animation type='fromTop' className="text-3xl my-10">Quem somos</Animation>
         <Animation  className="bg-SECONDARY w-full h-full flex flex-col md:flex-row items-center justify-center">
-          <Animation className="w-5/6 h-24 md:w-1/2 md:h-full flex items-center justify-center text-WHITE text-xl md:text-4xl text-center">Assista ao VÍDEO e entenda melhor!</Animation>
-          <Animation className='videoWrapper w-full md:w-1/2 rounded-ss-3xl'>
+          <Animation type="fromLeft" className="w-5/6 h-24 md:w-1/2 md:h-full flex items-center justify-center text-WHITE text-xl md:text-4xl text-center">Assista ao VÍDEO e entenda melhor!</Animation>
+          <Animation type='fromRight' className='videoWrapper w-full md:w-1/2 rounded-ss-3xl'>
             <iframe className="rounded-ss-3xl w-full h-96 border-none" src={videoURL} title="YouTube video player" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"></iframe>
           </Animation>
         </Animation>

@@ -5,8 +5,19 @@ import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import logoText from '../../assets/logoText.svg';
 import { Icon } from '@iconify-icon/react';
 
-const Header: React.FC = () => {
+interface HeaderProps {
+  transparent: Boolean;
+}
+
+const Header: React.FC<HeaderProps> = ({ transparent }) => {
   const [responsive, setResponsive] = useState(false);
+
+  const styleGroup = {
+    headerTransparent: "bg-gradient-to-b from-BLACK to-transparent text-white flex md:fixed w-full top-0 z-10",
+    headerWhite: "bg-WHITE text-black flex w-full z-10",
+    options: "hover:text-PRIMARY duration-300",
+    button: "w-24 h-8 my-2 bg-SECONDARY rounded-lg justify-center items-center flex hover:bg-ERROR duration-200"
+  }
 
   const changeResponsive = (value: boolean) => {
     setResponsive(value);
@@ -25,18 +36,18 @@ const Header: React.FC = () => {
   })
 
   return ( 
-    <div className="bg-gradient-to-b from-BLACKT to-transparent flex md:fixed w-full top-0 z-10">
+    <div className={transparent ? styleGroup.headerTransparent : styleGroup.headerWhite}>
       {(responsive) ?
           <div className="w-full h-auto py-7 justify-center items-center flex flex-col">
           <a href="/" className="w-56 py-2">
             <img src={logoText} alt="logo" className="w-56"></img>
           </a>
           <div className="w-full px-10 py-2 text-base inline-flex justify-between">
-            <a href="/" className="text-white font-black">Home</a>
-            <a href="/" className="text-white font-black">Como funciona</a>
-            <a href="/#quemsomos" className="text-white font-black">Quem somos</a>
+            <a href="/" className={styleGroup.options}>Home</a>
+            <a href="/" className={styleGroup.options}>Como funciona</a>
+            <a href="/#quemsomos" className={styleGroup.options}>Quem somos</a>
           </div>
-          <button className="w-24 h-8 my-2 bg-SECONDARY rounded-lg justify-center items-center flex">
+          <button className={styleGroup.button}>
             <div className="text-white text-base font-bold">Login</div>
           </button>
         </div>
@@ -46,11 +57,11 @@ const Header: React.FC = () => {
             <img src={logoText} alt="logo" className="w-56"></img>
           </a>
           <div className="w-1/3 flex text-xl justify-between">
-            <a href="/" className="text-white font-black">Home</a>
-            <a href="/" className="text-white font-black">Como funciona</a>
-            <a href="/#quemsomos" className="text-white font-black">Quem somos</a>
+            <a href="/" className={styleGroup.options}>Home</a>
+            <a href="/" className={styleGroup.options}>Como funciona</a>
+            <a href="/#quemsomos" className={styleGroup.options}>Quem somos</a>
           </div>
-          <button className="w-24 h-8 bg-SECONDARY rounded-lg justify-center items-center flex">
+          <button className={styleGroup.button}>
             <a href="/">
               <div className="text-white text-xl font-bold">Login</div>
             </a>

@@ -110,7 +110,7 @@ const Register = () => {
   return (
     <>
       {/* ----------------------- HEADER ----------------------- */}
-      <Header />
+      <Header transparent={false}/>
 
       {/* ----------------------- Content ----------------------- */}
       {/* ------- Carousel ------- */}
@@ -121,7 +121,7 @@ const Register = () => {
           alt="3"
           className="h-full w-full object-cover"
         />
-        <div className="absolute inset-0 justify-between flex flex-row h-full w-full bg-gradient-to-r from-BLACK/70 to-BLACK/5 pt-56 md:pt-36 px-10">
+        <div className="absolute inset-0 justify-between flex flex-row h-full w-full bg-gradient-to-r pt-8 from-BLACK/70 to-BLACK/5 px-10">
           <div className="text-WHITE">
             <div className="text-4xl text-left mb-20">
               Alcance o sucesso pessoal<br />e profissional vendendo<br />os seus produtos

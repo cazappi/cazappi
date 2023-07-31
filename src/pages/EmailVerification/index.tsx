@@ -42,9 +42,9 @@ const EmailVerification = () => {
 
   return (
     <div>
-      <Header />
+      <Header transparent={false} />
 
-      <Section className="py-56">
+      <Section className="">
         <H1>
           <strong>Pronto!</strong>
         </H1>

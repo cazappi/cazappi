@@ -36,7 +36,7 @@ const registrationSchema = Yup.object().shape({
     confirmPassword: Yup.string()
         .oneOf([Yup.ref('password')], 'As senhas não conferem'),
     state: Yup.string()
-        .required('O estado é obrigatório'),
+        .required('Campo obrigatório'),
     city: Yup.string()
         .required('Campo obrigatório'),
     termsOfUse: Yup.boolean(),
@@ -63,7 +63,9 @@ const Cadastro: React.FC = () => {
         field: "bg-GRAY_600 w-full input-input",
 
         typeButtonSelected: "bg-WHITE flex flex-row items-center justify-center text-GRAY_600 rounded-xl p-3 buttonSelected",
-        typeButton: "bg-GRAY_600 flex flex-row items-center justify-center text-WHITE rounded-xl p-3 button"
+        typeButton: "bg-GRAY_600 flex flex-row items-center justify-center text-WHITE rounded-xl p-3 button",
+
+        error: "mt-2 text-ERROR",
     }
     
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
@@ -120,7 +122,7 @@ const Cadastro: React.FC = () => {
                                 onChange={handleChange}
                             />
                             <label className={styleGroup.fieldText}>Estado</label>
-                            <ErrorMessage name="state" component="div" />
+                            <ErrorMessage className={styleGroup.error} name="state" component="div" />
                         </div>
                         <div className={styleGroup.fieldGroup}>
                             <input className={styleGroup.field} 
@@ -130,7 +132,7 @@ const Cadastro: React.FC = () => {
                                 onChange={handleChange}
                             />
                             <label className={styleGroup.fieldText}>Cidade</label>                        
-                            <ErrorMessage name="city" component="div" />
+                            <ErrorMessage className={styleGroup.error} name="city" component="div" />
                         </div>
                         <div className={styleGroup.fieldGroup}>
                             <input className={styleGroup.field} 
@@ -140,7 +142,7 @@ const Cadastro: React.FC = () => {
                                 onChange={handleChange}
                             />
                             <label className={styleGroup.fieldText}>Nome</label>
-                            <ErrorMessage name="name" component="div" />
+                            <ErrorMessage className={styleGroup.error} name="name" component="div" />
                         </div>
                         <div className={styleGroup.fieldGroup}>
                             <input className={styleGroup.field} 
@@ -150,7 +152,7 @@ const Cadastro: React.FC = () => {
                                 onChange={handleChange}
                             />
                             <label className={styleGroup.fieldText}>{typeAccount ? 'CPF:' : 'CNPJ:'}</label>
-                            <ErrorMessage name="document" component="div" />
+                            <ErrorMessage className={styleGroup.error} name="document" component="div" />
                         </div>
                         <div className={styleGroup.fieldGroup}>
                             <input className={styleGroup.field} 
@@ -160,7 +162,7 @@ const Cadastro: React.FC = () => {
                                 onChange={handleChange}
                             />
                             <label className={styleGroup.fieldText}>E-mail</label>
-                            <ErrorMessage name="email" component="div" />
+                            <ErrorMessage className={styleGroup.error} name="email" component="div" />
                         </div>
                         <div className={styleGroup.fieldGroup}>
                             <input className={styleGroup.field} 
@@ -170,7 +172,7 @@ const Cadastro: React.FC = () => {
                                 onChange={handleChange}
                             />
                             <label className={styleGroup.fieldText}>Senha</label>
-                            <ErrorMessage name="password" component="div" />
+                            <ErrorMessage className={styleGroup.error} name="password" component="div" />
                         </div>
                         <div className={styleGroup.fieldGroup}>
                             <input className={styleGroup.field} 
@@ -180,7 +182,7 @@ const Cadastro: React.FC = () => {
                                 onChange={handleChange}
                             />
                             <label className={styleGroup.fieldText}>Confirmar senha</label>
-                            <ErrorMessage name="confirmPassword" component="div" />
+                            <ErrorMessage className={styleGroup.error} name="confirmPassword" component="div" />
                         </div>
                         <div className="flex flex-row items-center justify-center p-5">
                             <input 
@@ -188,7 +190,7 @@ const Cadastro: React.FC = () => {
                                 name="termsOfUse"
                                 className="mr-1 border-PRIMARY checked:bg-PRIMARY checked:decoration-transparent" />
                             <div>Eu aceito o uso dos meus dados de acordo com a Declaração de Privacidade e aceito os Termos e Condições.</div>
-                            <ErrorMessage name="termsOfUse" component="div" />
+                            <ErrorMessage className={styleGroup.error} name="termsOfUse" component="div" />
                         </div>
                         <button className="bg-PRIMARY text-WHITE p-3 rounded-lg text-xl m-4" type="submit">Cadastre-se</button>
                     </Form>
