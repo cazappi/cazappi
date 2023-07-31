@@ -18,8 +18,13 @@
     transition: outline-color 500ms;
 }
 
+.input-input:hover{
+    outline: 1px solid rgba(91, 91, 91, .2);
+    box-shadow: 0 0 2px 1px #919191;
+}
+
 .input-input:focus{
-    box-shadow: 0 0 3px 2px #919191;
+    box-shadow: 0 0 2px 1px #919191;
     outline: 1px solid rgba(91, 91, 91, .2);
 }
 

@@ -15,8 +15,8 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
   const styleGroup = {
     headerTransparent: "bg-gradient-to-b from-BLACK to-transparent text-white flex md:fixed w-full top-0 z-10",
     headerWhite: "bg-WHITE text-black flex w-full z-10",
-    options: "hover:text-PRIMARY duration-300",
-    button: "w-24 h-8 my-2 bg-SECONDARY rounded-lg justify-center items-center flex hover:bg-ERROR duration-200"
+    options: "hover:text-PRIMARY hover:scale-110 hover:shadow-blue-gray-900 duration-300",
+    button: "w-24 h-8 my-2 bg-SECONDARY rounded-lg justify-center items-center flex duration-200 hover:shadow-2xl hover:scale-110"
   }
 
   const changeResponsive = (value: boolean) => {
@@ -44,7 +44,7 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
           </a>
           <div className="w-full px-10 py-2 text-base inline-flex justify-between">
             <a href="/" className={styleGroup.options}>Home</a>
-            <a href="/" className={styleGroup.options}>Como funciona</a>
+            <a href="/register/#comofunciona" className={styleGroup.options}>Como funciona</a>
             <a href="/#quemsomos" className={styleGroup.options}>Quem somos</a>
           </div>
           <button className={styleGroup.button}>
@@ -58,7 +58,7 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
           </a>
           <div className="w-1/3 flex text-xl justify-between">
             <a href="/" className={styleGroup.options}>Home</a>
-            <a href="/" className={styleGroup.options}>Como funciona</a>
+            <a href="/register/#comofunciona" className={styleGroup.options}>Como funciona</a>
             <a href="/#quemsomos" className={styleGroup.options}>Quem somos</a>
           </div>
           <button className={styleGroup.button}>

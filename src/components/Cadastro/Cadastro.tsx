@@ -59,7 +59,7 @@ const Cadastro: React.FC = () => {
 
     const styleGroup = {
         fieldGroup: "w-4/5 my-4 relative",
-        fieldText: "top-0 left-0 input-label",
+        fieldText: "top-0 left-0 input-label ",
         field: "bg-GRAY_600 w-full input-input",
 
         typeButtonSelected: "bg-WHITE flex flex-row items-center justify-center text-GRAY_600 rounded-xl p-3 buttonSelected",
@@ -85,7 +85,7 @@ const Cadastro: React.FC = () => {
         // Após adicionar o cliente, precisamos adicionar um endereço com a cidade e estado dele pelo ID dele (criado)!
     }
     return ( 
-        <div className="flex flex-col items-center w-2/5 max-w-md h-fit p-3 justify-center bg-gradient-to-b from-BLACK/90 to-BLACK/10 rounded-3xl text-WHITE text-xs">
+        <div className="flex flex-col items-center w-2/5 max-w-md h-fit p-3 justify-center bg-BLACK from-BLACK/90 to-BLACK/10 rounded-3xl text-WHITE text-xs">
             <img src={miniLogo} alt="" className="my-2" />
             <div className="mb-4">Cadastre-se e seja vendedor!</div>
             <div className="flex flex-row justify-around items-center w-5/6">
@@ -192,7 +192,7 @@ const Cadastro: React.FC = () => {
                             <div>Eu aceito o uso dos meus dados de acordo com a Declaração de Privacidade e aceito os Termos e Condições.</div>
                             <ErrorMessage className={styleGroup.error} name="termsOfUse" component="div" />
                         </div>
-                        <button className="bg-PRIMARY text-WHITE p-3 rounded-lg text-xl m-4" type="submit">Cadastre-se</button>
+                        <button className="bg-PRIMARY text-WHITE p-3 rounded-lg text-xl m-4 hover:scale-105 duration-200 hover:shadow-2xl" type="submit">Cadastre-se</button>
                     </Form>
                 )}
             </Formik>
