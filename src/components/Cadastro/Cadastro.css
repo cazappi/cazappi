@@ -1,0 +1,40 @@
+
+.input-label {
+    position: absolute;
+    top: 0;
+    left: 0;
+    transition: translate 500ms, scale 500ms;
+    translate: 16px -20px;
+}
+
+.input-input {
+    font: inherit;
+    border: none;
+    padding: 10px;
+    border-radius: 20px;
+    outline: none;
+    outline: 2px solid #fff;
+    background-color: #919191;
+    transition: outline-color 500ms;
+}
+
+.input-input:focus{
+    box-shadow: 0 0 3px 2px #919191;
+    outline: 1px solid rgba(91, 91, 91, .2);
+}
+
+.input-input:focus + .input-label {
+    padding-inline: 5px;
+    translate: 10px -10px;
+    scale: 0.9;
+}
+
+.button{
+    transition: all 500ms;
+    border: 2px solid rgba(91, 91, 91, .2);
+}
+
+.buttonSelected{
+    transition: all 500ms;
+    border: 2px solid #F2BD00;
+}
