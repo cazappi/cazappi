@@ -3,7 +3,7 @@ import Politica from "../pages/Politica";
 import Home from "../pages/Home/index";
 import Login from "../pages/Login/index";
 import ForgetPass from "../pages/ForgetPass";
-import MailConfirmation from "../pages/Desktop-4";
+import MailConfirmation from "../pages/MailConfirmation";
 import EmailVerification from "../pages/EmailVerification";
 import Advertising from "../pages/Advertising";
 import BusinessType from "../pages/BusinessType";
@@ -13,6 +13,7 @@ import DadosBancariosPreenchimento from "../pages/DadosBancariosPreenchimento";
 import BankAccount from "../pages/BankAccount";
 import SignUp from "../pages/SignUp";
 import Register from "../pages/Register";
+import Profile from "../pages/Profile";
 
 const AppRoutes = () => (
   <Routes>
@@ -21,6 +22,7 @@ const AppRoutes = () => (
     <Route path="/Politica" element={<Politica />} />
     <Route path="/" element={<Home />} />
     <Route path="/register" element={<Register />} />
+    <Route path="/profile" element={<Profile />} />
     <Route path="/login" element={<Login />} />
     <Route path="/forgetPass" element={<ForgetPass />} />
     <Route path="/EmailVerification/:token" element={<EmailVerification />} />

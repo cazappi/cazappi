@@ -33,6 +33,9 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
     }
     window.addEventListener('resize', handleResize)
     window.addEventListener('load', handleResize)
+    window.addEventListener('scroll', handleResize)
+    window.addEventListener('focus', handleResize)
+    window.addEventListener('mousemove', handleResize)
   })
 
   return ( 
@@ -47,9 +50,11 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
             <a href="/register/#comofunciona" className={styleGroup.options}>Como funciona</a>
             <a href="/#quemsomos" className={styleGroup.options}>Quem somos</a>
           </div>
-          <button className={styleGroup.button}>
-            <div className="text-white text-base font-bold">Login</div>
-          </button>
+          <a href="/login">
+            <button className={styleGroup.button}>
+                <div className="text-white text-base font-bold">Login</div>
+            </button>
+          </a>
         </div>
         :
         <div className="w-full h-24 px-8 py-7 justify-between items-center inline-flex">
@@ -61,11 +66,11 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
             <a href="/register/#comofunciona" className={styleGroup.options}>Como funciona</a>
             <a href="/#quemsomos" className={styleGroup.options}>Quem somos</a>
           </div>
-          <button className={styleGroup.button}>
-            <a href="/">
-              <div className="text-white text-xl font-bold">Login</div>
-            </a>
-          </button>
+          <a href="/login">
+            <button className={styleGroup.button}>
+                <div className="text-white text-xl font-bold">Login</div>
+            </button>
+          </a>
         </div>
       }
     </div>

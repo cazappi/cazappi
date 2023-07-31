@@ -53,48 +53,49 @@ const Cadastro: React.FC = () => {
     };
 
     const handleSubmit = (values: RegistrationValues) => {
+        api.post('/landPage/user', {
+            city: values.city,
+            state: values.state,
+            name: values.name,
+            document: values.document,
+            documentType: typeAccount ? "cpf" : "cnpj",
+            email: values.email,
+            password: values.password
+        })
+            .then(response => {console.log("Adicionado com sucesso usuário!"); console.log(response.data)})
+            .catch(err => {console.log(err)})
         // Aqui você pode enviar os dados para o servidor ou realizar outras ações com os valores preenchidos.
         console.log(values);
     };
 
     const styleGroup = {
         fieldGroup: "w-4/5 my-4 relative",
-        fieldText: "top-0 left-0 input-label ",
-        field: "bg-GRAY_600 w-full input-input",
+        fieldText: "font-semibold top-0 left-0 input-label",
+        field: "bg-GRAY_600 w-full p-[8px] md:p-[10px] input-input",
 
-        typeButtonSelected: "bg-WHITE flex flex-row items-center justify-center text-GRAY_600 rounded-xl p-3 buttonSelected",
-        typeButton: "bg-GRAY_600 flex flex-row items-center justify-center text-WHITE rounded-xl p-3 button",
+        typeButtonSelected: "bg-WHITE flex flex-row items-center justify-center text-GRAY_600 rounded-xl p-2 md:p-3 buttonSelected mb-2 md:mb-0",
+        typeButton: "bg-GRAY_600 flex flex-row items-center justify-center text-WHITE rounded-xl p-2 md:p-3 button mb-2 md:mb-0",
 
         error: "mt-2 text-ERROR",
     }
     
     const handleClick = (event: React.MouseEvent<HTMLButtonElement>) => {
         event.preventDefault();
-        api.post('/landPage/user', {
-            city: "sao 3",
-            state: "brasilia!",
-            name: "Jakson",
-            document: "53636637000135",
-            documentType: "cnpj",
-            email: "jaksonhuangz@gmail.com",
-            password: "123456"
-        })
-            .then(response => {console.log("Adicionado com sucesso usuário!"); console.log(response.data)})
-            .catch(err => {console.log(err)})
+        
 
         // Após adicionar o cliente, precisamos adicionar um endereço com a cidade e estado dele pelo ID dele (criado)!
     }
     return ( 
-        <div className="flex flex-col items-center w-2/5 max-w-md h-fit p-3 justify-center bg-BLACK from-BLACK/90 to-BLACK/10 rounded-3xl text-WHITE text-xs">
+        <div className="flex mt-5 md:mt-0 flex-col items-center w-full md:w-2/5 max-w-md h-fit p-3 justify-center bg-BLACK from-BLACK/90 to-BLACK/10 rounded-3xl text-WHITE text-xs">
             <img src={miniLogo} alt="" className="my-2" />
             <div className="mb-4">Cadastre-se e seja vendedor!</div>
-            <div className="flex flex-row justify-around items-center w-5/6">
+            <div className="flex flex-col md:flex-row justify-around items-center md:w-5/6">
                 <button onClick={() => {handleDocumentTypeChange(true)}} className={typeAccount ? styleGroup.typeButtonSelected : styleGroup.typeButton}>
-                    <Icon icon="ic:round-person" className="text-lg mr-2"></Icon>
+                    <Icon icon="ic:round-person" className="text-lg mr-1 md:mr-2"></Icon>
                     <div>Pessoa física</div>
                 </button>
                 <button onClick={() => {handleDocumentTypeChange(false)}}  className={typeAccount ? styleGroup.typeButton : styleGroup.typeButtonSelected}>
-                    <Icon icon="mingcute:briefcase-fill" className="text-lg mr-2"></Icon>
+                    <Icon icon="mingcute:briefcase-fill" className="text-lg mr-1 md:mr-2"></Icon>
                     <div>Pessoa jurídica</div>
                 </button>
             </div>
