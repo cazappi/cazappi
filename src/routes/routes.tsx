@@ -14,6 +14,8 @@ import BankAccount from "../pages/BankAccount";
 import SignUp from "../pages/SignUp";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
+import RegisterShop from "../pages/RegisterShop";
+import ResetPass from "../pages/PasswordReset";
 
 const AppRoutes = () => (
   <Routes>
@@ -22,8 +24,10 @@ const AppRoutes = () => (
     <Route path="/Politica" element={<Politica />} />
     <Route path="/" element={<Home />} />
     <Route path="/register" element={<Register />} />
+    <Route path="/registershop" element={<RegisterShop />} />
     <Route path="/profile" element={<Profile />} />
     <Route path="/login" element={<Login />} />
+    <Route path="/resetpass" element={<ResetPass />} />
     <Route path="/forgetPass" element={<ForgetPass />} />
     <Route path="/EmailVerification/:token" element={<EmailVerification />} />
     <Route path="/DadosBancariosRevisao" element={<DadosBancariosRevisao />} />
