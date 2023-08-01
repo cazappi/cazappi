@@ -20,9 +20,9 @@ import ResetPass from "../pages/PasswordReset";
 const AppRoutes = () => (
   <Routes>
     {/* exemplo de rota: <Route path="/novaRota" element={<ArquivoImportado />} /> */}
+    <Route path="/" element={<Home />} />
     <Route path="/MailConfirmation" element={<MailConfirmation />} />
     <Route path="/Politica" element={<Politica />} />
-    <Route path="/" element={<Home />} />
     <Route path="/register" element={<Register />} />
     <Route path="/registershop" element={<RegisterShop />} />
     <Route path="/profile" element={<Profile />} />

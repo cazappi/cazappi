@@ -8,6 +8,7 @@ import { Icon } from '@iconify-icon/react';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import api from '../../services/api';
+import Input from '../../components/Input/Input';
 import { Formik, Form, Field, ErrorMessage } from 'formik';
 import * as Yup from 'yup';
 
@@ -68,11 +69,11 @@ const Login = () => {
                             <div className="flex mb-24 flex-col w-full justify-center">
                                 <div className='mb-6 flex flex-col'>
                                     <label className='text-xl mb-1 text-black' htmlFor="email">E-mail ou usuário</label>
-                                    <input placeholder='email@email.com' className={styleGroup.input} type="email" name="email" value={values.email} onChange={handleChange} />
+                                    <Input placeholder='email@email.com' type="email" name="email" value={values.email} onChange={handleChange} />
                                 </div>
                                 <div className='mb-1 flex flex-col'>
                                     <label className='text-xl mb-1 text-black' htmlFor="password">Senha</label>
-                                    <input placeholder='**********' className={styleGroup.input} type="password" name="password" value={values.password} onChange={handleChange} />
+                                    <Input placeholder='**********' type="password" name="password" value={values.password} onChange={handleChange} />
                                 </div>
                                 <div className='text-sm'>
                                     Esqueceu a senha?
