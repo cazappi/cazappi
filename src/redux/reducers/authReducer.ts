@@ -1,16 +1,22 @@
-import { LOGIN_SUCCESS } from "../actions/authActions";
+import { TOKEN_BACKEND, TOKEN_FIREBASE } from "../actions/authActions";
 import { AuthState } from "../types";
 
 const initialState: AuthState = {
-  token: null,
+  token_backend: null,
+  token_firebase: null
 };
 
-const authReducer = (state = initialState, action: any): AuthState => {
+const authReducer = (state: AuthState = initialState, action: any): AuthState => {
   switch (action.type) {
-    case LOGIN_SUCCESS:
+    case TOKEN_FIREBASE:
       return {
         ...state,
-        token: action.payload,
+        token_firebase: action.payload,
+      };
+    case TOKEN_BACKEND:
+      return {
+        ...state,
+        token_backend: action.payload,
       };
     default:
       return state;

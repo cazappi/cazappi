@@ -51,7 +51,7 @@ const Header: React.FC = () => {
             <a href="/#quemsomos" className="text-white font-black">Quem somos</a>
           </div>
           <button className="w-24 h-8 bg-SECONDARY rounded-lg justify-center items-center flex">
-            <a href="/">
+            <a href="/login">
               <div className="text-white text-xl font-bold">Login</div>
             </a>
           </button>

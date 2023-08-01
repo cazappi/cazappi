@@ -13,6 +13,7 @@ import DadosBancariosPreenchimento from "../pages/DadosBancariosPreenchimento";
 import BankAccount from "../pages/BankAccount";
 import SignUp from "../pages/SignUp";
 import Register from "../pages/Register";
+import TokenExemplo from "../pages/TokenExemplo";
 
 const AppRoutes = () => (
   <Routes>
@@ -31,6 +32,7 @@ const AppRoutes = () => (
     <Route path="/ShopConditions" element={<ShopConditions />} />
     <Route path="/BankAccount" element={<BankAccount />} />
     <Route path="/SignUp" element={<SignUp />} />
+    <Route path="/exemploToken" element={<TokenExemplo />} />
   </Routes>
 );
 

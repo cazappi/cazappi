@@ -1,5 +1,6 @@
 export interface AuthState {
-    token: string | null;
+    token_backend: string | null;
+    token_firebase: string | null;
 }
   
 export interface RootState {
