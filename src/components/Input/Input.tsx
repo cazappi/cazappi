@@ -13,7 +13,7 @@ const Input = React.forwardRef<HTMLInputElement, InputProps>(
         setShowPassword(!showPassword);
     };
 
-    const icon = (className?.indexOf("iconOn") !== -1);
+    const icon = (className?.indexOf("iconOn") !== -1 && className?.indexOf("iconOn") !== undefined);
     let iconName = "";
     switch (type) {
       case "file":
