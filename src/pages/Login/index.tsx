@@ -38,7 +38,7 @@ const Login = () => {
     console.log("teste");
     api
       .post("/login", {
-        email: "jaksonhuangz@gmail.com",
+        email: "julo@gmail.com",
         password: "123456",
       })
       .then(async (response) => {

@@ -7,7 +7,6 @@ import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 
 const TokenExemplo = () => {
-  const navigate = useNavigate();
   const [sta, setSta] = useState("");
   const tokenFirebase = useSelector(
     (state: RootState) => state.auth.token_firebase
