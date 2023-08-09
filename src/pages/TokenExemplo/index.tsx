@@ -1,9 +1,6 @@
 import { useSelector } from "react-redux";
 import { RootState } from "../../redux/types";
 import { useState } from "react";
-import Header from "../../components/Header/Header";
-import { Footer } from "flowbite-react";
-import { useNavigate } from "react-router-dom";
 import api from "../../services/api";
 
 const TokenExemplo = () => {
@@ -16,15 +13,29 @@ const TokenExemplo = () => {
   );
 
   function teste() {
-    api.post("/token/set", {
-      token_firebase: tokenFirebase,
-    });
+    api
+      .post("/token/set", {
+        token_firebase: tokenFirebase,
+      })
+      .then((response) => {
+        console.log(response.data);
+      })
+      .catch((error) => {
+        console.log(error);
+        throw new Error();
+      });
   }
 
   function testeWithMiddlewate() {
-    api.post("/token/teste").then((response) => {
-      setSta(response.data);
-    });
+    api
+      .post("/token/teste", undefined, {
+        headers: {
+          "Authorization": "njs",
+        },
+      })
+      .then((response) => {
+        setSta(response.data);
+      });
   }
 
   return (

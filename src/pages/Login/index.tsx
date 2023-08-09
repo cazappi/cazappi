@@ -1,20 +1,16 @@
-import React, { useState, useEffect, Children } from "react";
+import React from "react";
 import { useDispatch } from "react-redux";
 import { tokenBackend, tokenFirebase } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
 import {
   LOGOIMAGE,
   LINK,
-  FLEXROW,
   FLEXCOLUMN,
   TITLE,
   CONTAINER,
   INPUTTEXT,
 } from "./style";
 import logoImg from "../../assets/logoImgWithoutCircles.png";
-import { THEME } from "../../theme/index";
-import { Icon } from "@iconify-icon/react";
-import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Button from "../../components/Button/Button";
 import Input from "../../components/Input/Input";
@@ -38,7 +34,7 @@ const Login = () => {
     console.log("teste");
     api
       .post("/login", {
-        email: "julo@gmail.com",
+        email: "julio@gmail.com",
         password: "123456",
       })
       .then(async (response) => {
@@ -51,6 +47,7 @@ const Login = () => {
             const token_firebase = await userCredential.user.getIdToken();
             dispatch(tokenFirebase(token_firebase));
             dispatch(tokenBackend(tokenFromApi));
+            document.cookie = `token_firebase=${token_firebase}`;
             // navegar para outra tela após salvar o TOKEN
             navigate("/exemploToken");
           })
