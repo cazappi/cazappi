@@ -1,9 +1,10 @@
 import React, { useState, useEffect } from "react";
 import { THEME } from "../../theme/index";
 // import { HEADER, LOGOIMAGE, OPTIONS, LINK, OPT, BACK } from "./style";
-import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
-import logoText from "../../assets/logoText.svg";
-import { Icon } from "@iconify-icon/react";
+import { useNavigate } from "react-router-dom";
+import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
+import logoText from '../../assets/logoText.svg';
+import { Icon } from '@iconify-icon/react';
 import api from "../../services/api";
 import miniLogo from "../../assets/miniLogo.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -44,7 +45,8 @@ const registrationSchema = Yup.object().shape({
 });
 
 const Cadastro: React.FC = () => {
-  const [typeAccount, setTypeAccount] = useState(true); // Se true, é CPF. Se false, é CNPJ
+    const [typeAccount, setTypeAccount] = useState(true); // Se true, é CPF. Se false, é CNPJ
+    const navigate = useNavigate();
 
   const handleDocumentTypeChange = (value: React.SetStateAction<boolean>) => {
     setTypeAccount(value);
