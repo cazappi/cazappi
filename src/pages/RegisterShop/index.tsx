@@ -27,20 +27,20 @@ interface ShopRegistrationValues {
   street: string;
   number: string;
   complement: string;
-  opmon: string;
-  optue: string;
-  opwed: string;
-  opthur:string;
-  opfri: string;
-  opsat: string;
-  opsun: string;
-  clmon: string;
-  cltue: string;
-  clwed: string;
-  clthur:string;
-  clfri: string;
-  clsat: string;
-  clsun: string;
+  opSeg: string;
+  opTer: string;
+  opQua: string;
+  opQui:string;
+  opSex: string;
+  opSab: string;
+  opDom: string;
+  clSeg: string;
+  clTer: string;
+  clQua: string;
+  clQui:string;
+  clSex: string;
+  clSab: string;
+  clDom: string;
 }
 
 const MAX_FILE_SIZE = 10240000; //10 Mb
@@ -56,21 +56,21 @@ function isValidFileType(file: File | null | undefined, fileType: string): boole
 
 const shopRegistrationSchema = Yup.object().shape({
   name: Yup.string().required("Campo obrigatório"),
-  capa: Yup.mixed()
-    .test("is-valid-type", "Imagem não é de formato válido", function (value) {
-      return isValidFileType(value as File, "image");
-    })
-    .test("is-valid-size", "Tamanho máximo da imagem: 10 Mb", function (value) {
-      return value && (value as File).size <= MAX_FILE_SIZE;
-    }),
-  profile: Yup.mixed()
-    .test("is-valid-type", "Imagem não é de formato válido", function (value) {
-      console.log(value);
-      return isValidFileType(value as File, "image");
-    })
-    .test("is-valid-size", "Tamanho máximo da imagem: 10 Mb", function (value) {
-      return value && (value as File).size <= MAX_FILE_SIZE;
-    }),
+  // capa: Yup.mixed()
+  //   .test("is-valid-type", "Imagem não é de formato válido", function (value) {
+  //     return isValidFileType(value as File, "image");
+  //   })
+  //   .test("is-valid-size", "Tamanho máximo da imagem: 10 Mb", function (value) {
+  //     return value && (value as File).size <= MAX_FILE_SIZE;
+  //   }),
+  // profile: Yup.mixed()
+  //   .test("is-valid-type", "Imagem não é de formato válido", function (value) {
+  //     console.log(value);
+  //     return isValidFileType(value as File, "image");
+  //   })
+  //   .test("is-valid-size", "Tamanho máximo da imagem: 10 Mb", function (value) {
+  //     return value && (value as File).size <= MAX_FILE_SIZE;
+  //   }),
 
   cep: Yup.string().required("Campo obrigatório")
     .test("is-valid-cep", "Invalid CEP format", function (value) {
@@ -95,7 +95,7 @@ const RegisterShop = () => {
       "bg-GRAY_300 w-full p-[8px] border-none md:p-[10px] rounded-3xl outline-none text-black",
       error: "mt-2 text-ERROR"
   };
-  const dias = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sáb"];
+  const dias = ["Dom", "Seg", "Ter", "Qua", "Qui", "Sex", "Sab"];
 
   let hours = ["00h00"];
   for (let i = 1; i < 24; i++) {
@@ -122,22 +122,22 @@ const RegisterShop = () => {
         [
             {
                 openingTime: {
-                mon: values.opmon[0]+values.opmon[1],
-                tue: values.optue[0]+values.optue[1],
-                wed: values.opwed[0]+values.opwed[1],
-                thur: values.opthur[0]+values.opthur[1],
-                fri: values.opfri[0]+values.opfri[1],
-                sat: values.opsat[0]+values.opsat[1],
-                sun: values.opsun[0]+values.opsun[1]
+                mon: values.opSeg[0]+values.opSeg[1],
+                tue: values.opTer[0]+values.opTer[1],
+                wed: values.opQua[0]+values.opQua[1],
+                thur: values.opQui[0]+values.opQui[1],
+                fri: values.opSex[0]+values.opSex[1],
+                sat: values.opSab[0]+values.opSab[1],
+                sun: values.opDom[0]+values.opDom[1]
               },
               closingTime: {
-                mon: values.clmon[0]+values.clmon[1],
-                tue: values.cltue[0]+values.cltue[1],
-                wed: values.clwed[0]+values.clwed[1],
-                thur: values.clthur[0]+values.clthur[1],
-                fri: values.clfri[0]+values.clfri[1],
-                sat: values.clsat[0]+values.clsat[1],
-                sun: values.clsun[0]+values.clsun[1]
+                mon: values.clSeg[0]+values.clSeg[1],
+                tue: values.clTer[0]+values.clTer[1],
+                wed: values.clQua[0]+values.clQua[1],
+                thur: values.clQui[0]+values.clQui[1],
+                fri: values.clSex[0]+values.clSex[1],
+                sat: values.clSab[0]+values.clSab[1],
+                sun: values.clDom[0]+values.clDom[1]
               }
             }
         ],
@@ -172,27 +172,27 @@ const RegisterShop = () => {
               name: "",
               capa: undefined,
               profile: undefined,
-              cep: "",
-              state: "",
-              city: "",
-              address: "",
-              street: "",
-              number: "",
-              complement: "",
-              opmon: "",
-              optue: "",
-              opwed: "",
-              opthur:"",
-              opfri: "",
-              opsat: "",
-              opsun: "",
-              clmon: "",
-              cltue: "",
-              clwed: "",
-              clthur:"",
-              clfri: "",
-              clsat: "",
-              clsun: "",
+              cep: "00h00",
+              state: "00h00",
+              city: "00h00",
+              address: "00h00",
+              street: "00h00",
+              number: "00h00",
+              complement: "00h00",
+              opSeg: "00h00",
+              opTer: "00h00",
+              opQua: "00h00",
+              opQui:"00h00",
+              opSex: "00h00",
+              opSab: "00h00",
+              opDom: "00h00",
+              clSeg: "00h00",
+              clTer: "00h00",
+              clQua: "00h00",
+              clQui:"00h00",
+              clSex: "00h00",
+              clSab: "00h00",
+              clDom: "00h00",
           }}
           validationSchema={shopRegistrationSchema}
           onSubmit={handleSubmit}
@@ -201,7 +201,7 @@ const RegisterShop = () => {
           <Form className="w-4/5 md:w-3/5">
             <div className="md:w-1/2 mb-6">
               <label className="text-base mb-5" htmlFor="capa-input">
-                Define o nome da sua loja
+                Defina o nome da sua loja
               </label>
 
               <Input className="iconOn" 
@@ -245,7 +245,7 @@ const RegisterShop = () => {
                   setFieldValue("profile", file);
                 }}
               ></InputFile>
-              <ErrorMessage name="profile" component="div" className="error-message" />
+              <ErrorMessage name="profile" component="div" className={styleGroup.error} />
             </div>
 
             <div className="w-full mb-6">
@@ -344,11 +344,18 @@ const RegisterShop = () => {
               </div>
 
               <div className="">
-                <Input
-                  className="iconOn"
+                <Input className="iconOn" 
                   type="text"
+                  name="complement"
+                  value={values.complement}
                   placeholder="Complemento"
+                  onChange={handleChange}
                 ></Input>
+                <ErrorMessage
+                  className={styleGroup.error}
+                  name="complement"
+                  component="div"
+                />
               </div>
             </div>
             <div>
@@ -361,18 +368,20 @@ const RegisterShop = () => {
                   <th>Horário Início</th>
                   <th>Horário Fim</th>
                 </tr>
-                {dias.map((element) => (
-                  <tr className="text-GRAY_600 text-center">
-                    <td className="mb-2">{element}</td>
+                {dias.map((dia) => (
+                  <tr key={dia} className="text-GRAY_600 text-center">
+                    <td className="mb-2">{dia}</td>
                     <td className="">
                       <select
                         className="border-none bg-GRAY_300 px-2 py-1 rounded-lg mb-2"
-                        name={`${element}HoraInicio`}
-                        id={`${element}HoraInicio`}
+                        name={`op${dia}`}
+                        id={`${dia}HoraInicio`}
+                        onChange={(e) => setFieldValue(`op${dia}`, e.target.value)} // Use setFieldValue aqui
+                        value={values[`op${dia}` as keyof typeof values]} // Passe o valor atual do Formik como value
                       >
-                        {hours.map((element) => (
-                          <option key={element} value={element}>
-                            {element}
+                        {hours.map((hora) => (
+                          <option key={hora} value={hora}>
+                            {hora}
                           </option>
                         ))}
                       </select>
@@ -380,12 +389,14 @@ const RegisterShop = () => {
                     <td className="">
                       <select
                         className="border-none bg-GRAY_300 px-2 py-1 rounded-lg mb-2"
-                        name={`${element}HoraFim`}
-                        id={`${element}HoraFim`}
+                        name={`cl${dia}`}
+                        id={`${dia}HoraFim`}
+                        onChange={(e) => setFieldValue(`cl${dia}`, e.target.value)} // Use setFieldValue aqui
+                        value={values[`cl${dia}` as keyof typeof values]} // Use uma conversão explícita para keyof
                       >
-                        {hours.map((element) => (
-                          <option key={element} value={element}>
-                            {element}
+                        {hours.map((hora) => (
+                          <option key={hora} value={hora}>
+                            {hora}
                           </option>
                         ))}
                       </select>
