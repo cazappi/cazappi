@@ -26,7 +26,9 @@ const registrationSchema = Yup.object().shape({
   name: Yup.string().required("Campo obrigatório"),
   document: Yup.string()
     .required("Campo obrigatório")
-    .test("cpfOrCnpj", "CPF ou CNPJ inválido", (value) => true),
+    .test("cpfOrCnpj", "CPF ou CNPJ inválido", (value) =>
+      cpf.isValid(value + "")
+    ),
   email: Yup.string().email("E-mail inválido").required("Campo obrigatório"),
   password: Yup.string()
     .required("Campo obrigatório")
