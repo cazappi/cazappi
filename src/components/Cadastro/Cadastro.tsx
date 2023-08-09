@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { THEME } from '../../theme/index';
 // import { HEADER, LOGOIMAGE, OPTIONS, LINK, OPT, BACK } from "./style";
+import { useNavigate } from "react-router-dom";
 import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
 import logoText from '../../assets/logoText.svg';
 import { Icon } from '@iconify-icon/react';
@@ -46,6 +47,7 @@ const registrationSchema = Yup.object().shape({
 
 const Cadastro: React.FC = () => {
     const [typeAccount, setTypeAccount] = useState(true); // Se true, é CPF. Se false, é CNPJ
+    const navigate = useNavigate();
 
     
     const handleDocumentTypeChange = (value: React.SetStateAction<boolean>) => {
@@ -62,7 +64,7 @@ const Cadastro: React.FC = () => {
             email: values.email,
             password: values.password
         })
-            .then(response => {console.log("Adicionado com sucesso usuário!"); console.log(response.data)})
+            .then(response => {console.log("Adicionado com sucesso usuário!"); console.log(response.data); navigate('/login')})
             .catch(err => {console.log(err)})
         // Aqui você pode enviar os dados para o servidor ou realizar outras ações com os valores preenchidos.
         console.log(values);
