@@ -41,7 +41,7 @@ const AppRoutes = () => (
     <Route path="/ShopConditions" element={<ShopConditions />} />
     <Route path="/BankAccount" element={<BankAccount />} />
     <Route path="/SignUp" element={<SignUp />} />
-    <Route path="/exemploToken" element={<TokenExemplo />} />
+    <Route path="/tokenExemplo" element={<TokenExemplo />} />
   </Routes>
 );
 

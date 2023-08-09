@@ -33,8 +33,8 @@ const Login = () => {
   const loginHook = (values: LoginValues) => {
     api
       .post("/login", {
-        email: "julio@gmail.com",
-        password: "123456",
+        email: values.email,
+        password: values.password,
       })
       .then(async (response) => {
         const tokenFromApi = response.data.token;
@@ -47,6 +47,8 @@ const Login = () => {
             dispatch(tokenFirebase(token_firebase));
             dispatch(tokenBackend(tokenFromApi));
             document.cookie = `token_firebase=${token_firebase}`;
+
+            navigate("/profile");
           })
           .catch((error) => {
             console.log("erro");
@@ -132,6 +134,9 @@ const Login = () => {
           )}
         </Formik>
       </div>
+
+      {/* ----------------------- FOOTER ----------------------- */}
+      <Footer />
     </div>
   );
 };

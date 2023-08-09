@@ -30,7 +30,7 @@ const TokenExemplo = () => {
     api
       .post("/token/teste", undefined, {
         headers: {
-          "Authorization": "njs",
+          "Authorization": `${document.cookie.split("=")[1]}`,
         },
       })
       .then((response) => {
