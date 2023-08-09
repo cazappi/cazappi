@@ -130,7 +130,7 @@ const DadosBancariosRevisao = () => {
                             <SUBTITLE>
                                 Agência
                             </SUBTITLE>
-                            <Input type="text" placeholder='' size={rw(80)} />
+                            <Input type="text" placeholder=''/>
                         </ITEM>
 
 
@@ -138,7 +138,7 @@ const DadosBancariosRevisao = () => {
                             <SUBTITLE>
                                 Conta
                             </SUBTITLE>
-                            <Input type="text" placeholder='' size={rw(80)} />
+                            <Input type="text" placeholder=''/>
                         </ITEM>
 
 
@@ -146,7 +146,7 @@ const DadosBancariosRevisao = () => {
                             <SUBTITLE>
                                 Dígito
                             </SUBTITLE>
-                            <Input type="text" placeholder='' size={rw(80)} />
+                            <Input type="text" placeholder=''/>
                         </ITEM>
                     </FLEXROW>
 
