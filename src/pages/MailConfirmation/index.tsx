@@ -30,7 +30,7 @@ const MailConfirmation = () => {
                     <img className='w-1/3 mb-6 md:m-0 text-PRIMARY' src={mailImg} alt=""/>
                     <div className='flex flex-col text-2xl ml-11'>
                         Enviamos uma confirmação para 
-                        <strong>caz*****@gmail.com</strong> 
+                        <strong>seu email</strong> 
                     </div>
                 </div>
                 <div className='flex flex-col items-center justify-center mb-10 mt-20'>

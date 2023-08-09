@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch } from "react-redux";
 import { tokenBackend, tokenFirebase } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
@@ -22,6 +22,7 @@ const Login = () => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const auth = getAuth();
+  const [errorAcc, setErrorAcc] = useState(false);
 
   const styleGroup = {
     input:
@@ -47,7 +48,7 @@ const Login = () => {
             dispatch(tokenFirebase(token_firebase));
             dispatch(tokenBackend(tokenFromApi));
             document.cookie = `token_firebase=${token_firebase}`;
-
+            setErrorAcc(false);
             navigate("/profile");
           })
           .catch((error) => {
@@ -59,8 +60,10 @@ const Login = () => {
       })
       .catch((err) => {
         console.log("Erro" + err);
+        setErrorAcc(true);
       });
   };
+
   return (
     <div>
       {/* ----------------------- HEADER ----------------------- */}
@@ -111,6 +114,14 @@ const Login = () => {
                   <a href="/resetpass" className="text-PRIMARY">
                     Alterar senha
                   </a>
+                </div>
+                {errorAcc ? (
+                  <div className="text-sm text-ERROR">
+                    Usuário e/ou senha incorreto(s)
+                  </div>
+                ) : ""}
+                <div>
+                  
                 </div>
               </div>
               <button

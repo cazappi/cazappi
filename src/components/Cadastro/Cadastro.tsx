@@ -34,14 +34,14 @@ const registrationSchema = Yup.object().shape({
   password: Yup.string()
     .required("Campo obrigatório")
     .min(6, "A senha deve ter pelo menos 6 caracteres"),
-  confirmPassword: Yup.string().oneOf(
+  confirmPassword: Yup.string().required("Campo obrigatório").oneOf(
     [Yup.ref("password")],
     "As senhas não conferem"
+    
   ),
   state: Yup.string().required("Campo obrigatório"),
   city: Yup.string().required("Campo obrigatório"),
-  termsOfUse: Yup.boolean(),
-  //.oneOf([true], 'Você deve aceitar os termos de uso para continuar'),
+  termsOfUse: Yup.boolean().oneOf([true], 'Você deve aceitar os termos de uso para continuar'),
 });
 
 const Cadastro: React.FC = () => {
@@ -66,6 +66,7 @@ const Cadastro: React.FC = () => {
       .then((response) => {
         console.log("Adicionado com sucesso usuário!");
         console.log(response.data);
+        navigate("/MailConfirmation");
       })
       .catch((err) => {
         console.log(err);
@@ -250,18 +251,20 @@ const Cadastro: React.FC = () => {
               <input
                 type="checkbox"
                 name="termsOfUse"
+                checked={values.termsOfUse}
                 className="mr-1 border-PRIMARY checked:bg-PRIMARY checked:decoration-transparent"
+                onChange={handleChange}
               />
               <div>
                 Eu aceito o uso dos meus dados de acordo com a Declaração de
                 Privacidade e aceito os Termos e Condições.
               </div>
+            </div>
               <ErrorMessage
                 className={styleGroup.error}
                 name="termsOfUse"
                 component="div"
               />
-            </div>
             <button
               className="bg-PRIMARY text-WHITE p-3 rounded-lg text-xl m-4 hover:scale-105 duration-200 hover:shadow-2xl"
               type="submit"

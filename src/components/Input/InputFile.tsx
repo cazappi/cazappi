@@ -1,12 +1,13 @@
-import React, { useRef, useState } from 'react';
+import React, { useRef, useState, InputHTMLAttributes } from 'react';
 import { Icon } from '@iconify-icon/react';
 import { input } from '@material-tailwind/react';
 
-interface FileInputProps {
-    className?: string;
-  }
+interface FileInputProps extends InputHTMLAttributes<HTMLInputElement> {
+  iconOn?: boolean;
+  className?: string;
+}
 
-const FileInput: React.FC<FileInputProps> = ({ className }) => {
+const FileInput: React.FC<FileInputProps> = ({ className, iconOn, ...rest }) => {
   const inputRef = useRef<HTMLInputElement>(null);
   const [fileName, setFileName] = useState("Escolher arquivo");
 
@@ -21,6 +22,7 @@ const FileInput: React.FC<FileInputProps> = ({ className }) => {
     <label className={`relative flex items-center w-full h-10 rounded-xl bg-GRAY_300 px-3 py-2 text-sm cursor-pointer ${className}`}>
       <input
         type="file"
+        {...rest}
         // accept='pdf/*' // Analisar e automatizar no component
         className={`absolute w-full h-full opacity-0 cursor-pointer ${icon ? "pl-12" : ""}`}
         ref={inputRef}
