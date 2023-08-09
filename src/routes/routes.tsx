@@ -13,6 +13,7 @@ import DadosBancariosPreenchimento from "../pages/DadosBancariosPreenchimento";
 import BankAccount from "../pages/BankAccount";
 import SignUp from "../pages/SignUp";
 import Register from "../pages/Register";
+import TokenExemplo from "../pages/TokenExemplo";
 import Profile from "../pages/Profile";
 import RegisterShop from "../pages/RegisterShop";
 import ResetPass from "../pages/PasswordReset";
@@ -31,12 +32,16 @@ const AppRoutes = () => (
     <Route path="/forgetPass" element={<ForgetPass />} />
     <Route path="/EmailVerification/:token" element={<EmailVerification />} />
     <Route path="/DadosBancariosRevisao" element={<DadosBancariosRevisao />} />
-    <Route path="/DadosBancariosPreenchimento" element={<DadosBancariosPreenchimento />} />
+    <Route
+      path="/DadosBancariosPreenchimento"
+      element={<DadosBancariosPreenchimento />}
+    />
     <Route path="/Advertising" element={<Advertising />} />
     <Route path="/BusinessType" element={<BusinessType />} />
     <Route path="/ShopConditions" element={<ShopConditions />} />
     <Route path="/BankAccount" element={<BankAccount />} />
     <Route path="/SignUp" element={<SignUp />} />
+    <Route path="/tokenExemplo" element={<TokenExemplo />} />
   </Routes>
 );
 

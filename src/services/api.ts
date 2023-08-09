@@ -1,18 +1,14 @@
-import axios from 'axios';
+import axios from "axios";
 
-const url = 'https://api-agcqapi5sa-uw.a.run.app/api';
+const url = "https://api-agcqapi5sa-uw.a.run.app/api";
 
 const api = axios.create({
-    // baseURL: url || process.env.REACT_APP_API_URL,
-    baseURL: 'https://api-agcqapi5sa-uw.a.run.app/api',
-})
-
-api.get('/')
-    .then((response) => {
-        console.log("OK");
-    })
-    .catch((err) => {  
-        console.log("Problema direto.");
-    })
+  baseURL: url ?? "http://localhost:3333/api",
+  // baseURL: "http://172.19.6.83:3333/api",
+  withCredentials: true,
+  headers: {
+    "Content-Type": "application/json",
+  },
+});
 
 export default api;

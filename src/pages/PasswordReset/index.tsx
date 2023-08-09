@@ -1,10 +1,9 @@
-import React, { useState, useEffect, Children } from 'react';
+import React, { useState, useEffect, Children } from "react";
 import { useDispatch } from "react-redux";
-import { loginSuccess } from '../../redux/actions/authActions';
-import { useNavigate } from "react-router-dom"
-import logoImg from '../../assets/logoImgWithoutCircles.png';
-import { THEME } from '../../theme/index';
-import { Icon } from '@iconify-icon/react';
+import { useNavigate } from "react-router-dom";
+import logoImg from "../../assets/logoImgWithoutCircles.png";
+import { THEME } from "../../theme/index";
+import { Icon } from "@iconify-icon/react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import api from '../../services/api';
@@ -13,42 +12,54 @@ import * as Yup from 'yup';
 import Input from '../../components/Input/Input';
 
 interface resetPassValues {
-    email: string;
+  email: string;
 }
 
 const ResetPass = () => {
-    const navigate = useNavigate();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-    const styleGroup = {
-        input: "bg-GRAY_300 w-full p-[8px] border-none md:p-[10px] rounded-3xl outline-none text-black"
-    }
+  const styleGroup = {
+    input:
+      "bg-GRAY_300 w-full p-[8px] border-none md:p-[10px] rounded-3xl outline-none text-black",
+  };
 
-    //integracao para fazer o login e salvar o token com Redux
-    //para pegar o token em outra tela, é necessário usar o useSelector e o RootState("../redux/types")
-    const recoveryHook = (values: resetPassValues) => {
-        console.log("teste");
-        api
-            .post('/recover', {
-                email: values.email
-            })
-            .then(() => {
-                navigate('/login');
-            })
-            .catch(err => {
-                console.log("Erro" + err);
-                navigate('/login');
-            });
-    };
-    return (
-        <div>
-            {/* ----------------------- HEADER ----------------------- */}
-            <Header transparent={false}></Header>
+  //integracao para fazer o login e salvar o token com Redux
+  //para pegar o token em outra tela, é necessário usar o useSelector e o RootState("../redux/types")
+  const recoveryHook = (values: resetPassValues) => {
+    console.log("teste");
+    api
+        .post('/recover', {
+            email: values.email
+        })
+      .then((response) => {
+        const tokenFromApi = response.data;
 
-            {/* ----------------------- Container ----------------------- */}
-            <div className='w-full flex flex-col items-center justify-center my-14'>
-                <div className='mb-1 text-4xl text-PRIMARY text-center font-bold'>Esqueceu sua senha?</div>
-                <div className='mb-24 text-4xl text-PRIMARY text-center font-bold'>Redefina ela agora mesmo!</div>
+        // Despacha a ação para salvar o token no estado global (Redux)
+        // dispatch(tokenBackend(tokenFromApi));
+        console.log("Sucesso!" + tokenFromApi);
 
+        //navegar para outra tela após salvar o TOKEN
+        navigate('/login');
+      })
+      .catch((err) => {
+        console.log("Erro" + err);
+        navigate('/login');
+      });
+  };
+  return (
+    <div>
+      {/* ----------------------- HEADER ----------------------- */}
+      <Header transparent={false}></Header>
+
+      {/* ----------------------- Container ----------------------- */}
+      <div className="w-full flex flex-col items-center justify-center my-14">
+        <div className="mb-1 text-4xl text-PRIMARY text-center font-bold">
+          Esqueceu sua senha?
+        </div>
+        <div className="mb-24 text-4xl text-PRIMARY text-center font-bold">
+          Redefina ela agora mesmo!
+        </div>
                 <Formik
                     initialValues={{
                         email: '',
@@ -72,8 +83,9 @@ const ResetPass = () => {
 
             {/* ----------------------- FOOTER ----------------------- */}    
             <Footer />
+
         </div>
-    )
-}
+  );
+};
 
 export default ResetPass;
