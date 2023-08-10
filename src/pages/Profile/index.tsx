@@ -132,6 +132,7 @@ const Profile = () => {
               />
               <a
                 href=""
+                onClick={() => navigate("/updateshop", { state: store })}
                 className="absolute top-[116px] left-[279.5px] rounded-full bg-PRIMARY flex flex-row p-1 items-center justify-center"
               >
                 <Icon icon="mdi:pencil" width={20} className="text-WHITE" />
@@ -147,12 +148,14 @@ const Profile = () => {
               />
               <a
                 href=""
+                onClick={() => navigate("/updateshop", { state: store })}
                 className="absolute top-[209px] left-[279.5px] rounded-full bg-PRIMARY flex flex-row p-1 items-center justify-center"
               >
                 <Icon icon="mdi:pencil" width={20} className="text-WHITE" />
               </a>
               <a
                 href=""
+                onClick={() => navigate("/updateshop", { state: store })}
                 className="absolute top-[132px] left-[99px] rounded-full bg-PRIMARY w-[29px] flex flex-row p-1 box-border items-center justify-center"
               >
                 <Icon icon="mdi:pencil" width={20} className="text-WHITE" />
@@ -187,6 +190,7 @@ const Profile = () => {
                 </div>
                 <a
                   href=""
+                  onClick={() => navigate("/updateshop", { state: store })}
                   className="rounded-full bg-PRIMARY flex flex-row p-1 items-center justify-center"
                 >
                   <Icon icon="mdi:pencil" width={20} className="text-WHITE" />
@@ -221,6 +225,7 @@ const Profile = () => {
                   </div>
                   <a
                     href=""
+                    onClick={() => navigate("/updateshop", { state: store })}
                     className="absolute top-[0px] left-[283px] rounded-full bg-PRIMARY flex flex-row p-1 items-center justify-center"
                   >
                     <Icon icon="mdi:pencil" width={20} className="text-WHITE" />
