@@ -83,11 +83,6 @@ const Profile = () => {
     return text.charAt(0).toUpperCase() + text.slice(1);
   }
 
-  function formaterNumberToTime(num: string) {
-    if (num.length < 2) num = "0" + num;
-    return num + ":00";
-  }
-
   function formaterScheduleTime() {
     const schedule = store.store ? store.store?.schedule[0] : undefined;
     const time = [];
@@ -100,13 +95,7 @@ const Profile = () => {
           const timeCl =
             schedule.closingTime[key as keyof typeof schedule.closingTime];
 
-          time.push(
-            formaterNumberToTime(timeOp) + "-" + formaterNumberToTime(timeCl)
-          );
-
-          console.log(
-            formaterNumberToTime(timeOp) + "-" + formaterNumberToTime(timeCl)
-          );
+          time.push(timeOp + "-" + timeCl);
         }
       }
     }
@@ -134,8 +123,12 @@ const Profile = () => {
             <div className="relative rounded-3xl box-border w-[350px] h-[620px] overflow-hidden shrink-0 border-PRIMARY border-2">
               <img
                 className="absolute top-[0px] left-[0px] rounded-t-xl rounded-b-none w-[432px] h-[131px] object-cover"
-                alt=""
-                src={profilebg}
+                alt="imagem de capa da loja"
+                src={
+                  store.store && store.store.imageBanner
+                    ? store.store.imageBanner
+                    : profilebg
+                }
               />
               <a
                 href=""
@@ -144,9 +137,13 @@ const Profile = () => {
                 <Icon icon="mdi:pencil" width={20} className="text-WHITE" />
               </a>
               <img
-                className="absolute top-[111px] left-[34px] rounded-full object-cover"
-                alt=""
-                src={profileExample}
+                className="h-40 w-40 absolute top-[111px] left-[34px] rounded-full object-cover"
+                alt="imagem de perfil da loja"
+                src={
+                  store.store && store.store.imagePerfil
+                    ? store.store.imagePerfil
+                    : profileExample
+                }
               />
               <a
                 href=""
