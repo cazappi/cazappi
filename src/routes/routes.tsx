@@ -19,6 +19,7 @@ import RegisterShop from "../pages/RegisterShop";
 import ResetPass from "../pages/PasswordReset";
 import Unauthenticated from "../pages/Unauthenticated";
 import PrivateRoute from "./private-route";
+import HasShopVerificationRoute from "./ShopAndLog-route";
 
 const AppRoutes = () => (
   <>
@@ -38,7 +39,7 @@ const AppRoutes = () => (
       <Route path="/ShopConditions" element={<ShopConditions />} />
       <Route path="/unauthorized" element={<Unauthenticated />} />
     </Routes>
-    <PrivateRoute path="/registershop" element={<RegisterShop />} />
+    <HasShopVerificationRoute path="/registershop" element={<RegisterShop />} />
     <PrivateRoute path="/profile" element={<Profile />} />
     <PrivateRoute
       path="/DadosBancariosRevisao"

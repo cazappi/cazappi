@@ -27,7 +27,7 @@ const Register = () => {
     cardText: "text-center h-1/2 min-h-[100px] flex items-center justify-center"
   }
 
-  const handleCollapse = (value: number) => {
+    const handleCollapse = (value: number) => {
     setCollapsed((prevCollapsed) => {
       const index = prevCollapsed.indexOf(value);
       if (index === -1) {
@@ -39,7 +39,7 @@ const Register = () => {
       }
     });
   };
-
+  
   const questions = () => {
     return (
       <>
