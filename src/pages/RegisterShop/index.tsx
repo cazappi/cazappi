@@ -16,7 +16,7 @@ interface ShopRegistrationValues {
   cep: string;
   state: string;
   city: string;
-  address: string;
+  bairro: string;
   street: string;
   number: string;
   complement: string;
@@ -82,7 +82,7 @@ const shopRegistrationSchema = Yup.object().shape({
     }),
   state: Yup.string().required("Campo obrigatório"),
   city: Yup.string().required("Campo obrigatório"),
-  address: Yup.string().required("Campo obrigatório"),
+  bairro: Yup.string().required("Campo obrigatório"),
   street: Yup.string().required("Campo obrigatório"),
   number: Yup.string().required("Campo obrigatório"),
   complement: Yup.string(),
@@ -184,13 +184,13 @@ const RegisterShop = () => {
           ],
           Address: [
             {
-              city: "sao carlos",
-              state: "sp",
-              street: "trabalhador",
-              zipCode: "12212222",
-              number: "2",
-              district: null, //Usar "district" : null, para campos opcionais.
-              complement: null,
+              city: values.city,
+              state: values.state,
+              street: values.street,
+              zipCode: values.cep,
+              number: values.number,
+              district: values.bairro, //Usar "district" : null, para campos opcionais.
+              complement: values.complement,
             },
           ],
         },
@@ -229,7 +229,7 @@ const RegisterShop = () => {
             cep: "",
             state: "",
             city: "",
-            address: "",
+            bairro: "",
             street: "",
             number: "",
             complement: "",
@@ -372,14 +372,14 @@ const RegisterShop = () => {
                   <Input
                     className="iconOn"
                     type="text"
-                    name="address"
-                    value={values.address}
+                    name="bairro"
+                    value={values.bairro}
                     placeholder="Bairro"
                     onChange={handleChange}
                   ></Input>
                   <ErrorMessage
                     className={styleGroup.error}
-                    name="address"
+                    name="bairro"
                     component="div"
                   />
                 </div>
