@@ -7,14 +7,18 @@ const Unauthenticated = () => {
       <Header transparent={false} />
 
       <div className="w-full flex flex-col items-center justify-center my-14 space-y-20">
-        <p>Para acessar nossos serviços você deve estar logado.</p>
+        <p className="text-lg">
+          Para acessar nossos serviços você deve estar logado.
+        </p>
 
-        <a className="text-red-500 hover:text-red-700" href="/register">
+        <a className="text-red-500 hover:text-red-700 text-lg" href="/register">
           Caso não tenha conta, clique aqui para se cadastrar.
         </a>
       </div>
 
-      <Footer />
+      <div className="fixed bottom-0 w-full">
+        <Footer />
+      </div>
     </div>
   );
 };
