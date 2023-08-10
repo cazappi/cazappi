@@ -2,9 +2,9 @@ import React, { useState, useEffect } from "react";
 import { THEME } from "../../theme/index";
 // import { HEADER, LOGOIMAGE, OPTIONS, LINK, OPT, BACK } from "./style";
 import { useNavigate } from "react-router-dom";
-import { disableBodyScroll, enableBodyScroll } from 'body-scroll-lock';
-import logoText from '../../assets/logoText.svg';
-import { Icon } from '@iconify-icon/react';
+import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
+import logoText from "../../assets/logoText.svg";
+import { Icon } from "@iconify-icon/react";
 import api from "../../services/api";
 import miniLogo from "../../assets/miniLogo.png";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -34,19 +34,20 @@ const registrationSchema = Yup.object().shape({
   password: Yup.string()
     .required("Campo obrigatório")
     .min(6, "A senha deve ter pelo menos 6 caracteres"),
-  confirmPassword: Yup.string().required("Campo obrigatório").oneOf(
-    [Yup.ref("password")],
-    "As senhas não conferem"
-    
-  ),
+  confirmPassword: Yup.string()
+    .required("Campo obrigatório")
+    .oneOf([Yup.ref("password")], "As senhas não conferem"),
   state: Yup.string().required("Campo obrigatório"),
   city: Yup.string().required("Campo obrigatório"),
-  termsOfUse: Yup.boolean().oneOf([true], 'Você deve aceitar os termos de uso para continuar'),
+  termsOfUse: Yup.boolean().oneOf(
+    [true],
+    "Você deve aceitar os termos de uso para continuar"
+  ),
 });
 
 const Cadastro: React.FC = () => {
-    const [typeAccount, setTypeAccount] = useState(true); // Se true, é CPF. Se false, é CNPJ
-    const navigate = useNavigate();
+  const [typeAccount, setTypeAccount] = useState(true); // Se true, é CPF. Se false, é CNPJ
+  const navigate = useNavigate();
 
   const handleDocumentTypeChange = (value: React.SetStateAction<boolean>) => {
     setTypeAccount(value);
@@ -260,11 +261,11 @@ const Cadastro: React.FC = () => {
                 Privacidade e aceito os Termos e Condições.
               </div>
             </div>
-              <ErrorMessage
-                className={styleGroup.error}
-                name="termsOfUse"
-                component="div"
-              />
+            <ErrorMessage
+              className={styleGroup.error}
+              name="termsOfUse"
+              component="div"
+            />
             <button
               className="bg-PRIMARY text-WHITE p-3 rounded-lg text-xl m-4 hover:scale-105 duration-200 hover:shadow-2xl"
               type="submit"

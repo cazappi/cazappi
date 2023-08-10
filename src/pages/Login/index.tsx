@@ -119,10 +119,10 @@ const Login = () => {
                   <div className="text-sm text-ERROR">
                     Usuário e/ou senha incorreto(s)
                   </div>
-                ) : ""}
-                <div>
-                  
-                </div>
+                ) : (
+                  ""
+                )}
+                <div></div>
               </div>
               <button
                 type="submit"

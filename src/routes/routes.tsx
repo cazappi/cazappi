@@ -17,32 +17,40 @@ import TokenExemplo from "../pages/TokenExemplo";
 import Profile from "../pages/Profile";
 import RegisterShop from "../pages/RegisterShop";
 import ResetPass from "../pages/PasswordReset";
+import Unauthenticated from "../pages/Unauthenticated";
+import PrivateRoute from "./private-route";
 
 const AppRoutes = () => (
-  <Routes>
-    {/* exemplo de rota: <Route path="/novaRota" element={<ArquivoImportado />} /> */}
-    <Route path="/" element={<Home />} />
-    <Route path="/MailConfirmation" element={<MailConfirmation />} />
-    <Route path="/Politica" element={<Politica />} />
-    <Route path="/register" element={<Register />} />
-    <Route path="/registershop" element={<RegisterShop />} />
-    <Route path="/profile" element={<Profile />} />
-    <Route path="/login" element={<Login />} />
-    <Route path="/resetpass" element={<ResetPass />} />
-    <Route path="/forgetPass" element={<ForgetPass />} />
-    <Route path="/EmailVerification/:token" element={<EmailVerification />} />
-    <Route path="/DadosBancariosRevisao" element={<DadosBancariosRevisao />} />
-    <Route
+  <>
+    <Routes>
+      {/* exemplo de rota: <Route path="/novaRota" element={<ArquivoImportado />} /> */}
+      <Route path="/" element={<Home />} />
+      <Route path="/MailConfirmation" element={<MailConfirmation />} />
+      <Route path="/Politica" element={<Politica />} />
+      <Route path="/register" element={<Register />} />
+      <Route path="/SignUp" element={<SignUp />} />
+      <Route path="/login" element={<Login />} />
+      <Route path="/forgetPass" element={<ForgetPass />} />
+      <Route path="/resetpass" element={<ResetPass />} />
+      <Route path="/EmailVerification/:token" element={<EmailVerification />} />
+      <Route path="/Advertising" element={<Advertising />} />
+      <Route path="/BusinessType" element={<BusinessType />} />
+      <Route path="/ShopConditions" element={<ShopConditions />} />
+      <Route path="/unauthorized" element={<Unauthenticated />} />
+    </Routes>
+    <PrivateRoute path="/registershop" element={<RegisterShop />} />
+    <PrivateRoute path="/profile" element={<Profile />} />
+    <PrivateRoute
+      path="/DadosBancariosRevisao"
+      element={<DadosBancariosRevisao />}
+    />
+    <PrivateRoute
       path="/DadosBancariosPreenchimento"
       element={<DadosBancariosPreenchimento />}
     />
-    <Route path="/Advertising" element={<Advertising />} />
-    <Route path="/BusinessType" element={<BusinessType />} />
-    <Route path="/ShopConditions" element={<ShopConditions />} />
-    <Route path="/BankAccount" element={<BankAccount />} />
-    <Route path="/SignUp" element={<SignUp />} />
-    <Route path="/tokenExemplo" element={<TokenExemplo />} />
-  </Routes>
+    <PrivateRoute path="/BankAccount" element={<BankAccount />} />
+    <PrivateRoute path="/tokenExemplo" element={<TokenExemplo />} />
+  </>
 );
 
 export default AppRoutes;
