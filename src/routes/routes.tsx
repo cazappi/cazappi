@@ -20,6 +20,7 @@ import ResetPass from "../pages/PasswordReset";
 import Unauthenticated from "../pages/Unauthenticated";
 import PrivateRoute from "./private-route";
 import HasShopVerificationRoute from "./ShopAndLog-route";
+import UpdateShop from "../pages/UpdateShop";
 
 const AppRoutes = () => (
   <>
@@ -49,6 +50,7 @@ const AppRoutes = () => (
       path="/DadosBancariosPreenchimento"
       element={<DadosBancariosPreenchimento />}
     />
+    <PrivateRoute path="/updateshop" element={<UpdateShop />} />
     <PrivateRoute path="/BankAccount" element={<BankAccount />} />
     <PrivateRoute path="/tokenExemplo" element={<TokenExemplo />} />
   </>
