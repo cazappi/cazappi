@@ -137,7 +137,7 @@ const Profile = () => {
                 <Icon icon="mdi:pencil" width={20} className="text-WHITE" />
               </a>
               <img
-                className="h-40 w-40 absolute top-[111px] left-[34px] rounded-full object-cover"
+                className="h-20 w-20 absolute top-[111px] left-[34px] rounded-full object-cover"
                 alt="imagem de perfil da loja"
                 src={
                   store.store && store.store.imagePerfil
