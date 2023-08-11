@@ -468,8 +468,34 @@ const RegisterShop = () => {
                           className="border-none bg-GRAY_300 px-2 py-1 rounded-lg mb-2"
                           name={`cl${dia}`}
                           id={`${dia}HoraFim`}
-                          onChange={(e) =>
-                            setFieldValue(`cl${dia}`, e.target.value)
+                          onChange={(e) => {
+                            let setable = ""
+                            switch (dia) {
+                              case "Seg":
+                                setable = values.opSeg
+                                break
+                              case "Ter":
+                                setable = values.opTer
+                                break
+                              case "Qua":
+                                setable = values.opQua
+                                break
+                              case "Qui":
+                                setable = values.opQui
+                                break
+                              case "Sex":
+                                setable = values.opSex
+                                break
+                              case "Sab":
+                                setable = values.opSab
+                                break
+                              case "Dom":
+                                setable = values.opDom
+                                break
+                            }
+                            if (setable < e.target.value)
+                              setFieldValue(`cl${dia}`, e.target.value)
+                          }
                           } // Use setFieldValue aqui
                           value={values[`cl${dia}` as keyof typeof values]} // Use uma conversão explícita para keyof
                         >
