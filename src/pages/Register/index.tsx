@@ -7,6 +7,9 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Carousel3 from '../../assets/Carousel3.png';
 import Cadastro from '../../components/Cadastro/Cadastro';
+import Imagem1 from '../../assets/Imagem1Cazapi.jpg'
+import Imagem2 from '../../assets/Imagem2Cazapi.jpg'
+import Imagem3 from '../../assets/Imagem3Cazapi.jpg'
 import Plus from '../../assets/Plus.svg'
 import {
   responsiveWidth as rw,
@@ -104,15 +107,15 @@ const Register = () => {
         </Animation>
         <Animation className="w-4/5 flex flex-col md:flex-row items-center justify-between">
           <Animation className={styleGroup.card}> 
-            <img src="caminho/para/imagem.jpg" alt="Imagem" className={styleGroup.cardImage} />
+            <img src={Imagem1} alt="Imagem" className={styleGroup.cardImage} />
             <div className={styleGroup.cardText}>Fica a sua escolha<br />entregar ou o cliente retira</div>
           </Animation>
           <Animation className={styleGroup.card}>
-            <img src="caminho/para/imagem.jpg" alt="Imagem" className={styleGroup.cardImage} />
+            <img src={Imagem2} alt="Imagem" className={styleGroup.cardImage} />
             <div className={styleGroup.cardText}>Crie e realize, suas vendas<br />irão crescer com o Cazzapi</div>
           </Animation>
           <Animation className={styleGroup.card}>
-            <img src="caminho/para/imagem.jpg" alt="Imagem" className={styleGroup.cardImage} />
+            <img src={Imagem3} alt="Imagem" className={styleGroup.cardImage} />
             <div className={styleGroup.cardText}>Liberdade financeira,<br />satisfação e motivação<br />você só encontra aqui</div>
           </Animation>
         </Animation>

@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import { THEME } from "../../theme/index";
 import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
-import Carousel1 from "../../assets/Carousel1.png";
+import Carousel1 from "../../assets/Carousel1.jpg";
 import Carousel2 from "../../assets/Carousel2.png";
 import { Icon } from "@iconify-icon/react";
 import { Carousel as Car } from "react-responsive-carousel";
