@@ -17,7 +17,7 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
 
   const styleGroup = {
     headerTransparent:
-      "bg-gradient-to-b from-BLACK to-transparent text-white flex md:fixed w-full top-0 z-10",
+      "bg-gradient-to-b from-black to-transparent text-white flex md:fixed w-full top-0 z-10",
     headerWhite: "bg-WHITE text-black flex w-full z-10",
     options:
       "hover:text-PRIMARY hover:scale-110 my-2 hover:shadow-blue-gray-900 duration-300",
