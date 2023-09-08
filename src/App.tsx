@@ -4,7 +4,7 @@ import AppRoutes from "./routes/routes";
 import { Helmet } from "react-helmet";
 import { initializeApp } from "firebase/app";
 
-// colocar esses dados de uma maneira mais segura, talvez em um .env
+// TODO: colocar esses dados de uma maneira mais segura, talvez em um .env
 var firebaseConfig = {
   apiKey: "AIzaSyCcU5Dwl4_vX9JmQKYl4EdQa83M4NXdx4c",
   authDomain: "okeo-dev-371221.firebaseapp.com",

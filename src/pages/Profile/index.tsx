@@ -44,6 +44,7 @@ interface storeProps {
     state: string;
     street: string;
     district: string;
+    number: string;
   };
 }
 
@@ -91,7 +92,7 @@ const Profile = () => {
       for (const key in schedule.closingTime) {
         if (schedule.closingTime.hasOwnProperty(key)) {
           const timeOp =
-            schedule.closingTime[key as keyof typeof schedule.openingTime];
+            schedule.openingTime[key as keyof typeof schedule.openingTime];
           const timeCl =
             schedule.closingTime[key as keyof typeof schedule.closingTime];
 
@@ -197,10 +198,11 @@ const Profile = () => {
                 </a>
                 <div className="relative rounded-t-none rounded-b-xl bg-white w-[350px] h-[149px] overflow-hidden shrink-0">
                   <div className="absolute top-[-194px] left-[-33px] w-[500px] h-[500px]" />
+                  {/*TODO: COLOCAR API KEY EM UM .env */}
                   <img
                     className="absolute top-[0px] left-[0px] object-cover"
                     alt=""
-                    src={mapExample}
+                    src={`https://maps.googleapis.com/maps/api/staticmap?center=${store.storeAddress?.street}+${store.storeAddress?.number},${store.storeAddress?.city},${store.storeAddress?.state.toUpperCase()}&zoom=17&size=350x200&maptype=roadmap&markers=color:red%7CAlameda+dos+Narcisos+171,São%20Carlos,SP&key=AIzaSyCcU5Dwl4_vX9JmQKYl4EdQa83M4NXdx4c`}
                   />
                 </div>
               </div>

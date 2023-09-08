@@ -111,9 +111,6 @@ const UpdateShop = () => {
     const typeFile = file.type;
     const nameFile = file.name.split(".")[0];
 
-    console.log(typeFile);
-    console.log(nameFile);
-
     return {
       typeFile,
       nameFile,
@@ -124,12 +121,11 @@ const UpdateShop = () => {
     let url_perfil = undefined;
     let url_banner = undefined;
 
-    console.log(values);
     if (values.capa) {
       await api
         .post(`arquivo/bannerLoja/${values.name}`, values.capa, {
           headers: {
-            "Authorization": `${document.cookie.split("=")[1]}`,
+            Authorization: `${document.cookie.split("=")[1]}`,
           },
         })
         .then((response) => {
@@ -142,7 +138,7 @@ const UpdateShop = () => {
       await api
         .post(`arquivo/perfilLoja/${values.name}`, values.profile, {
           headers: {
-            "Authorization": `${document.cookie.split("=")[1]}`,
+            Authorization: `${document.cookie.split("=")[1]}`,
           },
         })
         .then((response) => {
@@ -208,7 +204,7 @@ const UpdateShop = () => {
         },
         {
           headers: {
-            "Authorization": `${document.cookie.split("=")[1]}`,
+            Authorization: `${document.cookie.split("=")[1]}`,
           },
         }
       )
@@ -247,6 +243,8 @@ const UpdateShop = () => {
             bairro: JSON.stringify(shopData.storeAddress.district).slice(1, -1),
             street: JSON.stringify(shopData.storeAddress.street).slice(1, -1),
             number: JSON.stringify(shopData.storeAddress.number).slice(1, -1),
+            sameHoursOp: "",
+            sameHoursCl: "",
             complement: shopData.storeAddress.complement
               ? JSON.stringify(shopData.storeAddress.complement).slice(1, -1)
               : "",
@@ -531,6 +529,49 @@ const UpdateShop = () => {
                     </tr>
                   ))}
                 </table>
+                <div className="mb-4">
+                  <label className="text-base" htmlFor="sameHours">
+                    Definir o mesmo horário para todos os dias:
+                  </label>
+                  <select 
+                    className="border-none bg-GRAY_300 px-2 py-1 rounded-lg mb-2 w-32 ml-2"
+                    name="sameHoursOp"
+                    id="sameHoursOp"
+                    onChange={(e) => {
+                      const selectedHour = e.target.value;
+                      // Define o mesmo horário para todos os dias
+                      dias.forEach((dia) => {
+                        setFieldValue(`op${dia}`, selectedHour);
+                      });
+                    }}
+                  >
+                    <option value="">Selecione um horário</option>
+                    {hours.map((hora) => (
+                      <option key={hora} value={hora}>
+                        {hora}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    className="border-none bg-GRAY_300 px-2 py-1 rounded-lg mb-2 w-32 ml-2"
+                    name="sameHoursCl"
+                    id="sameHoursCl"
+                    onChange={(e) => {
+                      const selectedHour = e.target.value;
+                      // Define o mesmo horário para todos os dias
+                      dias.forEach((dia) => {
+                        setFieldValue(`cl${dia}`, selectedHour);
+                      });
+                    }}
+                  >
+                    <option value="">Selecione um horário</option>
+                    {hours.map((hora) => (
+                      <option key={hora} value={hora}>
+                        {hora}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <button
                 className="bg-PRIMARY text-WHITE p-3 rounded-lg text-xl m-4 hover:scale-105 duration-200 hover:shadow-2xl"

@@ -48,9 +48,55 @@ const registrationSchema = Yup.object().shape({
 const Cadastro: React.FC = () => {
   const [typeAccount, setTypeAccount] = useState(true); // Se true, é CPF. Se false, é CNPJ
   const navigate = useNavigate();
+  const [states, setStates] = useState<any[]>([]);
+  const [cities, setCities] = useState<any[]>([]);
+
+  useEffect(() => {
+    fetchStates();
+    // fetchCities("");
+  }, []);
+
+  const fetchStates = async () => {
+    try {
+      const response = await fetch(
+        "https://servicodados.ibge.gov.br/api/v1/localidades/estados"
+      );
+      const data = await response.json();
+      console.log(data);
+      let estados: any = [];
+      data.forEach((state: any) => {
+        estados.push(state);
+      });
+      setStates(estados);
+      console.log("ESTADOS ", states);
+    } catch (error) {
+      console.log("Error fetching states:", error);
+    }
+  };
+
+  const fetchCities = async (state: string) => {
+    try {
+      let url = `https://servicodados.ibge.gov.br/api/v1/localidades/estados/${state}/municipios`;
+      const response = await fetch(url);
+      const data = await response.json();
+      // console.log(data)
+      let cidades: any = [];
+      data.forEach((cidade: any) => {
+        cidades.push(cidade);
+      });
+      setCities(cidades);
+    } catch (error) {
+      console.log("Error fetching cities:", error);
+    }
+  };
 
   const handleDocumentTypeChange = (value: React.SetStateAction<boolean>) => {
     setTypeAccount(value);
+  };
+
+  const loadCities = (selectedState: string) => {
+    console.log("teste", selectedState);
+    fetchCities(selectedState)
   };
 
   const handleSubmit = (values: RegistrationValues) => {
@@ -142,13 +188,26 @@ const Cadastro: React.FC = () => {
         {({ values, handleChange }) => (
           <Form className="flex flex-col items-center justify-center mt-4">
             <div className={styleGroup.fieldGroup}>
-              <input
+              {/* Dropdown para o estado */}
+              <select
                 className={styleGroup.field}
-                type="text"
                 name="state"
                 value={values.state}
-                onChange={handleChange}
-              />
+                onChange={(e) => {
+                  values.city = ""
+                  handleChange(e);
+                  loadCities(e.target.value); // Carregar as cidades com base no estado selecionado
+                }}
+              >
+                <option value="" disabled>
+                  Selecione um estado
+                </option>
+                {states.map((state) => (
+                  <option key={state.id} value={state.sigla}>
+                    {state.nome}
+                  </option>
+                ))}
+              </select>
               <label className={styleGroup.fieldText}>Estado</label>
               <ErrorMessage
                 className={styleGroup.error}
@@ -157,13 +216,22 @@ const Cadastro: React.FC = () => {
               />
             </div>
             <div className={styleGroup.fieldGroup}>
-              <input
+              {/* Dropdown para a cidade */}
+              <select
                 className={styleGroup.field}
-                type="text"
                 name="city"
                 value={values.city}
                 onChange={handleChange}
-              />
+              >
+                <option value="" disabled>
+                  Selecione uma cidade
+                </option>
+                {cities.map((city) => (
+                  <option key={city.nome} value={city.nome}>
+                    {city.nome}
+                  </option>
+                ))}
+              </select>
               <label className={styleGroup.fieldText}>Cidade</label>
               <ErrorMessage
                 className={styleGroup.error}

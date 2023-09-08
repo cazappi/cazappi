@@ -123,7 +123,7 @@ const RegisterShop = () => {
       await api
         .post(`arquivo/bannerLoja/${values.name}`, values.capa, {
           headers: {
-            "Authorization": `${document.cookie.split("=")[1]}`,
+            Authorization: `${document.cookie.split("=")[1]}`,
           },
         })
         .then((response) => {
@@ -136,7 +136,7 @@ const RegisterShop = () => {
       await api
         .post(`arquivo/perfilLoja/${values.name}`, values.profile, {
           headers: {
-            "Authorization": `${document.cookie.split("=")[1]}`,
+            Authorization: `${document.cookie.split("=")[1]}`,
           },
         })
         .then((response) => {
@@ -144,6 +144,7 @@ const RegisterShop = () => {
           url_perfil = response.data.Key;
         });
     }
+
 
     api
       .post(
@@ -187,7 +188,7 @@ const RegisterShop = () => {
               city: values.city,
               state: values.state,
               street: values.street,
-              zipCode: values.cep,
+              zipCode: values.cep.replace('-', ''),
               number: values.number,
               district: values.bairro, //Usar "district" : null, para campos opcionais.
               complement: values.complement,
@@ -196,7 +197,7 @@ const RegisterShop = () => {
         },
         {
           headers: {
-            "Authorization": `${document.cookie.split("=")[1]}`,
+            Authorization: `${document.cookie.split("=")[1]}`,
           },
         }
       )
@@ -483,6 +484,49 @@ const RegisterShop = () => {
                     </tr>
                   ))}
                 </table>
+                <div className="mb-4">
+                  <label className="text-base" htmlFor="sameHours">
+                    Definir o mesmo horário para todos os dias:
+                  </label>
+                  <select
+                    className="border-none bg-GRAY_300 px-2 py-1 rounded-lg mb-2 w-32 ml-2"
+                    name="sameHoursOp"
+                    id="sameHoursOp"
+                    onChange={(e) => {
+                      const selectedHour = e.target.value;
+                      // Define o mesmo horário para todos os dias
+                      dias.forEach((dia) => {
+                        setFieldValue(`op${dia}`, selectedHour);
+                      });
+                    }}
+                  >
+                    <option value="">Selecione um horário</option>
+                    {hours.map((hora) => (
+                      <option key={hora} value={hora}>
+                        {hora}
+                      </option>
+                    ))}
+                  </select>
+                  <select
+                    className="border-none bg-GRAY_300 px-2 py-1 rounded-lg mb-2 w-32 ml-2"
+                    name="sameHoursCl"
+                    id="sameHoursCl"
+                    onChange={(e) => {
+                      const selectedHour = e.target.value;
+                      // Define o mesmo horário para todos os dias
+                      dias.forEach((dia) => {
+                        setFieldValue(`cl${dia}`, selectedHour);
+                      });
+                    }}
+                  >
+                    <option value="">Selecione um horário</option>
+                    {hours.map((hora) => (
+                      <option key={hora} value={hora}>
+                        {hora}
+                      </option>
+                    ))}
+                  </select>
+                </div>
               </div>
               <button
                 className="bg-PRIMARY text-WHITE p-3 rounded-lg text-xl m-4 hover:scale-105 duration-200 hover:shadow-2xl"
