@@ -41,8 +41,6 @@ import InternetLogo from "../../assets/Internet-logo.svg";
 const Advertising = () => {
   return (
     <div>
-      <Header />
-
       <Section>
         <Titulo>Crie sua loja</Titulo>
 

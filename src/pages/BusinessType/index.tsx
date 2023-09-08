@@ -25,7 +25,6 @@ import Button from "../../components/Button/Button";
 const BusinessType = () => {
   return (
     <div>
-      <Header />
 
       <Section>
         <Title>Tipo de negócio do restaurante</Title>

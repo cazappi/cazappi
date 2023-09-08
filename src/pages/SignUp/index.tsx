@@ -19,8 +19,6 @@ const SignUp = () => {
         <div>
             {/* ----------------------- HEADER ----------------------- */}
 
-            <Header></Header>
-
             {/* ----------------------- Container ----------------------- */}
             <FLEXCOLUMN style={{
                 marginTop: rh(78),

@@ -20,8 +20,6 @@ const DadosBancariosRevisao = () => {
         <div>
             {/* ----------------------- HEADER ----------------------- */}
 
-            <Header />
-
             {/* ----------------------- Container ----------------------- */}
             <FLEXCOLUMN>
                 <text style={{
