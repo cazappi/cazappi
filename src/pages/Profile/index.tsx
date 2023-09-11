@@ -5,11 +5,12 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import api from "../../services/api";
 import profilebg from "../../assets/profilebg.png";
-import mapExample from "../../assets/mapExample.png";
 import profileExample from "../../assets/profileExample.png";
 import { getUser } from "../../utils/user-token-request";
 import PulseLoader from "react-spinners/PulseLoader";
 import { THEME } from "../../theme";
+import { getToken } from "../../utils/get-cookie";
+import { clearToken } from "../../utils/clear-cookie";
 
 interface storeProps {
   store?: {
@@ -67,7 +68,7 @@ const Profile = () => {
     await api
       .get(`store/${getUser().user_id}`, {
         headers: {
-          "Authorization": `Bearer ${document.cookie.split("=")[1]}`,
+          "Authorization": `Bearer ${getToken()}`,
         },
       })
       .then((response) => {
@@ -75,7 +76,11 @@ const Profile = () => {
         setHasShop(true);
         console.log(response.data);
       })
-      .catch(() => {
+      .catch((err) => {
+        if (err.response.status === 401) {
+          clearToken();
+          navigate("/unauthorized");
+        }
         setHasShop(false);
       });
   }
@@ -202,7 +207,11 @@ const Profile = () => {
                   <img
                     className="absolute top-[0px] left-[0px] object-cover"
                     alt=""
-                    src={`https://maps.googleapis.com/maps/api/staticmap?center=${store.storeAddress?.street}+${store.storeAddress?.number},${store.storeAddress?.city},${store.storeAddress?.state.toUpperCase()}&zoom=17&size=350x200&maptype=roadmap&markers=color:red%7CAlameda+dos+Narcisos+171,São%20Carlos,SP&key=AIzaSyCcU5Dwl4_vX9JmQKYl4EdQa83M4NXdx4c`}
+                    src={`https://maps.googleapis.com/maps/api/staticmap?center=${
+                      store.storeAddress?.street
+                    }+${store.storeAddress?.number},${
+                      store.storeAddress?.city
+                    },${store.storeAddress?.state.toUpperCase()}&zoom=17&size=350x200&maptype=roadmap&markers=color:red%7CAlameda+dos+Narcisos+171,São%20Carlos,SP&key=AIzaSyCcU5Dwl4_vX9JmQKYl4EdQa83M4NXdx4c`}
                   />
                 </div>
               </div>

@@ -8,6 +8,8 @@ import * as Yup from "yup";
 import Input from "../../components/Input/Input";
 import InputFile from "../../components/Input/InputFile";
 import { getUser } from "../../utils/user-token-request";
+import { getToken } from "../../utils/get-cookie";
+import { clearToken } from "../../utils/clear-cookie";
 
 interface ShopRegistrationValues {
   name: string;
@@ -125,7 +127,7 @@ const UpdateShop = () => {
       await api
         .post(`arquivo/bannerLoja/${values.name}`, values.capa, {
           headers: {
-            Authorization: `${document.cookie.split("=")[1]}`,
+            Authorization: `${getToken()}`,
           },
         })
         .then((response) => {
@@ -138,7 +140,7 @@ const UpdateShop = () => {
       await api
         .post(`arquivo/perfilLoja/${values.name}`, values.profile, {
           headers: {
-            Authorization: `${document.cookie.split("=")[1]}`,
+            Authorization: `${getToken()}`,
           },
         })
         .then((response) => {
@@ -204,7 +206,7 @@ const UpdateShop = () => {
         },
         {
           headers: {
-            Authorization: `${document.cookie.split("=")[1]}`,
+            Authorization: `${getToken()}`,
           },
         }
       )
@@ -213,7 +215,10 @@ const UpdateShop = () => {
         navigate("/profile");
       })
       .catch((err) => {
-        console.log(err);
+        if (err.response.status === 401) {
+          clearToken();
+          navigate("/unauthorized");
+        }
       });
   };
 
@@ -533,7 +538,7 @@ const UpdateShop = () => {
                   <label className="text-base" htmlFor="sameHours">
                     Definir o mesmo horário para todos os dias:
                   </label>
-                  <select 
+                  <select
                     className="border-none bg-GRAY_300 px-2 py-1 rounded-lg mb-2 w-32 ml-2"
                     name="sameHoursOp"
                     id="sameHoursOp"

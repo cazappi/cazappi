@@ -13,7 +13,6 @@ import DadosBancariosPreenchimento from "../pages/DadosBancariosPreenchimento";
 import BankAccount from "../pages/BankAccount";
 import SignUp from "../pages/SignUp";
 import Register from "../pages/Register";
-import TokenExemplo from "../pages/TokenExemplo";
 import Profile from "../pages/Profile";
 import RegisterShop from "../pages/RegisterShop";
 import ResetPass from "../pages/PasswordReset";
@@ -52,7 +51,6 @@ const AppRoutes = () => (
     />
     <PrivateRoute path="/updateshop" element={<UpdateShop />} />
     <PrivateRoute path="/BankAccount" element={<BankAccount />} />
-    <PrivateRoute path="/tokenExemplo" element={<TokenExemplo />} />
   </>
 );
 

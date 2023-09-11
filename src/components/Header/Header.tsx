@@ -1,11 +1,8 @@
-import React, { useState, useEffect } from "react";
-import { THEME } from "../../theme/index";
+import React, { useState } from "react";
 // import { HEADER, LOGOIMAGE, OPTIONS, LINK, OPT, BACK } from "./style";
-import { disableBodyScroll, enableBodyScroll } from "body-scroll-lock";
 import logoText from "../../assets/logoText.svg";
-import { Icon } from "@iconify-icon/react";
 import { getUser } from "../../utils/user-token-request";
-import { clearCookie } from "../../utils/clear-cookie";
+import { clearToken } from "../../utils/clear-cookie";
 
 interface HeaderProps {
   transparent: Boolean;
@@ -73,7 +70,7 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
           </div>
           {isAuthenticated ? (
             <a href="/">
-              <button className={styleGroup.button} onClick={clearCookie}>
+              <button className={styleGroup.button} onClick={clearToken}>
                 <div className="text-white text-xl font-bold">Logout</div>
               </button>
             </a>
@@ -108,7 +105,7 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
           </div>
           {isAuthenticated ? (
             <a href="/">
-              <button className={styleGroup.button} onClick={clearCookie}>
+              <button className={styleGroup.button} onClick={clearToken}>
                 <div className="text-white text-xl font-bold">Logout</div>
               </button>
             </a>

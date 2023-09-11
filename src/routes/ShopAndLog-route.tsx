@@ -4,6 +4,8 @@ import { getUser } from "../utils/user-token-request";
 import api from "../services/api";
 import { useSelector } from "react-redux";
 import { RootState } from "../redux/types";
+import { getToken } from "../utils/get-cookie";
+import { clearToken } from "../utils/clear-cookie";
 
 const HasShopVerificationRoute = (params: RouteProps) => {
   const [hasShop, setHasShop] = useState<boolean>(true);
@@ -18,13 +20,16 @@ const HasShopVerificationRoute = (params: RouteProps) => {
       await api
         .get(`store/${getUser().user_id}`, {
           headers: {
-            "Authorization": `Bearer ${document.cookie.split("=")[1]}`,
+            "Authorization": `Bearer ${getToken()}`,
           },
         })
         .then((response) => {
           setHasShop(true);
         })
-        .catch(() => {
+        .catch((err) => {
+          if (err.response.status === 401) {
+            clearToken();
+          }
           setHasShop(false);
         });
     }
