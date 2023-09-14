@@ -50,6 +50,11 @@ const Cadastro: React.FC = () => {
   const navigate = useNavigate();
   const [states, setStates] = useState<any[]>([]);
   const [cities, setCities] = useState<any[]>([]);
+  const [customErrors, setCustomErrors] = useState({
+    email: "",
+    document: ""
+  });
+  
 
   useEffect(() => {
     fetchStates();
@@ -100,6 +105,11 @@ const Cadastro: React.FC = () => {
   };
 
   const handleSubmit = (values: RegistrationValues) => {
+    setCustomErrors((prevErrors) => ({
+      email: "",
+      document: ""
+    }));
+
     api
       .post("/landPage/user", {
         city: values.city,
@@ -117,6 +127,21 @@ const Cadastro: React.FC = () => {
       })
       .catch((err) => {
         console.log(err);
+        if (err.response && err.response.data) {
+          const errorMessage = err.response.data.error;
+          console.log(errorMessage);
+          if (errorMessage.includes("document")) {
+            setCustomErrors((prevErrors) => ({
+              ...prevErrors,
+              document: "CPF ou CNPJ já cadastrado."
+            }));
+          } else if (errorMessage.includes("email")) {
+            setCustomErrors((prevErrors) => ({
+              ...prevErrors,
+              email: "E-mail já cadastrado."
+            }));
+          }
+        }
       });
     // Aqui você pode enviar os dados para o servidor ou realizar outras ações com os valores preenchidos.
     console.log(values);
@@ -270,6 +295,7 @@ const Cadastro: React.FC = () => {
                 name="document"
                 component="div"
               />
+              {customErrors.document && <div className={styleGroup.error}>{customErrors.document}</div>}
             </div>
             <div className={styleGroup.fieldGroup}>
               <input
@@ -285,6 +311,7 @@ const Cadastro: React.FC = () => {
                 name="email"
                 component="div"
               />
+              {customErrors.email && <div className={styleGroup.error}>{customErrors.email}</div>}
             </div>
             <div className={styleGroup.fieldGroup}>
               <input
