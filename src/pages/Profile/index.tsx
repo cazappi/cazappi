@@ -10,49 +10,17 @@ import profileExample from "../../assets/profileExample.png";
 import { getUser } from "../../utils/user-token-request";
 import PulseLoader from "react-spinners/PulseLoader";
 import { THEME } from "../../theme";
-
-interface storeProps {
-  store?: {
-    name: string;
-    imageBanner: string;
-    imagePerfil: string;
-    schedule: [
-      {
-        closingTime: {
-          sun: string;
-          mon: string;
-          tue: string;
-          wed: string;
-          thu: string;
-          fri: string;
-          sat: string;
-        };
-        openingTime: {
-          sun: string;
-          mon: string;
-          tue: string;
-          wed: string;
-          thu: string;
-          fri: string;
-          sat: string;
-        };
-      }
-    ];
-  };
-  storeAddress?: {
-    city: string;
-    state: string;
-    street: string;
-    district: string;
-    number: string;
-  };
-}
+import { useDispatch } from "react-redux";
+import { setUserProfile } from "../../redux/actions/authActions"
+import { storeProps } from "../../redux/types";
 
 const Profile = () => {
   const [store, setStore] = useState<storeProps>({});
   const [hasShop, setHasShop] = useState<boolean>();
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
+
+  const dispatch = useDispatch();
 
   useEffect(() => {
     setTimeout(async () => {
@@ -73,6 +41,7 @@ const Profile = () => {
       .then((response) => {
         setStore(response.data);
         setHasShop(true);
+        dispatch(setUserProfile(response.data));
         console.log(response.data);
       })
       .catch(() => {
