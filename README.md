@@ -1,7 +1,7 @@
 # frontend
 
 - O projeto está espelhado no GitHub da conta desenvolvimento@catijr.com.br
-- O deploy está na Vercel vinculada ao GitHub em questão
+- O deploy está na Vercel vinculada ao GitHub em questão.
 
 
 ## Getting started
