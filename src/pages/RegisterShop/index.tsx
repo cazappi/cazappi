@@ -8,6 +8,8 @@ import * as Yup from "yup";
 import Input from "../../components/Input/Input";
 import InputFile from "../../components/Input/InputFile";
 import { getUser } from "../../utils/user-token-request";
+import { getToken } from "../../utils/get-cookie";
+import { clearToken } from "../../utils/clear-cookie";
 
 interface ShopRegistrationValues {
   name: string;
@@ -123,7 +125,7 @@ const RegisterShop = () => {
       await api
         .post(`arquivo/bannerLoja/${values.name}`, values.capa, {
           headers: {
-            Authorization: `${document.cookie.split("=")[1]}`,
+            Authorization: `${getToken()}`,
           },
         })
         .then((response) => {
@@ -136,7 +138,7 @@ const RegisterShop = () => {
       await api
         .post(`arquivo/perfilLoja/${values.name}`, values.profile, {
           headers: {
-            Authorization: `${document.cookie.split("=")[1]}`,
+            Authorization: `${getToken()}`,
           },
         })
         .then((response) => {
@@ -144,7 +146,6 @@ const RegisterShop = () => {
           url_perfil = response.data.Key;
         });
     }
-
 
     api
       .post(
@@ -188,7 +189,7 @@ const RegisterShop = () => {
               city: values.city,
               state: values.state,
               street: values.street,
-              zipCode: values.cep.replace('-', ''),
+              zipCode: values.cep.replace("-", ""),
               number: values.number,
               district: values.bairro, //Usar "district" : null, para campos opcionais.
               complement: values.complement,
@@ -197,13 +198,19 @@ const RegisterShop = () => {
         },
         {
           headers: {
-            Authorization: `${document.cookie.split("=")[1]}`,
+            Authorization: `${getToken()}`,
           },
         }
       )
       .then((response) => {
         console.log("deu certo");
         navigate("/profile");
+      })
+      .catch((err) => {
+        if (err.response.status === 401) {
+          clearToken();
+          navigate("/unauthorized");
+        }
       });
   };
 

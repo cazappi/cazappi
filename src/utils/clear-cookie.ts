@@ -1,3 +1,3 @@
-export const clearCookie = () => {
-  document.cookie = "token_firebase=";
+export const clearToken = () => {
+  localStorage.setItem("token_firebase", "");
 };

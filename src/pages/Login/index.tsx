@@ -1,16 +1,12 @@
-import React, { useEffect, useState } from "react";
+import { useState } from "react";
 import { useDispatch } from "react-redux";
 import { tokenBackend, tokenFirebase } from "../../redux/actions/authActions";
 import { useNavigate } from "react-router-dom";
-import logoImg from "../../assets/logoImgWithoutCircles.png";
-import { THEME } from "../../theme/index";
-import { Icon } from "@iconify-icon/react";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import api from "../../services/api";
 import Input from "../../components/Input/Input";
-import { Formik, Form, Field, ErrorMessage } from "formik";
-import * as Yup from "yup";
+import { Formik, Form } from "formik";
 import { getAuth, signInWithCustomToken } from "firebase/auth";
 
 interface LoginValues {
@@ -23,11 +19,6 @@ const Login = () => {
   const dispatch = useDispatch();
   const auth = getAuth();
   const [errorAcc, setErrorAcc] = useState(false);
-
-  const styleGroup = {
-    input:
-      "bg-GRAY_300 w-full p-[8px] border-none md:p-[10px] rounded-3xl outline-none text-black",
-  };
 
   //integracao para fazer o login e salvar o token com Redux
   //para pegar o token em outra tela, é necessário usar o useSelector e o RootState("../redux/types")
@@ -47,15 +38,14 @@ const Login = () => {
             const token_firebase = await userCredential.user.getIdToken();
             dispatch(tokenFirebase(token_firebase));
             dispatch(tokenBackend(tokenFromApi));
-            document.cookie = `token_firebase=${token_firebase}`;
+            localStorage.setItem("token_firebase", token_firebase);
             setErrorAcc(false);
             navigate("/profile");
           })
           .catch((error) => {
             console.log("erro");
-            const errorCode = error.code;
             const errorMessage = error.message;
-            // ...
+            throw new Error(errorMessage);
           });
       })
       .catch((err) => {
