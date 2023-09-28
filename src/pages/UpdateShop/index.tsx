@@ -1,17 +1,15 @@
-import React, { useState, useEffect } from "react";
+import React from "react";
 import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import api from "../../services/api";
+import profilebg from "../../assets/profilebg.png";
+import profileExample from "../../assets/profileExample.png";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Input from "../../components/Input/Input";
 import InputFile from "../../components/Input/InputFile";
 import { getUser } from "../../utils/user-token-request";
-import profilebg from "../../assets/profilebg.png";
-import profileExample from "../../assets/profileExample.png";
-import { useSelector } from "react-redux";
-import { RootState } from '../../redux/reducers/rootReducer';
 
 interface ShopRegistrationValues {
   name: string;
@@ -59,8 +57,22 @@ function isValidFileType(
 
 const shopRegistrationSchema = Yup.object().shape({
   name: Yup.string().required("Campo obrigatório"),
-  capa: Yup.mixed().notRequired(),
-  profile: Yup.mixed().notRequired(),
+  // capa: Yup.mixed()
+  //   .test("is-valid-type", "Imagem não é de formato válido", function (value) {
+  //     return isValidFileType(value as File, "image");
+  //   })
+  //   .test("is-valid-size", "Tamanho máximo da imagem: 10 Mb", function (value) {
+  //     return value && (value as File).size <= MAX_FILE_SIZE;
+  //   }),
+  // profile: Yup.mixed()
+  //   .test("is-valid-type", "Imagem não é de formato válido", function (value) {
+  //     console.log(value);
+  //     return isValidFileType(value as File, "image");
+  //   })
+  //   .test("is-valid-size", "Tamanho máximo da imagem: 10 Mb", function (value) {
+  //     return value && (value as File).size <= MAX_FILE_SIZE;
+  //   }),
+
   cep: Yup.string()
     .required("Campo obrigatório")
     .test("is-valid-cep", "Invalid CEP format", function (value) {
@@ -79,11 +91,9 @@ const shopRegistrationSchema = Yup.object().shape({
 });
 
 const UpdateShop = () => {
-  const userProfile = useSelector((state: RootState) => state.auth.userProfile);
   const location = useLocation();
   const shopData = location.state;
   const navigate = useNavigate();
-  console.log(`ShopData: `);
   console.log(shopData);
   console.log(JSON.stringify(shopData.store.schedule[0].openingTime.mon));
   const styleGroup = {
@@ -110,14 +120,10 @@ const UpdateShop = () => {
   }
 
   const handleSubmit = async (values: ShopRegistrationValues) => {
-    let url_perfil = userProfile?.store?.imagePerfil;
-    let url_banner = userProfile?.store?.imageBanner;
-    console.log("Perfil e banner: ");
-    console.log(url_perfil);
-    console.log(url_banner);
-    console.log(userProfile);
+    let url_perfil = shopData.store.imagePerfil;
+    let url_banner = shopData.store.imageBanner;
 
-    if (values.capa) {
+    if (values.capa && values.capa != shopData.store.imageBanner) {
       await api
         .post(`arquivo/bannerLoja/${values.name}`, values.capa, {
           headers: {
@@ -125,13 +131,12 @@ const UpdateShop = () => {
           },
         })
         .then((response) => {
-          console.log("Enviar capa");
           console.log(response.data);
           url_banner = response.data.Key;
         });
     }
 
-    if (values.profile) {
+    if (values.profile && values.profile != shopData.store.imagePerfil) {
       await api
         .post(`arquivo/perfilLoja/${values.name}`, values.profile, {
           headers: {
@@ -139,7 +144,6 @@ const UpdateShop = () => {
           },
         })
         .then((response) => {
-          console.log("Enviar perfil");
           console.log(response.data);
           url_perfil = response.data.Key;
         });
@@ -211,7 +215,6 @@ const UpdateShop = () => {
         navigate("/profile");
       })
       .catch((err) => {
-        console.error("Erro ao atualizar loja:", err.response.data);
         console.log(err);
       });
   };
@@ -234,8 +237,8 @@ const UpdateShop = () => {
         <Formik
           initialValues={{
             name: JSON.stringify(shopData.store.name).slice(1, -1),
-            capa: undefined,
-            profile: undefined,
+            capa: shopData.store.imageBanner,
+            profile: shopData.store.imagePerfil,
             cep: JSON.stringify(shopData.storeAddress.zipCode).slice(1, -1),
             state: JSON.stringify(shopData.storeAddress.state).slice(1, -1),
             city: JSON.stringify(shopData.storeAddress.city).slice(1, -1),
@@ -321,10 +324,16 @@ const UpdateShop = () => {
                 <label className="text-base mb-5" htmlFor="capa-input">
                   Selecionar imagem de capa
                 </label>
+                <img className="w-[500px] h-auto my-4" src={
+                  shopData.store && shopData.store.imageBanner
+                    ? shopData.store.imageBanner
+                    : profilebg
+                }></img>
 
                 <InputFile
                   className="iconOn"
                   name="capa"
+                  placeholder="Capa"
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     const file = event.target.files;
                     if (file) validFile(file[0]);
@@ -343,6 +352,11 @@ const UpdateShop = () => {
                 <label className="text-base mb-5" htmlFor="profile-input">
                   Selecionar imagem de perfil
                 </label>
+                <img className="w-[200px] h-[200px] my-4 rounded-full" src={
+                  shopData.store && shopData.store.imagePerfil
+                    ? shopData.store.imagePerfil
+                    : profileExample
+                }></img>
 
                 <InputFile
                   className="iconOn"
