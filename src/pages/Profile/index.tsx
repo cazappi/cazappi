@@ -9,6 +9,9 @@ import profileExample from "../../assets/profileExample.png";
 import { getUser } from "../../utils/user-token-request";
 import PulseLoader from "react-spinners/PulseLoader";
 import { THEME } from "../../theme";
+import { useDispatch } from "react-redux";
+import { setUserProfile } from "../../redux/actions/authActions"
+import { storeProps } from "../../redux/types";
 import { getToken } from "../../utils/get-cookie";
 import { clearToken } from "../../utils/clear-cookie";
 
@@ -55,6 +58,8 @@ const Profile = () => {
   const [loading, setLoading] = useState(true);
   const navigate = useNavigate();
 
+  const dispatch = useDispatch();
+
   useEffect(() => {
     setTimeout(async () => {
       await getStore();
@@ -74,6 +79,7 @@ const Profile = () => {
       .then((response) => {
         setStore(response.data);
         setHasShop(true);
+        dispatch(setUserProfile(response.data));
         console.log(response.data);
       })
       .catch((err) => {

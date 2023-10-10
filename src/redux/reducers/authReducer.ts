@@ -1,9 +1,10 @@
-import { TOKEN_BACKEND, TOKEN_FIREBASE } from "../actions/authActions";
+import { TOKEN_BACKEND, TOKEN_FIREBASE, SET_USER_PROFILE } from "../actions/authActions";
 import { AuthState } from "../types";
 
 const initialState: AuthState = {
   token_backend: null,
-  token_firebase: null
+  token_firebase: null,
+  userProfile: undefined
 };
 
 const authReducer = (state: AuthState = initialState, action: any): AuthState => {
@@ -17,6 +18,11 @@ const authReducer = (state: AuthState = initialState, action: any): AuthState =>
       return {
         ...state,
         token_backend: action.payload,
+      };
+    case SET_USER_PROFILE:
+      return {
+        ...state,
+        userProfile: action.payload,
       };
     default:
       return state;

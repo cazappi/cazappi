@@ -3,6 +3,8 @@ import { useNavigate, useLocation } from "react-router-dom";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import api from "../../services/api";
+import profilebg from "../../assets/profilebg.png";
+import profileExample from "../../assets/profileExample.png";
 import { Formik, Form, ErrorMessage } from "formik";
 import * as Yup from "yup";
 import Input from "../../components/Input/Input";
@@ -120,10 +122,10 @@ const UpdateShop = () => {
   }
 
   const handleSubmit = async (values: ShopRegistrationValues) => {
-    let url_perfil = undefined;
-    let url_banner = undefined;
+    let url_perfil = shopData.store.imagePerfil;
+    let url_banner = shopData.store.imageBanner;
 
-    if (values.capa) {
+    if (values.capa && values.capa != shopData.store.imageBanner) {
       await api
         .post(`arquivo/bannerLoja/${values.name}`, values.capa, {
           headers: {
@@ -136,7 +138,7 @@ const UpdateShop = () => {
         });
     }
 
-    if (values.profile) {
+    if (values.profile && values.profile != shopData.store.imagePerfil) {
       await api
         .post(`arquivo/perfilLoja/${values.name}`, values.profile, {
           headers: {
@@ -240,8 +242,8 @@ const UpdateShop = () => {
         <Formik
           initialValues={{
             name: JSON.stringify(shopData.store.name).slice(1, -1),
-            capa: undefined,
-            profile: undefined,
+            capa: shopData.store.imageBanner,
+            profile: shopData.store.imagePerfil,
             cep: JSON.stringify(shopData.storeAddress.zipCode).slice(1, -1),
             state: JSON.stringify(shopData.storeAddress.state).slice(1, -1),
             city: JSON.stringify(shopData.storeAddress.city).slice(1, -1),
@@ -327,10 +329,16 @@ const UpdateShop = () => {
                 <label className="text-base mb-5" htmlFor="capa-input">
                   Selecionar imagem de capa
                 </label>
+                <img className="w-[500px] h-auto my-4" src={
+                  shopData.store && shopData.store.imageBanner
+                    ? shopData.store.imageBanner
+                    : profilebg
+                }></img>
 
                 <InputFile
                   className="iconOn"
                   name="capa"
+                  placeholder="Capa"
                   onChange={(event: React.ChangeEvent<HTMLInputElement>) => {
                     const file = event.target.files;
                     if (file) validFile(file[0]);
@@ -349,6 +357,11 @@ const UpdateShop = () => {
                 <label className="text-base mb-5" htmlFor="profile-input">
                   Selecionar imagem de perfil
                 </label>
+                <img className="w-[200px] h-[200px] my-4 rounded-full" src={
+                  shopData.store && shopData.store.imagePerfil
+                    ? shopData.store.imagePerfil
+                    : profileExample
+                }></img>
 
                 <InputFile
                   className="iconOn"
