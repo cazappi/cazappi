@@ -15,43 +15,6 @@ import { storeProps } from "../../redux/types";
 import { getToken } from "../../utils/get-cookie";
 import { clearToken } from "../../utils/clear-cookie";
 
-interface storeProps {
-  store?: {
-    name: string;
-    imageBanner: string;
-    imagePerfil: string;
-    schedule: [
-      {
-        closingTime: {
-          sun: string;
-          mon: string;
-          tue: string;
-          wed: string;
-          thu: string;
-          fri: string;
-          sat: string;
-        };
-        openingTime: {
-          sun: string;
-          mon: string;
-          tue: string;
-          wed: string;
-          thu: string;
-          fri: string;
-          sat: string;
-        };
-      }
-    ];
-  };
-  storeAddress?: {
-    city: string;
-    state: string;
-    street: string;
-    district: string;
-    number: string;
-  };
-}
-
 const Profile = () => {
   const [store, setStore] = useState<storeProps>({});
   const [hasShop, setHasShop] = useState<boolean>();
