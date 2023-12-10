@@ -20,6 +20,8 @@ import Unauthenticated from "../pages/Unauthenticated";
 import PrivateRoute from "./private-route";
 import HasShopVerificationRoute from "./ShopAndLog-route";
 import UpdateShop from "../pages/UpdateShop";
+import HomeClient from "../pages/HomeClient";
+import StoreAdvantages2 from "../pages/StoreAdvantages2";
 
 const AppRoutes = () => (
   <>
@@ -38,6 +40,8 @@ const AppRoutes = () => (
       <Route path="/BusinessType" element={<BusinessType />} />
       <Route path="/ShopConditions" element={<ShopConditions />} />
       <Route path="/unauthorized" element={<Unauthenticated />} />
+      <Route path="/homeclient" element={<HomeClient />}></Route>
+      <Route path="/storeadvantages" element={< StoreAdvantages2 />}></Route>
     </Routes>
     <HasShopVerificationRoute path="/registershop" element={<RegisterShop />} />
     <PrivateRoute path="/profile" element={<Profile />} />
