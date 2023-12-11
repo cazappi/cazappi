@@ -85,7 +85,7 @@ const Profile = () => {
 
       {/* ----------------------- Container ----------------------- */}
       <div className="w-full flex flex-col items-center justify-center my-14">
-        <div className="text-4xl w-4/5 text-center text-PRIMARY text-center font-bold">
+        <div className="text-4xl w-4/5 text-center text-PRIMARY font-bold">
           Configurações de perfil
         </div>
         <div className="my-6 w-4/5 bg-PRIMARY h-[2px]"></div>
