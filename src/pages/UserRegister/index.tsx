@@ -46,7 +46,11 @@ const UserRegister = () => {
     const dispatch = useDispatch();
     const auth = getAuth();
     const [errorAcc, setErrorAcc] = useState(false);
-    const [pf, setPF] = useState(true)
+    const [pf, setPF] = useState(true);
+    const [customErrors, setCustomErrors] = useState({
+        email: "",
+        document: ""
+    });
 
     const styleGroup = {
         btnStyle: {
@@ -59,6 +63,10 @@ const UserRegister = () => {
         },
         error: "mt-2 text-ERROR"
     }
+
+    const handleDocumentTypeChange = (value: React.SetStateAction<boolean>) => {
+        setPF(value);
+    };
 
     //integracao para fazer o login e salvar o token com Redux
     //para pegar o token em outra tela, é necessário usar o useSelector e o RootState("../redux/types")
@@ -94,6 +102,50 @@ const UserRegister = () => {
         //     });
     };
 
+    const handleSubmit = (values: RegisterValues) => {
+        setCustomErrors((prevErrors) => ({
+            email: "",
+            document: ""
+        }));
+
+        api
+            .post("/user", {
+                name: values.name,
+                document: values.document,
+                documentType: pf ? "cpf" : "cnpj",
+                email: values.email,
+                password: values.password,
+                confirmedEmail: false,
+                isUserDeleted: false,
+                image: ""
+            })
+            .then((response) => {
+                console.log("Adicionado com sucesso usuário!");
+                console.log(response.data);
+                navigate("/MailConfirmation");
+            })
+            .catch((err) => {
+                console.log(err);
+                if (err.response && err.response.data) {
+                    const errorMessage = err.response.data.error;
+                    console.log(errorMessage);
+                    if (errorMessage.includes("document")) {
+                        setCustomErrors((prevErrors) => ({
+                            ...prevErrors,
+                            document: "CPF ou CNPJ já cadastrado."
+                        }));
+                    } else if (errorMessage.includes("email")) {
+                        setCustomErrors((prevErrors) => ({
+                            ...prevErrors,
+                            email: "E-mail já cadastrado."
+                        }));
+                    }
+                }
+            });
+        // Aqui você pode enviar os dados para o servidor ou realizar outras ações com os valores preenchidos.
+        console.log(values);
+    };
+
     return (
         <div>
             {/* ----------------------- HEADER ----------------------- */}
@@ -106,11 +158,11 @@ const UserRegister = () => {
                 </div>
 
                 <div className="flex flex-col sm:flex-row items-center justify-center mb-8">
-                    <button onClick={() => { setPF(true) }} className={(pf ? styleGroup.btnStyle.selected : styleGroup.btnStyle.unselected) + " mr-0 mb-4 sm:mr-8 sm:mb-0"}>
+                    <button onClick={() => { handleDocumentTypeChange(true) }} className={(pf ? styleGroup.btnStyle.selected : styleGroup.btnStyle.unselected) + " mr-0 mb-4 sm:mr-8 sm:mb-0"}>
                         <Icon icon="material-symbols:person" width={26} className={pf ? styleGroup.iconStyle.selected : styleGroup.iconStyle.unselected} />
                         Pessoa física
                     </button>
-                    <button onClick={() => { setPF(false) }} className={!pf ? styleGroup.btnStyle.selected : styleGroup.btnStyle.unselected}>
+                    <button onClick={() => { handleDocumentTypeChange(false) }} className={!pf ? styleGroup.btnStyle.selected : styleGroup.btnStyle.unselected}>
                         <Icon icon="ic:round-business-center" width={26} className={!pf ? styleGroup.iconStyle.selected : styleGroup.iconStyle.unselected} />
                         Pessoa jurídica
                     </button>
@@ -126,7 +178,7 @@ const UserRegister = () => {
                         termsOfUse: false
                     }}
                     validationSchema={registrationSchema}
-                    onSubmit={registerHook}
+                    onSubmit={handleSubmit}
                 >
                     {({ values, handleChange }) => (
                         <Form className="flex flex-col w-1/5 min-w-[250px] justify-center items-center">
@@ -225,9 +277,9 @@ const UserRegister = () => {
                                         onChange={handleChange}
                                     />
                                     <div>
-                                        Eu aceito o uso dos meus dados de acordo com a 
+                                        Eu aceito o uso dos meus dados de acordo com a
                                         <a href="" className="font-bold"> Declaração de Privacidade </a>
-                                        e aceito os 
+                                        e aceito os
                                         <a href="" className="font-bold"> Termos e Condições</a>.
                                     </div>
                                 </div>
