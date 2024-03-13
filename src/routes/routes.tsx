@@ -11,7 +11,6 @@ import ShopConditions from "../pages/ShopConditions";
 import DadosBancariosRevisao from "../pages/DadosBancariosRevisao";
 import DadosBancariosPreenchimento from "../pages/DadosBancariosPreenchimento";
 import BankAccount from "../pages/BankAccount";
-import SignUp from "../pages/SignUp";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
 import RegisterShop from "../pages/RegisterShop";

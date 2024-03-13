@@ -27,7 +27,7 @@ const HasShopVerificationRoute = (params: RouteProps) => {
           setHasShop(true);
         })
         .catch((err) => {
-          if (err.response.status === 401) {
+          if (err.status === 401) {
             clearToken();
           }
           setHasShop(false);
