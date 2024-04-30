@@ -8,11 +8,12 @@ import {responsiveWidth as rw,
   
   export const CONTAINER = styled.div`
   width: ${rw(860)};
-  height: 50px;
+  height: auto;
   padding: 0px 32px;
   border-radius: 8px;
   border: 1px solid black;
-  display: flex;
+  display: flex; /* Altura ajustada automaticamente para manter a proporção */
+  /* Largura máxima para garantir que a imagem não fique muito grande */
   justify-content: space-between;
   align-items: center;
   margin: 0 auto;
@@ -29,11 +30,12 @@ export const MainContainer = styled.div`
 `;
 
 export const Image = styled.img`
-  width: 42px; /* Largura relativa à largura do contêiner pai */
- /* Altura ajustada automaticamente para manter a proporção */
- /* Largura máxima para garantir que a imagem não fique muito grande */
-  margin-right: 12px; /* Espaçamento entre a imagem e o texto */
+  width: 43px;
+  height: 41px; 
+  margin-right: 12px; 
   border-radius: 50%;
+  margin-top: 5px;
+  margin-bottom: 5px;
 `;
 
 export const TitleText = styled.span`
@@ -221,6 +223,7 @@ export const InfoBox = styled.div`
   margin-top:  ${rh(50)};
   box-shadow: 0px 1px 8px 0px #00000029;
   background-color: white; /* Cor de fundo do box */
+
 `;
 
 export const InfoLine = styled.div`
@@ -235,6 +238,8 @@ export const InfoLine = styled.div`
   line-height: 16.94px;
   text-align: left;
   margin-bottom: 8px; /* Adiciona espaçamento entre as linhas */
+  padding-left: 13px;
+  padding-right: 13px;
 `;
 
 export const TotalPaymentInfo = styled.div`
@@ -245,7 +250,8 @@ export const TotalPaymentInfo = styled.div`
   border-top: 1px solid #ccc; /* Adiciona borda superior */
   display: flex;
   justify-content: space-between; /* Espaça os elementos */
-
+  padding-left: 13px;
+  padding-right: 13px;
   font-family: Inter;
   font-size: 16px;
   font-weight: 500;

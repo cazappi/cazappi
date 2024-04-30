@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { CONTAINER,
         Image,
         TitleText,
@@ -56,7 +56,6 @@ const data = [
 const BagList = () => {
 
 
-
     return (
         <div>
             {/* ----------------------- HEADER ----------------------- */}
@@ -71,7 +70,7 @@ const BagList = () => {
                 </CONTAINER>
                 <CustomDiv>
                     <Text1>Itens</Text1>
-                    <Text2 >Esvaziar Sacola</Text2>
+                    <Text2>Esvaziar Sacola</Text2>
                 </CustomDiv>
 
                 <ItemsContainer>
@@ -88,7 +87,7 @@ const BagList = () => {
                     <ItemQuantity>
                         <MinusIcon />
                         <QuantityValue>{item.quantity}</QuantityValue>
-                        <PlusIcon />
+                        <PlusIcon/>
                     </ItemQuantity>
                     </ItemInfo>
                         </ListItemContainer>
