@@ -20,6 +20,7 @@ import Unauthenticated from "../pages/Unauthenticated";
 import PrivateRoute from "./private-route";
 import HasShopVerificationRoute from "./ShopAndLog-route";
 import UpdateShop from "../pages/UpdateShop";
+import ProductView from "../pages/ProductView";
 
 const AppRoutes = () => (
   <>
@@ -31,6 +32,7 @@ const AppRoutes = () => (
       <Route path="/register" element={<Register />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/ProductView" element={<ProductView />}/>
       <Route path="/forgetPass" element={<ForgetPass />} />
       <Route path="/resetpass" element={<ResetPass />} />
       <Route path="/EmailVerification/:token" element={<EmailVerification />} />
