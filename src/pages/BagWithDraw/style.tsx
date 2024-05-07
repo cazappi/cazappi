@@ -6,7 +6,8 @@ import {responsiveWidth as rw,
 
   import { AiFillPlusCircle, AiFillMinusCircle } from 'react-icons/ai';
   import { IconBaseProps } from 'react-icons/lib';
-  import { IoCheckbox } from "react-icons/io5";
+  import { IoCheckboxOutline } from "react-icons/io5";
+  import { MdCheckBoxOutlineBlank } from "react-icons/md";
 
   interface SelectedStyledProps extends IconBaseProps {
     selected: boolean;
@@ -29,7 +30,7 @@ export const DrawText = styled.span`
   font-weight: 400;
   line-height: 15px;
   text-align: left;
-  padding-top: 80px;
+  padding-top: 40px;
   padding-left: ${rw(290)};
 
 
@@ -95,9 +96,12 @@ export const OptionText = styled.span`
   color: ${(props: SelectedStyledProps) => (props.selected ? '#00FF00' : '#909090')};
 `;
 
-export const OptionSelector = styled(IoCheckbox )`
+export const OptionSelector = styled(({ selected, ...props }) =>
+  selected ? <IoCheckboxOutline {...props} /> : <MdCheckBoxOutlineBlank {...props} />
+)`
   color: ${(props: SelectedStyledProps) => (props.selected ? '#00FF00' : '#909090')};
   margin-right: 10px;
+  font-size: 24px;
 `;
 
 export const AddressText = styled.span`
