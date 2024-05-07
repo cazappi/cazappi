@@ -39,7 +39,7 @@ export const DrawText = styled.span`
 export const ContainerBox = styled.div`
     width: ${rw(860)};
     height: 100px;
-    padding: 0px 32px;
+    padding: 10px 32px 0px 32px;
     border-radius: 8px;
     border: 1px solid #909090;
     display: flex; 
@@ -79,6 +79,8 @@ export const Option = styled.div`
   flex-direction: row;
   align-items: center;
   margin-right: 20px;
+  justify-content: center;
+  text-align: center;
   cursor: pointer;
   color: ${(props: SelectedStyledProps) => (props.selected ? '#00FF00' : '#909090')};
 
