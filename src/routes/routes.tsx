@@ -20,7 +20,10 @@ import Unauthenticated from "../pages/Unauthenticated";
 import PrivateRoute from "./private-route";
 import HasShopVerificationRoute from "./ShopAndLog-route";
 import UpdateShop from "../pages/UpdateShop";
+import BagList from "../pages/BagList";
+import BagWithDraw from "../pages/BagWithDraw";
 import ProductView from "../pages/ProductView";
+
 
 const AppRoutes = () => (
   <>
@@ -40,6 +43,8 @@ const AppRoutes = () => (
       <Route path="/BusinessType" element={<BusinessType />} />
       <Route path="/ShopConditions" element={<ShopConditions />} />
       <Route path="/unauthorized" element={<Unauthenticated />} />
+      <Route path="/BagList" element={<BagList />} />
+      <Route path="/BagWithDraw" element={<BagWithDraw />} />
     </Routes>
     <HasShopVerificationRoute path="/registershop" element={<RegisterShop />} />
     <PrivateRoute path="/profile" element={<Profile />} />
