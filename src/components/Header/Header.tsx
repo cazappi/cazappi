@@ -3,6 +3,8 @@ import React, { useState } from "react";
 import logoText from "../../assets/logoText.svg";
 import { getUser } from "../../utils/user-token-request";
 import { clearToken } from "../../utils/clear-cookie";
+import { FaShoppingBag } from "react-icons/fa";
+import { GoPersonFill } from "react-icons/go";
 
 interface HeaderProps {
   transparent: Boolean;
@@ -19,7 +21,7 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
     options:
       "hover:text-PRIMARY hover:scale-110 my-2 hover:shadow-blue-gray-900 duration-300",
     button:
-      "w-24 h-8 my-2 bg-SECONDARY rounded-lg justify-center items-center flex duration-200 hover:shadow-2xl hover:scale-110",
+      "w-24 h-8 my-2 bg-transparent border border-red-500 rounded-full justify-center items-center flex duration-200 hover:shadow-2xl hover:scale-110",
   };
 
   const changeResponsive = (value: boolean) => {
@@ -62,24 +64,33 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
             <a href="/#quemsomos" className={styleGroup.options}>
               Quem somos
             </a>
-            {isAuthenticated ? (
-              <a href="/profile" className={styleGroup.options}>
-                Sua loja
-              </a>
-            ) : undefined}
+      
+      
           </div>
           {isAuthenticated ? (
+            <div className="flex items-center">
+              <a href="/profile" className={`${styleGroup.options} mr-10`}>
+                <FaShoppingBag color='red'/>
+              </a>
+              <a href="/profile" className={`${styleGroup.options} mr-10`}>
+                <GoPersonFill color='red' /> 
+              </a>
+              <a href="/">
+                <button className={styleGroup.button} onClick={clearToken}>
+                  <div className="text-red-500 text-xl font-bold">Logout</div>
+                </button>
+              </a>
+            </div>
+          ) : (
+            <div className="flex items-center">
+
+     
             <a href="/">
               <button className={styleGroup.button} onClick={clearToken}>
-                <div className="text-white text-xl font-bold">Logout</div>
+                <div className="text-red-500 text-xl font-bold">Login</div>
               </button>
             </a>
-          ) : (
-            <a href="/login">
-              <button className={styleGroup.button}>
-                <div className="text-white text-xl font-bold">Login</div>
-              </button>
-            </a>
+          </div>
           )}
         </div>
       ) : (
@@ -97,24 +108,31 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
             <a href="/#quemsomos" className={styleGroup.options}>
               Quem somos
             </a>
-            {isAuthenticated ? (
-              <a href="/profile" className={styleGroup.options}>
-                Sua loja
-              </a>
-            ) : undefined}
+   
           </div>
           {isAuthenticated ? (
+            <div className="flex items-center">
+              <a href="/profile" className={`${styleGroup.options} mr-10`}>
+                <FaShoppingBag color='red' size={24}/>
+              </a>
+              <a href="/profile" className={`${styleGroup.options} mr-10`}>
+                <GoPersonFill color='red' size={24}/> 
+              </a>
+              <a href="/">
+                <button className={styleGroup.button} onClick={clearToken}>
+                  <div className="text-red-500 text-xl font-bold">Logout</div>
+                </button>
+              </a>
+            </div>
+          ) : (
+            <div className="flex items-center">
+
             <a href="/">
               <button className={styleGroup.button} onClick={clearToken}>
-                <div className="text-white text-xl font-bold">Logout</div>
+                <div className="text-red-500 text-xl font-bold">Login</div>
               </button>
             </a>
-          ) : (
-            <a href="/login">
-              <button className={styleGroup.button}>
-                <div className="text-white text-xl font-bold">Login</div>
-              </button>
-            </a>
+          </div>
           )}
         </div>
       )}
