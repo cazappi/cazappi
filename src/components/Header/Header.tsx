@@ -5,6 +5,7 @@ import { getUser } from "../../utils/user-token-request";
 import { clearToken } from "../../utils/clear-cookie";
 import { FaShoppingBag } from "react-icons/fa";
 import { GoPersonFill } from "react-icons/go";
+import { useNavigate } from "react-router-dom";
 
 interface HeaderProps {
   transparent: Boolean;
@@ -13,6 +14,7 @@ interface HeaderProps {
 const Header: React.FC<HeaderProps> = ({ transparent }) => {
   const [responsive, setResponsive] = useState(false);
   const isAuthenticated = getUser().user_id;
+  const navigate = useNavigate();
 
   const styleGroup = {
     headerTransparent:
@@ -42,6 +44,11 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
     window.addEventListener("focus", handleResize);
     window.addEventListener("mousemove", handleResize);
   });
+  
+  const handleLogin = () => {
+    if(localStorage.getItem("token_firebase")) clearToken();
+    navigate('/SignUp');
+  }
 
   return (
     <div
@@ -76,7 +83,7 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
                 <GoPersonFill color='red' /> 
               </a>
               <a href="/">
-                <button className={styleGroup.button} onClick={clearToken}>
+                <button className={styleGroup.button} onClick={handleLogin}>
                   <div className="text-red-500 text-xl font-bold">Logout</div>
                 </button>
               </a>
@@ -86,7 +93,7 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
 
      
             <a href="/">
-              <button className={styleGroup.button} onClick={clearToken}>
+              <button className={styleGroup.button} onClick={handleLogin}>
                 <div className="text-red-500 text-xl font-bold">Login</div>
               </button>
             </a>
@@ -119,7 +126,7 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
                 <GoPersonFill color='red' size={24}/> 
               </a>
               <a href="/">
-                <button className={styleGroup.button} onClick={clearToken}>
+                <button className={styleGroup.button} onClick={handleLogin}>
                   <div className="text-red-500 text-xl font-bold">Logout</div>
                 </button>
               </a>
@@ -128,7 +135,7 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
             <div className="flex items-center">
 
             <a href="/">
-              <button className={styleGroup.button} onClick={clearToken}>
+              <button className={styleGroup.button} onClick={handleLogin}>
                 <div className="text-red-500 text-xl font-bold">Login</div>
               </button>
             </a>

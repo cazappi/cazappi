@@ -24,6 +24,8 @@ import BagList from "../pages/BagList";
 import BagWithDraw from "../pages/BagWithDraw";
 import ProductView from "../pages/ProductView";
 
+import ShopManageInventoryMain from "../pages/Shop/ManageInventory/Main";
+import ShopRegisteredProductsMain from "../pages/Shop/RegisteredProducts/Main";
 
 const AppRoutes = () => (
   <>
@@ -45,6 +47,9 @@ const AppRoutes = () => (
       <Route path="/unauthorized" element={<Unauthenticated />} />
       <Route path="/BagList" element={<BagList />} />
       <Route path="/BagWithDraw" element={<BagWithDraw />} />
+
+      <Route path="/ShopManageInventory" element={<ShopManageInventoryMain />} />
+      <Route path="/ShopRegisteredProducts" element={<ShopRegisteredProductsMain />} />
     </Routes>
     <HasShopVerificationRoute path="/registershop" element={<RegisterShop />} />
     <PrivateRoute path="/profile" element={<Profile />} />
