@@ -23,6 +23,8 @@ import UpdateShop from "../pages/UpdateShop";
 import BagList from "../pages/BagList";
 import BagWithDraw from "../pages/BagWithDraw";
 import ProductView from "../pages/ProductView";
+import RegisterProduct from "../pages/RegisterProduct";
+import EditProduct from "../pages/EditProduct";
 
 
 const AppRoutes = () => (
@@ -36,6 +38,8 @@ const AppRoutes = () => (
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/ProductView" element={<ProductView />}/>
+      <Route path="/RegisterProduct" element={<RegisterProduct />}/>
+      <Route path="/EditProduct" element={<EditProduct />}/>
       <Route path="/forgetPass" element={<ForgetPass />} />
       <Route path="/resetpass" element={<ResetPass />} />
       <Route path="/EmailVerification/:token" element={<EmailVerification />} />
