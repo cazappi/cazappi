@@ -9,28 +9,15 @@ interface ChatProps {
 
 interface ChatCardProps {
   chat: ChatProps;
-  selected?: boolean;
-  onClick?: (chatId: string) => void;
 }
 
-const ChatCard = ({
-  chat,
-  selected = false,
-  onClick = () => {},
-}: ChatCardProps) => {
+const ChatCard = ({ chat }: ChatCardProps) => {
   return (
     <Link
-      to={"#paginasecreta"}
-      onClick={() => onClick(chat.id)}
-      className={`flex flex-col w-full hover:opacity-60 ${
-        selected ? "border-PRIMARY" : "border-[#909090]"
-      } border-solid rounded-lg border-2 p-3 gap-3 relative`}
+      to={`/shopkeeper/chats/${chat.id}`}
+      className={`flex flex-col w-full hover:opacity-60 hover:border-PRIMARY border-[#909090] border-solid rounded-lg border-2 p-3 gap-3 relative`}
     >
-      <h3
-        className={`font-medium text-sm leading-4 ${
-          selected ? "text-PRIMARY" : ""
-        }`}
-      >
+      <h3 className={`font-medium text-sm leading-4 hover:text-PRIMARY`}>
         Pedido #1
       </h3>
       <div className="flex flex-row gap-2 items-center w-[44.75%] cursor-pointer">

@@ -4,12 +4,6 @@ import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 
 const MinhasConversasLojista = () => {
-  const [chatSelectedId, setChatSelectedId] = useState<string>("");
-
-  const handleSelectChat = (chatId: string) => {
-    setChatSelectedId(chatId);
-  };
-
   return (
     <div className="min-h-screen w-full flex flex-col overflow-x-hidden">
       <Header transparent={false} />
@@ -21,17 +15,7 @@ const MinhasConversasLojista = () => {
           <div className="w-full bg-PRIMARY h-[2px]"></div>
           <ul className="flex w-full flex-col gap-6">
             {Array.from([{ id: "1" }, { id: "2" }]).map((chat) => {
-              return (
-                <li key={chat.id}>
-                  {
-                    <ChatCard
-                      chat={chat}
-                      onClick={() => handleSelectChat(chat.id)}
-                      selected={chatSelectedId === chat.id}
-                    />
-                  }
-                </li>
-              );
+              return <li key={chat.id}>{<ChatCard chat={chat} />}</li>;
             })}
           </ul>
         </div>

@@ -46,8 +46,9 @@ const AppRoutes = () => (
       <Route path="/unauthorized" element={<Unauthenticated />} />
       <Route path="/BagList" element={<BagList />} />
       <Route path="/BagWithDraw" element={<BagWithDraw />} />
-      {/*TODO: rota abaixo deve ser privada*/}
-      <Route path="/MinhasConversasLojista" element={<MinhasConversasLojista />} />
+      {/*TODO: 2 rotas abaixo devem ser privadas*/}
+      <Route path="/shopkeeper/chats" element={<MinhasConversasLojista />} />
+      <Route path="/shopkeeper/chats/:chatId" element={<MinhasConversasLojista />} />
     </Routes>
     <HasShopVerificationRoute path="/registershop" element={<RegisterShop />} />
     <PrivateRoute path="/profile" element={<Profile />} />
