@@ -23,6 +23,7 @@ import UpdateShop from "../pages/UpdateShop";
 import BagList from "../pages/BagList";
 import BagWithDraw from "../pages/BagWithDraw";
 import ProductView from "../pages/ProductView";
+import MinhasConversasLojista from "../pages/MinhasConversasLojista";
 
 
 const AppRoutes = () => (
@@ -45,6 +46,8 @@ const AppRoutes = () => (
       <Route path="/unauthorized" element={<Unauthenticated />} />
       <Route path="/BagList" element={<BagList />} />
       <Route path="/BagWithDraw" element={<BagWithDraw />} />
+      {/*TODO: rota abaixo deve ser privada*/}
+      <Route path="/MinhasConversasLojista" element={<MinhasConversasLojista />} />
     </Routes>
     <HasShopVerificationRoute path="/registershop" element={<RegisterShop />} />
     <PrivateRoute path="/profile" element={<Profile />} />
