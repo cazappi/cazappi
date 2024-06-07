@@ -4,12 +4,17 @@ import Header from "../../components/Header/Header";
 import { Chat, MessageRole } from "../../components/ChatCard";
 import { FormEvent, useEffect, useState } from "react";
 import ChatMessage from "../../components/ChatMessage";
+import { db } from "../../App";
+import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { getUser } from "../../utils/user-token-request";
 
 const MinhaConversaLojista = () => {
   const { chatId } = useParams();
 
   const [chat, setChat] = useState<Chat>({} as Chat);
   const [message, setMessage] = useState<string>("");
+
+  const userId = getUser().user_id;
 
   useEffect(() => {
     async function fetchChat() {
@@ -47,11 +52,23 @@ const MinhaConversaLojista = () => {
 
   const formattedDate = chat?.orderDate ? formatDate(chat.orderDate) : "";
 
-  const handleSubmitMessage = (e: FormEvent) => {
-    e.preventDefault();
+  const handleSubmitMessage = async (event: FormEvent) => {
+    event.preventDefault();
+    if (message.trim() === "") {
+      setMessage("");
+      return;
+    }
+
+    // const { uid, displayName, photoURL } = auth.currentUser;
+    await addDoc(collection(db, "messages"), {
+      text: message,
+      name: "",
+      avatar: "",
+      createdAt: serverTimestamp(),
+      uid: "",
+    });
     setMessage("");
-    console.log("submitted!");
-  }
+  };
 
 
   return (

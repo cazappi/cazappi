@@ -59,7 +59,7 @@ const Profile = () => {
   }
 
   function formaterScheduleTime() {
-    const schedule = store.store ? store.store?.schedule[0] : undefined;
+    const schedule = store.store?.schedule?.[0];
     const time = [];
 
     if (schedule) {

@@ -48,7 +48,7 @@ const ChatCard = ({ chat }: ChatProps) => {
       </h3>
       <div className="flex flex-row gap-2 items-center w-[44.75%] cursor-pointer">
         <img src={MessageIcon} alt="Message icon" className="w-4 h-4" />
-        <p className="font-normal text-xs text-[#909090] w-[84.35%] overflow-hidden whitespace-nowrap text-ellipsis">
+        <p className="font-normal text-xs text-[#909090] max-w-[84.35%] overflow-hidden whitespace-nowrap text-ellipsis">
           {chat.messages[chat.messages.length - 1].text}
         </p>
         <img src={ArrowIcon} alt="Arrow icon" className="w-6 h-6" />
