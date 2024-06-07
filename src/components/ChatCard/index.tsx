@@ -3,8 +3,8 @@ import ArrowIcon from "../../assets/right_arrow_icon.svg";
 import { Link } from "react-router-dom";
 
 export enum MessageRole {
-  CLIENT,
-  SHOPKEEPER,
+  client = "client",
+  shopkeeper = "shopkeeper",
 }
 
 export interface MessageProps {

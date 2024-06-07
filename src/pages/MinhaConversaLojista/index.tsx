@@ -5,8 +5,9 @@ import { Chat, MessageRole } from "../../components/ChatCard";
 import { FormEvent, useEffect, useState } from "react";
 import ChatMessage from "../../components/ChatMessage";
 import { db } from "../../App";
-import { addDoc, collection, serverTimestamp } from "firebase/firestore";
+import { doc, getDoc, updateDoc, arrayUnion, serverTimestamp, FieldValue } from "firebase/firestore";
 import { getUser } from "../../utils/user-token-request";
+import { v4 as uuidv4 } from 'uuid';
 
 const MinhaConversaLojista = () => {
   const { chatId } = useParams();
@@ -14,30 +15,29 @@ const MinhaConversaLojista = () => {
   const [chat, setChat] = useState<Chat>({} as Chat);
   const [message, setMessage] = useState<string>("");
 
-  const userId = getUser().user_id;
+  const user = getUser();
 
   useEffect(() => {
     async function fetchChat() {
-      //const response = await axios.get(`/chat/${chatId}`);
-      //setChat(response.data);
-      setChat({
-        id: chatId!,
-        messages: [
-          {
-            id: "1",
-            text: "To com um problema aí na tua loja meu parceiro",
-            updatedAt: new Date(),
-            role: MessageRole.CLIENT,
-          },
-          {
-            id: "2",
-            text: "Problema seu paizão",
-            updatedAt: new Date(),
-            role: MessageRole.SHOPKEEPER,
-          },
-        ],
-        orderDate: new Date(),
-      });
+      const chatRef = doc(db, "conversations", chatId!);
+      const chatSnap = await getDoc(chatRef);
+
+      if (chatSnap.exists()) {
+        const data = chatSnap.data();
+        const chatData: Chat = {
+          id: data.id,
+          messages: data.messages.map((message: any) => ({
+            id: message.id,
+            text: message.text,
+            updatedAt: message.updatedAt.toDate(),
+            role: message.role,
+          })),
+          orderDate: data.orderDate.toDate(),
+        };
+        setChat(chatData);
+      } else {
+        console.log("No such document!");
+      }
     }
 
     fetchChat();
@@ -59,17 +59,39 @@ const MinhaConversaLojista = () => {
       return;
     }
 
-    // const { uid, displayName, photoURL } = auth.currentUser;
-    await addDoc(collection(db, "messages"), {
+    const newMessage = {
+      id: uuidv4(),
       text: message,
-      name: "",
-      avatar: "",
-      createdAt: serverTimestamp(),
-      uid: "",
+      updatedAt: new Date(),
+      role: MessageRole.shopkeeper,
+    };
+
+    const chatRef = doc(db, "conversations", chatId!);
+
+
+    await updateDoc(chatRef, {
+      messages: arrayUnion(newMessage),
     });
+
+
+    const chatSnap = await getDoc(chatRef);
+    if (chatSnap.exists()) {
+      const data = chatSnap.data();
+      const updatedChat: Chat = {
+        id: data.id,
+        messages: data.messages.map((message: any) => ({
+          id: message.id,
+          text: message.text,
+          updatedAt: message.updatedAt.toDate(),
+          role: message.role,
+        })),
+        orderDate: data.orderDate.toDate(),
+      };
+      setChat(updatedChat);
+    }
+
     setMessage("");
   };
-
 
   return (
     <div className="min-h-screen w-full flex flex-col overflow-x-hidden">
