@@ -2,7 +2,6 @@ import { useEffect, useState } from "react";
 import ChatCard, { Chat, MessageRole } from "../../components/ChatCard";
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
-import { getUser } from "../../utils/user-token-request";
 import api from "../../services/api";
 import { getToken } from "../../utils/get-cookie";
 import { clearToken } from "../../utils/clear-cookie";
@@ -21,47 +20,47 @@ import { db } from "../../App";
 interface ChatOrder {
   id: string;
   orderDate: Date;
+  name: string;
+  shopkeeperId: string;
 }
 
-const MinhasConversasLojista = () => {
-  const shopkeeper = getUser();
-  const [shopkeeperChats, setShopkeeperChats] = useState<Chat[]>([]);
+const MinhasConversasCliente = () => {
+  const [clientChats, setClientChats] = useState<Chat[]>([]);
   const navigate = useNavigate();
 
   useEffect(() => {
     const getOrders = async () => {
       try {
-        const storesResponse = await api.get(`store/${shopkeeper.user_id}`, {
+        // Buscando pedidos do cliente
+        const ordersResponse = await api.get(`/order`, {
           headers: {
             Authorization: `Bearer ${getToken()}`,
           },
         });
-        const storeNames = storesResponse.data.store.map(
-          (store: { name: string }) => store.name
-        );
 
-        const orderPromises = storeNames.map(async (storeName: string) => {
-          const ordersResponse = await api.get(`/order/store/${storeName}`, {
+        const orders = ordersResponse.data.map((order: { id: string; moment: Date; shopkeeperId: string }) => ({
+          id: order.id,
+          orderDate: order.moment,
+          shopkeeperId: order.shopkeeperId,
+        }));
+
+        // Ordenar os pedidos pela propriedade "orderDate"
+        const sortedOrders = orders.sort((a: any, b: any) => new Date(a.orderDate).getTime() - new Date(b.orderDate).getTime());
+
+        // Recuperando as lojas
+        const shopkeeperIds = Array.from(new Set(orders.map((order: any) => order.shopkeeperId)));
+
+        const storePromises = shopkeeperIds.map(async (shopkeeperId) => {
+          const storeResponse = await api.get(`/store/${shopkeeperId}`, {
             headers: {
               Authorization: `Bearer ${getToken()}`,
             },
           });
-          return ordersResponse.data.map(
-            (order: { id: string; moment: Date }) => ({
-              id: order.id,
-              orderDate: order.moment,
-            })
-          );
+          return storeResponse.data;
         });
 
-        const orderArrays = await Promise.all(orderPromises);
-        const allOrders = orderArrays.flat();
-
-        // Ordenar os pedidos pela propriedade "moment"
-        const sortedOrders = allOrders.sort(
-          (a, b) => new Date(a.moment).getTime() - new Date(b.moment).getTime()
-        );
-
+        const stores = await Promise.all(storePromises);
+        const storeMap = new Map(stores.map(store => [store.id, { name: store.name, imagePerfil: store.imagePerfil }]));
 
         // Fetch conversations from Firestore
         const fetchConversations = async (orders: ChatOrder[]) => {
@@ -88,6 +87,8 @@ const MinhasConversasLojista = () => {
                         role: message.role,
                       })),
                       orderDate: data.orderDate.toDate(),
+                      storeName: storeMap.get(order.shopkeeperId)?.name,
+                      storeImagePerfil: storeMap.get(order.shopkeeperId)?.imagePerfil,
                     };
                     resolve(chat);
                   });
@@ -97,7 +98,7 @@ const MinhasConversasLojista = () => {
           });
 
           const chats = await Promise.all(chatPromises);
-          setShopkeeperChats(chats.filter((chat) => chat !== null) as Chat[]);
+          setClientChats(chats.filter((chat) => chat !== null) as Chat[]);
         };
 
         fetchConversations(sortedOrders);
@@ -124,9 +125,9 @@ const MinhasConversasLojista = () => {
           </h1>
           <div className="w-full bg-PRIMARY h-[2px]"></div>
           <ul className="flex w-full flex-col gap-6">
-            {shopkeeperChats.map((chat) => (
+            {clientChats.map((chat) => (
               <li key={chat.id}>
-                <ChatCard chat={chat} role={MessageRole.shopkeeper} />
+                <ChatCard chat={chat} role={MessageRole.client} />
               </li>
             ))}
           </ul>
@@ -137,4 +138,4 @@ const MinhasConversasLojista = () => {
   );
 };
 
-export default MinhasConversasLojista;
+export default MinhasConversasCliente;

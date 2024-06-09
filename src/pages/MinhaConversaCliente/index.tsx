@@ -6,14 +6,14 @@ import { FormEvent, useEffect, useState } from "react";
 import ChatMessage from "../../components/ChatMessage";
 import { db } from "../../App";
 import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
-import { v4 as uuidv4 } from 'uuid';
+import { v4 as uuidv4 } from "uuid";
+import NoImage from "../../assets/no-image-icon.png";
 
-const MinhaConversaLojista = () => {
+const MinhaConversaCliente = () => {
   const { chatId } = useParams();
 
   const [chat, setChat] = useState<Chat>({} as Chat);
   const [message, setMessage] = useState<string>("");
-
 
   useEffect(() => {
     async function fetchChat() {
@@ -61,16 +61,14 @@ const MinhaConversaLojista = () => {
       id: uuidv4(),
       text: message,
       updatedAt: new Date(),
-      role: MessageRole.shopkeeper,
+      role: MessageRole.client, // Ajustado para client
     };
 
     const chatRef = doc(db, "conversations", chatId!);
 
-
     await updateDoc(chatRef, {
       messages: arrayUnion(newMessage),
     });
-
 
     const chatSnap = await getDoc(chatRef);
     if (chatSnap.exists()) {
@@ -96,9 +94,16 @@ const MinhaConversaLojista = () => {
       <Header transparent={false} />
       <div className="w-full flex flex-col items-center p-6 h-[80vh]">
         <div className="w-[71.42%] max-w-[800px] flex flex-col items-center gap-6 h-full">
-          <h1 className="text-PRIMARY font-medium text-[30px] sm:text-[4.28vw] leading-[56px]">
-            Pedido {chatId}
-          </h1>
+          <div className="flex flex-row gap-4 items-center">
+            <img
+              width={43}
+              height={41}
+              src={chat.storeImagePerfil ?? NoImage}
+              alt={chat.storeName ? chat.storeName + " logo" : "Store logo"}
+              className="rounded-[56px]"
+            />
+            <h1 className="text-2xl leading-7">{chat.storeName}</h1>
+          </div>
           <div className="w-full bg-PRIMARY h-[2px]"></div>
           <div className="w-[47.875%] flex flex-col items-center gap-6">
             <p className="text-[#909090] font-normal text-[14px] leading-3 flex flex-row gap-2 items-center">
@@ -122,7 +127,7 @@ const MinhaConversaLojista = () => {
                       text={message.text}
                       updatedAt={message.updatedAt}
                       role={message.role}
-                      user={MessageRole.shopkeeper}
+                      user={MessageRole.client}
                     />
                   </li>
                 );
@@ -146,4 +151,4 @@ const MinhaConversaLojista = () => {
   );
 };
 
-export default MinhaConversaLojista;
+export default MinhaConversaCliente;

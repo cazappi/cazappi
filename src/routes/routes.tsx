@@ -25,6 +25,8 @@ import BagWithDraw from "../pages/BagWithDraw";
 import ProductView from "../pages/ProductView";
 import MinhasConversasLojista from "../pages/MinhasConversasLojista";
 import MinhaConversaLojista from "../pages/MinhaConversaLojista";
+import MinhasConversasCliente from "../pages/MinhasConversasCliente";
+import MinhaConversaCliente from "../pages/MinhaConversaCliente";
 
 
 const AppRoutes = () => (
@@ -51,8 +53,8 @@ const AppRoutes = () => (
     <PrivateRoute path="/shopkeeper/order-chats" element={<MinhasConversasLojista />} />
     <PrivateRoute path="/shopkeeper/order-chats/:chatId" element={<MinhaConversaLojista />} />
 
-    <PrivateRoute path="/client/order-chats" element={<MinhasConversasLojista />} />
-    <PrivateRoute path="/client/order-chats/:chatId" element={<MinhaConversaLojista />} />
+    <PrivateRoute path="/client/order-chats" element={<MinhasConversasCliente />} />
+    <PrivateRoute path="/client/order-chats/:chatId" element={<MinhaConversaCliente />} />
     <HasShopVerificationRoute path="/registershop" element={<RegisterShop />} />
     <PrivateRoute path="/profile" element={<Profile />} />
     <PrivateRoute
