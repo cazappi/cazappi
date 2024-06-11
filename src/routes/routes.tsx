@@ -25,6 +25,8 @@ import BagWithDraw from "../pages/BagWithDraw";
 import ProductView from "../pages/ProductView";
 import RegisterProduct from "../pages/RegisterProduct";
 import EditProduct from "../pages/EditProduct";
+import BagPagment from "../pages/BagPagment";
+import OrderHistoryClient from "../pages/OrderHistoryClient";
 
 
 const AppRoutes = () => (
@@ -38,6 +40,8 @@ const AppRoutes = () => (
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/ProductView" element={<ProductView />}/>
+      <Route path="/BagPagment" element={<BagPagment />}/>
+      <Route path="/OrderHistoryClient" element={<OrderHistoryClient />}/>
       <Route path="/RegisterProduct" element={<RegisterProduct />}/>
       <Route path="/EditProduct" element={<EditProduct />}/>
       <Route path="/forgetPass" element={<ForgetPass />} />
