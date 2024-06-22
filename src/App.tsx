@@ -3,6 +3,8 @@ import { BrowserRouter } from "react-router-dom";
 import AppRoutes from "./routes/routes";
 import { Helmet } from "react-helmet";
 import { initializeApp } from "firebase/app";
+import { getAuth } from "firebase/auth";
+import { getFirestore } from "firebase/firestore";
 
 // TODO: colocar esses dados de uma maneira mais segura, talvez em um .env
 var firebaseConfig = {
@@ -17,6 +19,8 @@ var firebaseConfig = {
 };
 // Inicialize o Firebase
 export const app = initializeApp(firebaseConfig);
+export const auth = getAuth(app);
+export const db = getFirestore(app);
 
 const App = () => {
   return (

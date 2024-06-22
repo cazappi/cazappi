@@ -23,6 +23,10 @@ import UpdateShop from "../pages/UpdateShop";
 import BagList from "../pages/BagList";
 import BagWithDraw from "../pages/BagWithDraw";
 import ProductView from "../pages/ProductView";
+import MinhasConversasLojista from "../pages/MinhasConversasLojista";
+import MinhaConversaLojista from "../pages/MinhaConversaLojista";
+import MinhasConversasCliente from "../pages/MinhasConversasCliente";
+import MinhaConversaCliente from "../pages/MinhaConversaCliente";
 import RegisterProduct from "../pages/RegisterProduct";
 import EditProduct from "../pages/EditProduct";
 import BagPagment from "../pages/BagPagment";
@@ -54,6 +58,11 @@ const AppRoutes = () => (
       <Route path="/BagList" element={<BagList />} />
       <Route path="/BagWithDraw" element={<BagWithDraw />} />
     </Routes>
+    <PrivateRoute path="/shopkeeper/order-chats" element={<MinhasConversasLojista />} />
+    <PrivateRoute path="/shopkeeper/order-chats/:chatId" element={<MinhaConversaLojista />} />
+
+    <PrivateRoute path="/client/order-chats" element={<MinhasConversasCliente />} />
+    <PrivateRoute path="/client/order-chats/:chatId" element={<MinhaConversaCliente />} />
     <HasShopVerificationRoute path="/registershop" element={<RegisterShop />} />
     <PrivateRoute path="/profile" element={<Profile />} />
     <PrivateRoute
