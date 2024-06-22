@@ -31,6 +31,8 @@ import RegisterProduct from "../pages/RegisterProduct";
 import EditProduct from "../pages/EditProduct";
 import BagPagment from "../pages/BagPagment";
 import OrderHistoryClient from "../pages/OrderHistoryClient";
+import ShopkeeperConfig from "../pages/ShopkeeperConfig";
+import ShopkeeperFinish from "../pages/ShopkeeperConfig/ShopkeeperFinish";
 
 
 const AppRoutes = () => (
@@ -63,6 +65,9 @@ const AppRoutes = () => (
 
     <PrivateRoute path="/client/order-chats" element={<MinhasConversasCliente />} />
     <PrivateRoute path="/client/order-chats/:chatId" element={<MinhaConversaCliente />} />
+
+    <PrivateRoute path="/shopkeeper/config" element={<ShopkeeperConfig />} />
+    <PrivateRoute path="/shopkeeper/finish" element={<ShopkeeperFinish />} />
     <HasShopVerificationRoute path="/registershop" element={<RegisterShop />} />
     <PrivateRoute path="/profile" element={<Profile />} />
     <PrivateRoute
