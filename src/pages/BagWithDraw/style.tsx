@@ -16,24 +16,18 @@ import {responsiveWidth as rw,
 
 export const MainContainer = styled.div`
   display: flex;
-
-  padding-bottom: 100px; /* Adiciona espaço para o rodapé */
+  padding-bottom: 100px;
   flex-direction: column;
-  
-
 `;
-
 
 export const DrawText = styled.span`
   font-family: Inter;
-  font-size: 24px
+  font-size: 24px;
   font-weight: 400;
   line-height: 15px;
   text-align: left;
   padding-top: 40px;
   padding-left: ${rw(290)};
-
-
 `;
 
 export const ContainerBox = styled.div`
@@ -50,28 +44,17 @@ export const ContainerBox = styled.div`
     margin-top: 20px;
     flex-direction: column;
     align-items: flex-start; 
-
-
 `;
 
 export const RetirarLoja = styled.div`
   display: flex;
-  
   flex-direction: row;
-  
-
 `;
 
 export const ReceberEntrega = styled.div`
   display: flex;
- 
   flex-direction: row;
-  
-
 `;
-
-
-
 
 export const Option = styled.div`
   display: flex;
@@ -108,37 +91,33 @@ export const OptionSelector = styled(({ selected, ...props }) =>
 
 export const AddressText = styled.span`
   font-family: Inter;
-  font-size: 24px
+  font-size: 24px;
   font-weight: 400;
   line-height: 15px;
   text-align: left;
   padding-top: 40px;
   padding-left: ${rw(290)};
-
-
 `;
 
+/*color: ${(props: SelectedStyledProps) => (props.selected ? '#00FF00' : '#909090')};*/
 export const AdressContainer1 = styled.div`
     width: ${rw(860)};
     height: auto;
-    padding: 0px 13px;
+    padding: 16px;
     border-radius: 8px;
    
     display: flex; 
-    align-items: center;
-    justify-content: center;
-    text-align: center;
     margin: 0 auto;
     margin-top: 20px;
-    flex-direction: column;
-    align-items: flex-start; 
-    background-color: black;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    background-color: ${(props: {delivery: boolean}) => (props.delivery ? '#EB1212' : 'black')};
+    cursor: pointer;
 
 `;
 
 export const StreetText = styled.span`
-  margin-top: 13px;
-  margin-left: 10px;
   color: white;
   font-family: Inter;
   font-size: 14px;
@@ -146,9 +125,7 @@ export const StreetText = styled.span`
 `;
 
 export const NeibText = styled.span`
-  margin-left: 10px;
   color: white;
-  margin-bottom: 13px;
   font-family: Inter;
   font-size: 14px;
 `;
@@ -158,11 +135,8 @@ export const CopyButton = styled.span`
   font-size: 14px;
   font-weight: 300;
   line-height: 15px;
-  
-
-
-
 `;
+
 export const CopyContainer = styled.div`
   display: flex;
   flex-direction: row;
@@ -175,6 +149,7 @@ export const CopyContainer = styled.div`
   text-align: center; /* Ajuste de texto centralizado */
   margin: 0 auto;
 `;
+
 export const ContinueButton = styled.button`
   width: fit-content; /* Ajusta a largura ao conteúdo */
   height: 33px; /* Altura fixa */
@@ -197,6 +172,29 @@ export const ContinueButton = styled.button`
   display: block; /* Exibir como bloco para ocupar a largura total disponível */
   margin-left: auto; /* Alinha horizontalmente */
   margin-right: auto; /* Alinha horizontalmente */
- 
- 
+`;
+
+export const TimeAndPriceContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 12px;
+  margin-top: 100px;
+  padding: 8px 0px;
+  width: ${rw(860)};
+  align-self: center;
+  border-top: 1px solid black;
+`;
+
+
+export const EstimatedTimeContainer = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
+`;
+
+export const WithDrawPrice = styled.div`
+  display: flex;
+  flex-direction: row;
+  justify-content: space-between;
 `;
