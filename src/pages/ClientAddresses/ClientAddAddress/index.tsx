@@ -5,51 +5,35 @@ import ArrowBack from "../../../assets/arrow_back.svg";
 import SearchIcon from "../../../assets/search_icon.svg";
 import CloseIcon from "../../../assets/close.svg";
 import { useEffect, useState } from "react";
-import { getUser } from "../../../utils/user-token-request";
-import { ClientAddress, clientAddressesMock } from "..";
-import api from "../../../services/api";
-import { getToken } from "../../../utils/get-cookie";
 import LocationIcon from "../../../assets/location_on.svg";
 import AddressNotFoundIcon from "../../../assets/address_not_found.svg";
+import axios from "axios";
+
+const API_KEY = "SUA_CHAVE_API_AQUI";
 
 const ClientAddAddress = () => {
   const [searchText, setSearchText] = useState("");
-  const user = getUser();
-  const userId = user.user_id;
+  const [addresses, setAddresses] = useState<any[]>([]);
 
-  const [addresses, setAddresses] = useState<ClientAddress[]>([]);
-
-  useEffect(() => {
-    const fetchUserAddresses = async () => {
-      try {
-        const response = await api.get(`/user/${userId}/address`, {
-          headers: {
-            Authorization: `Bearer ${getToken()}`,
-          },
-        });
-        console.log("Addresses retrieved: ");
-        console.log(response.data);
-        setAddresses(response.data);
-      } catch (error) {
-        console.error("Error fetching user addresses: ", error);
-      }
-    };
-
-    fetchUserAddresses();
-  }, [userId]);
-
-  // FIXME: buscando os endereços do mock mas buscar do google depois
   useEffect(() => {
     if (searchText) {
-      const filteredAddresses = clientAddressesMock.filter((address) => {
-        return (
-          address.city.toLowerCase().includes(searchText.toLowerCase()) ||
-          address.state.toLowerCase().includes(searchText.toLowerCase()) ||
-          address.street?.toLowerCase().includes(searchText.toLowerCase()) ||
-          address.district?.toLowerCase().includes(searchText.toLowerCase())
-        );
-      });
-      setAddresses(filteredAddresses);
+      const fetchAddresses = async () => {
+        try {
+          const response = await axios.get(
+            `https://maps.googleapis.com/maps/api/place/autocomplete/json?input=${searchText}&key=${API_KEY}&components=country:br`
+          );
+          const addressData = response.data.predictions.map((prediction: any) => ({
+            id: prediction.place_id,
+            description: prediction.description
+          }));
+          setAddresses(addressData);
+        } catch (error) {
+          console.error("Error fetching addresses:", error);
+          setAddresses([]);
+        }
+      };
+
+      fetchAddresses();
     } else {
       setAddresses([]);
     }
@@ -59,10 +43,7 @@ const ClientAddAddress = () => {
     <div className="min-h-screen flex flex-col w-full">
       <Header transparent={false} />
       <main className="flex flex-grow flex-col gap-4 py-[100px] w-[76%] self-center">
-        <Link
-          className="flex flex-row gap-2 items-center text-PRIMARY font-medium w-fit"
-          to="/client/address"
-        >
+        <Link className="flex flex-row gap-2 items-center text-PRIMARY font-medium w-fit" to="/client/address">
           <img src={ArrowBack} alt="Voltar" />
           <span>Voltar</span>
         </Link>
@@ -76,12 +57,7 @@ const ClientAddAddress = () => {
             placeholder="Busque por um endereço"
             className="flex-grow border-none bg-transparent"
           />
-          <img
-            src={CloseIcon}
-            alt="Limpar"
-            className="cursor-pointer hidden sm:block"
-            onClick={() => setSearchText("")}
-          />
+          <img src={CloseIcon} alt="Limpar" className="cursor-pointer hidden sm:block" onClick={() => setSearchText("")} />
         </div>
 
         {addresses && addresses.length > 0 && (
@@ -93,21 +69,10 @@ const ClientAddAddress = () => {
               >
                 <Link to={`/client/address/add/${address.id}`} className="flex flex-row gap-6 w-full">
                   <div className="w-12 h-12 flex justify-center items-center">
-                    <img
-                      src={LocationIcon}
-                      alt="Localização"
-                      width={40}
-                      height={40}
-                    />
+                    <img src={LocationIcon} alt="Localização" width={40} height={40} />
                   </div>
                   <div className="flex flex-col justify-center items-start text-[#909090]">
-                    <span>
-                      {address.street}, {address.number}
-                    </span>
-                    <span>
-                      {address.district}, {address.city} - {address.state}
-                    </span>
-                    <span>{address.complement}</span>
+                    <span>{address.description}</span>
                   </div>
                 </Link>
               </li>
