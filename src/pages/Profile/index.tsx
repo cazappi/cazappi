@@ -93,7 +93,7 @@ const Profile = () => {
           Personalize seu negócio para deixa-lo mais atrativo
         </div>
 
-        {!loading && hasShop ? (
+        {/* !loading && */ /* hasShop */ true ? (
           <div className="self-stretch overflow-hidden flex flex-col md:flex-row items-center justify-center gap-[100px] text-base ">
             <div className="relative rounded-3xl box-border w-[350px] h-[620px] overflow-hidden shrink-0 border-PRIMARY border-2">
               <img

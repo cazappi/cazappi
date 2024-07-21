@@ -12,7 +12,7 @@ const PrivateRoute = (params: RouteProps) => {
     <Routes>
       <Route
         {...params}
-        element={user_id ? params.element : <Navigate to="/unauthorized" />}
+        element={/* user_id */ true ? params.element : <Navigate to="/unauthorized" />}
       />
     </Routes>
   );

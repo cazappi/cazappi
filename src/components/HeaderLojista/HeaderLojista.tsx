@@ -121,7 +121,7 @@ const HeaderLojista: React.FC<HeaderProps> = ({ transparent }) => {
             </div>
           </div>
 
-          {isAuthenticated ? (
+          {/* isAuthenticated */ true ? (
             <Relative>
               {/* icone PROFILE - lOGADO */}
               <button className="hover:shadow-2xl hover:scale-110" onClick={mudarMenu}>
@@ -195,7 +195,7 @@ const HeaderLojista: React.FC<HeaderProps> = ({ transparent }) => {
                 </a>
             </div>
         </div>
-        {isAuthenticated ? 
+        {/* isAuthenticated */ true ? 
             (  
               <Relative>
                 {/* icone PROFILE - lOGADO */}
