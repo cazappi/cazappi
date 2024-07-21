@@ -23,6 +23,16 @@ import UpdateShop from "../pages/UpdateShop";
 import BagList from "../pages/BagList";
 import BagWithDraw from "../pages/BagWithDraw";
 import ProductView from "../pages/ProductView";
+import MinhasConversasLojista from "../pages/MinhasConversasLojista";
+import MinhaConversaLojista from "../pages/MinhaConversaLojista";
+import MinhasConversasCliente from "../pages/MinhasConversasCliente";
+import MinhaConversaCliente from "../pages/MinhaConversaCliente";
+import RegisterProduct from "../pages/RegisterProduct";
+import EditProduct from "../pages/EditProduct";
+import BagPagment from "../pages/BagPagment";
+import OrderHistoryClient from "../pages/OrderHistoryClient";
+import ShopkeeperConfig from "../pages/ShopkeeperConfig";
+import ShopkeeperFinish from "../pages/ShopkeeperConfig/ShopkeeperFinish";
 
 
 const AppRoutes = () => (
@@ -36,6 +46,10 @@ const AppRoutes = () => (
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
       <Route path="/ProductView" element={<ProductView />}/>
+      <Route path="/BagPagment" element={<BagPagment />}/>
+      <Route path="/OrderHistoryClient" element={<OrderHistoryClient />}/>
+      <Route path="/RegisterProduct" element={<RegisterProduct />}/>
+      <Route path="/EditProduct" element={<EditProduct />}/>
       <Route path="/forgetPass" element={<ForgetPass />} />
       <Route path="/resetpass" element={<ResetPass />} />
       <Route path="/EmailVerification/:token" element={<EmailVerification />} />
@@ -46,6 +60,14 @@ const AppRoutes = () => (
       <Route path="/BagList" element={<BagList />} />
       <Route path="/BagWithDraw" element={<BagWithDraw />} />
     </Routes>
+    <PrivateRoute path="/shopkeeper/order-chats" element={<MinhasConversasLojista />} />
+    <PrivateRoute path="/shopkeeper/order-chats/:chatId" element={<MinhaConversaLojista />} />
+
+    <PrivateRoute path="/client/order-chats" element={<MinhasConversasCliente />} />
+    <PrivateRoute path="/client/order-chats/:chatId" element={<MinhaConversaCliente />} />
+
+    <PrivateRoute path="/shopkeeper/config" element={<ShopkeeperConfig />} />
+    <PrivateRoute path="/shopkeeper/finish" element={<ShopkeeperFinish />} />
     <HasShopVerificationRoute path="/registershop" element={<RegisterShop />} />
     <PrivateRoute path="/profile" element={<Profile />} />
     <PrivateRoute
