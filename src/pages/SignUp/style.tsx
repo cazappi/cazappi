@@ -5,14 +5,14 @@ import {
     responsiveHeight as rh,
     responsiveFontSize as rf
 } from '../../utils/responsive-functions';
+import { Button } from '../ProductView/style';
 
-export const LOGOIMAGE = styled.img`
-  height: min(6.13vh, 90px);
-  padding-bottom: min(2.38vh, 35px);
-`;
+interface ButtonProps {
+  isActive: boolean;
+}
 
-export const TITLE = styled.text`
-    font-size: ${rf(48)};
+export const Title = styled.text`
+    font-size: ${rf(40)};
     color: ${THEME.COLORS.PRIMARY};
     text-align: center;
 `;
@@ -23,13 +23,14 @@ export const FLEXROW = styled.div`
   align-items: center;
   width: 100%;
   justify-content: center;
+  margin-block: ${rw(12)};
 `;
 
 export const FLEXROWTERMS = styled.div`
   display: flex;
   flex-direction: row;
   align-items: center;
-  width: 50vw;
+  width: 40vw;
   justify-content: center;
   @media (max-width: 710px) {
     width: 80vw;
@@ -41,106 +42,94 @@ export const FLEXCOLUMN = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
-`;
-
-export const LINK = styled.a`
-  color: ${THEME.COLORS.WHITE};
-  font-size: ${rf(24)};
-  font-weight: bold;
-  padding-bottom: min(2.38vh, 35px);
-  text-decoration: none;
-  transition-duration: 0.3s;
-  &:hover {
-    opacity: 0.8;
-  }
-`;
-
-export const WRAP = styled.div`
-
+  margin-block: ${rh(50)};
 `;
 
 export const CHECK = styled.input`
-  -webkit-appearance: none;
-  -moz-appearance: none;
-  margin-right: 10px;
+  margin-right: ${rw(10)};
   box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.15);
-  width: 24px;
-  height: 24px;
-  border: 2px solid ${THEME.COLORS.PRIMARY};
-  color: ${THEME.COLORS.SECONDARY};
+  width: ${rw(28)};
+  height: ${rw(28)};
+  border: 1.6px solid ${THEME.COLORS.PRIMARY};
   border-radius: 5px;
-  &:focus{
+  &:checked {
     background-color: ${THEME.COLORS.PRIMARY};
   }
 `;
 
-export const TEXT = styled.div`
-  margin-top: 39px;
-  font-size: 24px;
-  margin-bottom: 17px;
-  width: 100%;
-  @media (max-width: 710px) {
-    font-size: 16px;
-    margin-bottom: 7px;
-  }
-  `;
-  
-export const INPUT = styled.input`
-  margin-top: ${rh(20)};
-  background: ${THEME.COLORS.GRAY_300};
-  border-radius: 16px;
-  width: ${rw(420)};
-  height: ${rw(24)};
-  border-color: ${THEME.COLORS.WHITE};
-  border: 0;
-  &:focus{
-    border: 0;
-    border-color: ${THEME.COLORS.PRIMARY};
-  }
-`;
-
 export const TERMS = styled.div`
-  max-width: 90%;
-  font-size: 24px;
-  @media (max-width: 710px) {
-    font-size: 14px;
-    max-width: 80%;
-  }
+  font-size: ${rf(27)};
 `
 
-export const SELECTEDBUTTON = styled.button`
+export const ButtonRegister = styled.button<ButtonProps>`
   display: flex;
   flex-direction: row;
   align-items: center;
   justify-content: center;
-  width: ${rw(310)};
-  height: ${rh(95)};
-  font-size: 20px;
+  padding: ${rw(20)};
+  padding-inline: ${rw(35)};
+  font-size: ${rf(28)};
   background: ${THEME.COLORS.WHITE};
   box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
   border-radius: 10px;
-  border-color:${THEME.COLORS.PRIMARY};
-  @media (max-width: 710px) {
-    font-size: 12px;
-    width: 40%;
-  }
-  `;
-  
-  export const UNSELECTEDBUTTON = styled.button`
+  border: 1px solid ${({ isActive }) => (isActive ? '#32cf15' : 'none')};;
+  margin-inline: ${rw(15)};
+  margin-top: ${rh(40)};
+`;
+
+export const Container = styled.div`
+  width: 30%;
+  margin-block: ${rh(40)};
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
   align-items: center;
+`;
+
+export const InputsWrapper = styled.div`
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
   justify-content: center;
-  width: ${rw(310)};
-  height: ${rh(95)};
-  background: ${THEME.COLORS.WHITE};
-  font-size: 20px;
-  box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.15);
+  margin-bottom: ${rh(30)};
+`;
+
+export const TEXT = styled.label`
+  font-size: ${rf(28)};
+  width: 100%;
+  text-align: left;
+  margin-bottom: ${rh(8)};
+`;
+
+export const INPUT = styled.input`
+  margin-top: ${rh(10)};
+  background: ${THEME.COLORS.GRAY_300};
   border-radius: 10px;
-  border-color:${THEME.COLORS.GRAY_300};
+  width: 100%;
+  padding: ${rw(6)};  
+  padding-left: ${rw(15)};  
   border: none;
-  @media (max-width: 710px) {
-    font-size: 12px;
-    width: 40%;
-  }
+  font-size: ${rf(26)};
+`;
+
+export const LeftContent = styled.div`
+  display: flex;
+  width:100%;
+  justify-content: flex-end;
+  margin-right: ${rw(250)};
+`;
+
+export const ActionButton = styled(Button)`
+    font-size: ${rf(30)};
+    border-radius: 20px;
+    padding-block: ${rh(25)};
+    padding-inline: ${rw(30)};
+    margin-top: ${rh(20)};
+    color: white;
+    background-color: #32cf15;
+
+    &:hover {
+        background-color: #259410;
+        color:white;
+    }
 `;

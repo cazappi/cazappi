@@ -1,8 +1,4 @@
-import React from 'react';
-import logoText from '../../assets/logoText.svg';
-import mailImg from '../../assets/mail.svg';
-import logoImg from '../../assets/logoImg.png';
-import cellphonesHome from '../../assets/cellphonesHome.png';
+import { useState } from 'react';
 import { THEME } from '../../theme/index';
 import { Icon } from '@iconify-icon/react';
 import {
@@ -15,12 +11,146 @@ import Footer from "../../components/Footer/Footer";
 import Button from "../../components/Button/Button";
 import { FLEXCOLUMN, FLEXROW, SUBTITLE, INFO, ITEM } from './style';
 import Input from "../../components/Input/Input";
+import { useLocation, useNavigate } from 'react-router-dom';
+import { ActionButton, INPUT } from '../SignUp/style';
+import api from '../../services/api';
+interface FormData {
+    lojista: boolean;
+    nome: string;
+    documento: string;
+    email: string;
+    senha: string;
+    confirmarSenha: string;
+    nomeComercio: string;
+    documentoComercio: string;
+    categoria: string;
+    delivery: boolean;
+    pickup: boolean;
+    banco: string;
+    agencia: string;
+    conta: string
+}
 
-const DadosBancariosRevisao = () => {
+const DadosBancariosPreenchimento = () => {
+    // ESSA TELA SERÁ STORE TRANSATION, MAS O REGISTRO JA ESTÁ FUNCIONANDO, SÓ ESTÁ COM UM ERRO DE GERENCIAMENTO
+    const navigate = useNavigate();
+    const location = useLocation();
+    const initialFormData = location.state;
+
+    const [formData, setFormData] = useState<FormData>({
+        ...initialFormData,
+        banco: '',
+        agencia: '',
+        conta: '',
+    });
+
+    const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+        const { name, value } = e.target;
+        setFormData((prevData) => ({
+            ...prevData,
+            [name]: value
+        }));
+    };
+
+    // Antes dessa tela, precisamos da tela de politicas de lojista, e essa tela está diferente do que será realmente!
+    const lojista = {
+        shopkeeper: {
+            name: formData.nome,
+            email: formData.email,
+            document: formData.documento,
+            documentType: formData.documento.length === 9? 'cpf':'cnpj',
+            password:  formData.senha,
+            bank: formData.banco,
+            account: formData.conta,
+            agency: formData.agencia,
+            confirmedEmail: true,
+        },
+        store: {
+            name: formData.nomeComercio,
+            category: formData.categoria,
+            delivery: formData.delivery,
+            pickup: formData.pickup,
+            document: formData.documentoComercio,
+            documentType: formData.documento.length === 9? 'cpf':'cnpj',
+            deliveryFee: 0,
+            serviceRadius: 10,
+            // nessa tela salvamos o lojista, mas ainda nao temos essas informações, porém elas nao são necessárias para finalizar o cadastro!
+            // pix: "pixlojadamaria6@gmail.com",
+            // subCategory: "",
+             schedule: [{
+                openingTime: {
+                    mon: "12h00",
+                    tue: "12h00",
+                    wed: "12h00",
+                    thur: "12h00",
+                    fri: "12h00",
+                    sat: "12h00",
+                    sun: "12h00"
+                },
+                closingTime: {
+                    mon: "18h00",
+                    tue: "18h00",
+                    wed: "18h00",
+                    thur: "18h00",
+                    fri: "18h00",
+                    sat: "18h00",
+                    sun: "18h00"
+                }
+            }],   
+            // address: {
+            //     city: "São Carlos",
+            //     state: "São Paulo",
+            //     street: "Rua Padre Teixeira",
+            //     zipCode: "13561207",
+            //     number: "1913",
+            //     district: "Centro",
+            //     complement: ""
+            // }
+        }
+    }
+
+    const saveUser = async () => {
+        const config = {
+            headers: {
+                'Authorization': "",
+                'Content-Type': 'application/json'
+            }
+        }
+
+        const dataShopkeeper = lojista
+        const urlShopkeeper = "/user?userRole=shopkeeper"
+        // Criação de usuário lojista (informações do lojista e da loja)
+        console.log(lojista);
+        await api
+            .post(urlShopkeeper, dataShopkeeper, config)
+            .then((response) => {
+                console.log(response);
+            });
+    }
+
+    const handleSubmit = () => {
+        const requiredFields: (keyof FormData)[] = [
+            'banco',
+            'agencia',
+            'conta',
+        ];
+    
+        for (const field of requiredFields) {
+            if (!formData[field]) {
+                alert(`Por favor, preencha o campo ${field}`);
+                return;
+            }
+        }
+        // definir onde redirecionará após essa tela!
+        saveUser().then(()=> { navigate('/') })
+
+        // navigate('/', { state: formData });
+    };
+
     return (
         <div>
             {/* ----------------------- HEADER ----------------------- */}
-
+            <Header transparent={false}/>
             {/* ----------------------- Container ----------------------- */}
             <FLEXCOLUMN>
                 <text style={{
@@ -88,7 +218,7 @@ const DadosBancariosRevisao = () => {
                                 Razão Social
                             </SUBTITLE>
                             <INFO>
-                                Lorem ipsum dolor
+                                {formData.nome}
                             </INFO>
                         </ITEM>
 
@@ -97,17 +227,18 @@ const DadosBancariosRevisao = () => {
                                 CNPJ
                             </SUBTITLE>
                             <INFO>
-                                123.456.789/0000-10
+                                {formData.documento}
                             </INFO>
                         </ITEM>
                     </FLEXROW>
 
                     <ITEM>
                         <SUBTITLE >
-                            Tipo de negócio
+                            Tipo de negócio (categoria)
                         </SUBTITLE>
                         <INFO>
-                            MEI
+                            {/* MEI */}
+                            {formData.categoria}
                         </INFO>
                     </ITEM>
 
@@ -121,7 +252,7 @@ const DadosBancariosRevisao = () => {
                         <SUBTITLE>
                             Banco
                         </SUBTITLE>
-                        <Input type="text" placeholder='' />
+                        <INPUT type='text' name='banco' placeholder='' value={formData.banco} onChange={handleChange} />
                     </ITEM>
 
                     <FLEXROW>
@@ -130,7 +261,7 @@ const DadosBancariosRevisao = () => {
                             <SUBTITLE>
                                 Agência
                             </SUBTITLE>
-                            <Input type="text" placeholder=''/>
+                            <INPUT type='text' name='agencia' placeholder='' value={formData.agencia} onChange={handleChange} />
                         </ITEM>
 
 
@@ -138,25 +269,27 @@ const DadosBancariosRevisao = () => {
                             <SUBTITLE>
                                 Conta
                             </SUBTITLE>
-                            <Input type="text" placeholder=''/>
+                            <INPUT type='text' name='conta' placeholder='' value={formData.conta} onChange={handleChange} />
                         </ITEM>
 
-
-                        <ITEM>
+                        {/* REMOVIDO: DÍGITO? NÃO PRESENTE NAS INFORMAÇÕES DO BACKEND */}
+                        {/* <ITEM>
                             <SUBTITLE>
                                 Dígito
                             </SUBTITLE>
                             <Input type="text" placeholder=''/>
-                        </ITEM>
+                        </ITEM> */}
                     </FLEXROW>
 
                 </div>
 
 
-                <Button as="a" type="red" style={{
+                <ActionButton style={{
+                    backgroundColor: THEME.COLORS.PRIMARY,
                     marginBottom: rh(80),
-                    marginTop: rh(80),
-                }}>Continuar</Button>
+                }} onClick={handleSubmit}>
+                    Confirmar Assinatura
+                </ActionButton>
             </FLEXCOLUMN>
 
             {/* ----------------------- FOOTER ----------------------- */}
@@ -167,4 +300,4 @@ const DadosBancariosRevisao = () => {
     );
 };
 
-export default DadosBancariosRevisao;
+export default DadosBancariosPreenchimento;
