@@ -72,7 +72,6 @@ const AppRoutes = () => (
     />
 
     <PrivateRoute path="/client/address/add" element={<ClientAddAddress />} />
-    <PrivateRoute path="/client/address/add/:addressId" element={<ClientAddSpecificAddress />} />
     <PrivateRoute path="/client/address" element={<ClientAddresses />} />
 
     <PrivateRoute

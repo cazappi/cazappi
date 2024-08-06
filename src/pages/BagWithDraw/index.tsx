@@ -22,22 +22,47 @@ import {
 import { MapContainer, TileLayer, Marker, Popup } from "react-leaflet";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import Button from "../../components/Button/Button";
+import { FaRegCopy } from "react-icons/fa";
+import { Link, useLocation, useNavigate } from "react-router-dom";
+import RightArrowIcon from "../../assets/right_arrow_icon.svg";
 import L from "leaflet"; // Importe a biblioteca Leaflet
 import "leaflet/dist/leaflet.css"; // Importe o CSS padrão do Leaflet
-import { Icon } from "leaflet"; // Importe o ícone Leaflet
-import {
-  responsiveWidth as rw,
-  responsiveHeight as rh,
-  responsiveFontSize as rf,
-} from "../../utils/responsive-functions";
 import iconUrl from "../../assets/marker.png";
-import { FaRegCopy } from "react-icons/fa";
-import { Link } from "react-router-dom";
-import RightArrowIcon from "../../assets/right_arrow_icon.svg";
+import { getUser } from "../../utils/user-token-request";
+import { getToken } from "../../utils/get-cookie";
+import api from "../../services/api";
 
 const BagWithDraw = () => {
-  const [selectedOption, setSelectedOption] = useState("RetirarNaLoja");
+  const location = useLocation();
+  const navigate = useNavigate();
+  const { address: initialAddress, selectedOption: initialSelectedOption } = location.state || {};
+  const [selectedOption, setSelectedOption] = useState(initialSelectedOption || "RetirarNaLoja");
+  const [address, setAddress] = useState(initialAddress || null);
+
+  useEffect(() => {
+    const fetchUserAddresses = async () => {
+      try {
+        const user = getUser();
+        const response = await api.get(`/user/${user.user_id}/addresses`, {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        });
+        if (response.data.addresses.length > 0) {
+          setAddress(response.data.addresses[0]);
+        } else {
+          // Handle the case where there are no addresses
+          console.error("No addresses found for user");
+        }
+      } catch (error) {
+        console.error("Error fetching user addresses: ", error);
+      }
+    };
+
+    if (!initialAddress) {
+      fetchUserAddresses();
+    }
+  }, [initialAddress]);
 
   // Define o ícone personalizado
   const customIcon = L.icon({
@@ -73,10 +98,19 @@ const BagWithDraw = () => {
   );
 
   const copyAddressToClipboard = () => {
-    const address =
-      "Rua Dom Pedro IV, 1714\nSetor Monte Alto, Senador Canedo - GO";
-    navigator.clipboard.writeText(address);
+    const addressText = `${address.street}, ${address.number}\n${address.district}, ${address.city} - ${address.state}`;
+    navigator.clipboard.writeText(addressText);
   };
+
+  if (!address) {
+    return (
+      <div>
+        <Header transparent={false}></Header>
+        <MainContainer>Carregando...</MainContainer>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div>
@@ -112,8 +146,8 @@ const BagWithDraw = () => {
         >
           <AdressContainer1 delivery={selectedOption === "ReceberEntrega"}>
             <div className="flex flex-col justify-start">
-              <StreetText>Rua Dom Pedro IV, 1714</StreetText>
-              <NeibText>Setor Monte Alto, Senador Canedo - GO</NeibText>
+              <StreetText>{address.street}, {address.number}</StreetText>
+              <NeibText>{address.district}, {address.city} - {address.state}</NeibText>
             </div>
             {selectedOption === "ReceberEntrega" && (
               <img
@@ -134,7 +168,7 @@ const BagWithDraw = () => {
               zoom={13}
               style={{
                 height: "147px",
-                width: `${rw(860)}`,
+                width: "100%",
                 margin: "60px auto 0 auto",
               }}
             >
@@ -171,7 +205,6 @@ const BagWithDraw = () => {
           </>
         )}
 
-        {/*TODO: Alterar aqui a rota para a pagina que deve mandar*/}
         <Link to={"/BagWithDraw"}>
           <ContinueButton>Continuar</ContinueButton>
         </Link>

@@ -1,12 +1,11 @@
 import Footer from "../../components/Footer/Footer";
 import Header from "../../components/Header/Header";
 import LocationIcon from "../../assets/location_on.svg";
-import MyLocationIcon from "../../assets/my_location.svg";
 import { getUser } from "../../utils/user-token-request";
 import { getToken } from "../../utils/get-cookie";
 import { useEffect, useState } from "react";
 import api from "../../services/api";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 
 export interface ClientAddress {
   id: string;
@@ -19,15 +18,12 @@ export interface ClientAddress {
   number: string | null;
 }
 
-
-
 const ClientAddresses = () => {
   const user = getUser();
   const userId = user.user_id;
 
-  //FIXME: Iniciar com array vazio
-  const [addresses, setAddresses] =
-    useState<ClientAddress[]>([]);
+  const [addresses, setAddresses] = useState<ClientAddress[]>([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const fetchUserAddresses = async () => {
@@ -37,8 +33,6 @@ const ClientAddresses = () => {
             Authorization: `Bearer ${getToken()}`,
           },
         });
-        console.log("Addresses retrieved: ");
-        console.log(response.data);
         setAddresses(response.data.addresses);
       } catch (error) {
         console.error("Error fetching user addresses: ", error);
@@ -48,17 +42,20 @@ const ClientAddresses = () => {
     fetchUserAddresses();
   }, [userId]);
 
+  const handleAddressClick = (address: ClientAddress) => {
+    navigate("/BagWithDraw", { state: { address, selectedOption: "ReceberEntrega" } });
+  };
+
   return (
     <div className="min-h-screen flex flex-col">
       <Header transparent={false} />
       <main className="flex flex-grow flex-col gap-4 justify-center items-center px-[20px] sm:px-[100px] py-[100px]">
         <ul className="w-full sm:w-[90%] flex flex-col gap-4">
-          
-
-          {addresses && addresses.map((address) => (
+          {addresses.map((address) => (
             <li
               key={address.id}
               className="cursor-pointer w-full flex flex-row gap-6 hover:border-PRIMARY border-2 border-solid border-transparent transition-all duration-500 rounded-2xl px-6 py-4"
+              onClick={() => handleAddressClick(address)}
             >
               <img src={LocationIcon} alt="" width={40} height={40} />
               <div className="flex flex-col justify-center items-start text-[#909090]">
