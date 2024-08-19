@@ -36,7 +36,9 @@ import OrderResumeLojista from "../pages/OrderResumeLojista";
 import PoliticaLojista from "../pages/PoliticaLojista";
 import ShopkeeperConfig from "../pages/ShopkeeperConfig";
 import ShopkeeperFinish from "../pages/ShopkeeperConfig/ShopkeeperFinish";
-
+import ClientAddresses from "../pages/ClientAddresses";
+import ClientAddAddress from "../pages/ClientAddresses/ClientAddAddress";
+import ClientAddSpecificAddress from "../pages/ClientAddresses/ClientAddSpecificAddress";
 
 const AppRoutes = () => (
   <>
@@ -67,11 +69,26 @@ const AppRoutes = () => (
       <Route path="/BagWithDraw" element={<BagWithDraw />} />
       <Route path="/DadosBancariosPreenchimento" element={<DadosBancariosPreenchimento />} />
     </Routes>
-    <PrivateRoute path="/shopkeeper/order-chats" element={<MinhasConversasLojista />} />
-    <PrivateRoute path="/shopkeeper/order-chats/:chatId" element={<MinhaConversaLojista />} />
+    <PrivateRoute
+      path="/shopkeeper/order-chats"
+      element={<MinhasConversasLojista />}
+    />
+    <PrivateRoute
+      path="/shopkeeper/order-chats/:chatId"
+      element={<MinhaConversaLojista />}
+    />
 
-    <PrivateRoute path="/client/order-chats" element={<MinhasConversasCliente />} />
-    <PrivateRoute path="/client/order-chats/:chatId" element={<MinhaConversaCliente />} />
+    <PrivateRoute path="/client/address/add" element={<ClientAddAddress />} />
+    <PrivateRoute path="/client/address" element={<ClientAddresses />} />
+
+    <PrivateRoute
+      path="/client/order-chats"
+      element={<MinhasConversasCliente />}
+    />
+    <PrivateRoute
+      path="/client/order-chats/:chatId"
+      element={<MinhaConversaCliente />}
+    />
 
     <PrivateRoute path="/shopkeeper/config" element={<ShopkeeperConfig />} />
     <PrivateRoute path="/shopkeeper/finish" element={<ShopkeeperFinish />} />
