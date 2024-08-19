@@ -31,6 +31,9 @@ import RegisterProduct from "../pages/RegisterProduct";
 import EditProduct from "../pages/EditProduct";
 import BagPagment from "../pages/BagPagment";
 import OrderHistoryClient from "../pages/OrderHistoryClient";
+import OrderResume from "../pages/OrderResume";
+import OrderResumeLojista from "../pages/OrderResumeLojista";
+import PoliticaLojista from "../pages/PoliticaLojista";
 import ShopkeeperConfig from "../pages/ShopkeeperConfig";
 import ShopkeeperFinish from "../pages/ShopkeeperConfig/ShopkeeperFinish";
 import ClientAddresses from "../pages/ClientAddresses";
@@ -44,14 +47,17 @@ const AppRoutes = () => (
       <Route path="/" element={<Home />} />
       <Route path="/MailConfirmation" element={<MailConfirmation />} />
       <Route path="/Politica" element={<Politica />} />
+      <Route path="/PoliticaLojista" element={<PoliticaLojista />} />
       <Route path="/register" element={<Register />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/ProductView" element={<ProductView />} />
-      <Route path="/BagPagment" element={<BagPagment />} />
-      <Route path="/OrderHistoryClient" element={<OrderHistoryClient />} />
-      <Route path="/RegisterProduct" element={<RegisterProduct />} />
-      <Route path="/EditProduct" element={<EditProduct />} />
+      <Route path="/ProductView" element={<ProductView />}/>
+      <Route path="/BagPagment" element={<BagPagment />}/>
+      <Route path="/OrderHistoryClient" element={<OrderHistoryClient />}/>
+      <Route path="/RegisterProduct" element={<RegisterProduct />}/>
+      <Route path="/EditProduct" element={<EditProduct />}/>
+      <Route path="/OrderResume" element={<OrderResume />}/>
+      <Route path="/OrderResumeLojista" element={<OrderResumeLojista />}/>
       <Route path="/forgetPass" element={<ForgetPass />} />
       <Route path="/resetpass" element={<ResetPass />} />
       <Route path="/EmailVerification/:token" element={<EmailVerification />} />
@@ -61,6 +67,7 @@ const AppRoutes = () => (
       <Route path="/unauthorized" element={<Unauthenticated />} />
       <Route path="/BagList" element={<BagList />} />
       <Route path="/BagWithDraw" element={<BagWithDraw />} />
+      <Route path="/DadosBancariosPreenchimento" element={<DadosBancariosPreenchimento />} />
     </Routes>
     <PrivateRoute
       path="/shopkeeper/order-chats"
@@ -90,10 +97,6 @@ const AppRoutes = () => (
     <PrivateRoute
       path="/DadosBancariosRevisao"
       element={<DadosBancariosRevisao />}
-    />
-    <PrivateRoute
-      path="/DadosBancariosPreenchimento"
-      element={<DadosBancariosPreenchimento />}
     />
     <PrivateRoute path="/updateshop" element={<UpdateShop />} />
     <PrivateRoute path="/BankAccount" element={<BankAccount />} />

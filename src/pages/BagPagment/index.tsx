@@ -4,6 +4,7 @@ import Header from '../../components/Header/Header';
 import Footer from "../../components/Footer/Footer";
 import { Option, Pagamento, NoWrap, Ml, Container, Resumo, InfoPedido, Line, Total, Center, CopyCode, Button, Card, Image, InfosCard, InfosWrapper, MoreOptions, CardNumbers, AddCard, FlexEnd } from './style';
 import {BsXDiamondFill, BsCreditCard, BsFiles, BsCheck, BsThreeDotsVertical, BsPlus} from 'react-icons/bs';
+import ResumoPedido from '../../components/ResumoPedido/ResumoPedido';
 interface CardType {
     id: number;
     image: string;
@@ -44,15 +45,6 @@ function BagPagment(){
             numbers: '1234 9568'
         },
     ];
-    const totalAmount = infoPedidos.reduce((acc, item) => acc + item.value, 0);
-
-    function FormattedPrice(valor:number){
-        const formattedPrice = valor.toLocaleString('pt-BR', {
-          minimumFractionDigits: 2,
-          maximumFractionDigits: 2
-        }); // arruma o valor a ser exibido no formato 0,00
-        return formattedPrice;
-    }
 
     const copyCodeToClipboard = () => {
         // Aqui irá o link do QRCODE -> mesma forma do gerador, utilizando o totalAmount e o pix destinatário
@@ -128,22 +120,7 @@ function BagPagment(){
             </>
             )}
             <NoWrap>Resumo do Pedido</NoWrap>
-            <Resumo>
-                {/* INFORMAÇÕES DO PEDIDO */}
-                {infoPedidos.map((item, index) => (
-                        <InfoPedido key={index}>
-                            <span>{item.label}</span>
-                            <span>R$ {FormattedPrice(item.value)}</span>
-                        </InfoPedido>
-                    ))}
-                <Line/>
-                <InfoPedido>
-                        {/* VALOR TOTAL */}
-                        <Total>Total a pagar</Total>
-                        <Total>R$ {FormattedPrice(totalAmount)}</Total>
-                    </InfoPedido>
-            </Resumo>
-
+            <ResumoPedido infoPedidos={infoPedidos} />
             <Center>
                 <Button onClick={() => navigate('/OrderHistoryClient')}> Continuar </Button> 
             </Center>

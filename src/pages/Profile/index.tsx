@@ -16,6 +16,7 @@ import { getToken } from "../../utils/get-cookie";
 import { clearToken } from "../../utils/clear-cookie";
 
 const Profile = () => {
+  // REFAZER A TELA PROFILE (PROFILEDADOSLOJISTAEFISICO)!!!!
   const [store, setStore] = useState<storeProps>({});
   const [hasShop, setHasShop] = useState<boolean>();
   const [loading, setLoading] = useState(true);
