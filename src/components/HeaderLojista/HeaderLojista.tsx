@@ -231,7 +231,7 @@ const HeaderLojista: React.FC<HeaderProps> = ({ transparent }) => {
             (
                 // Botão de Login - DESLOGADO
                 <div className="flex items-center">
-                    <a href="/">
+                    <a href="/Login">
                         <button className={styleGroup.button} onClick={clearToken}>
                             <div className="text-red-500 text-xl font-bold">Login</div>
                         </button>

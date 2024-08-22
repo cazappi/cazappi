@@ -40,6 +40,7 @@ const Login = () => {
             dispatch(tokenBackend(tokenFromApi));
             localStorage.setItem("token_firebase", token_firebase);
             setErrorAcc(false);
+            // Definir se é lojista ou cliente, se for lojist ProfileLojista, se for cliente ProfileClient
             navigate("/profile");
           })
           .catch((error) => {
@@ -120,11 +121,11 @@ const Login = () => {
               >
                 Entrar
               </button>
-              <a href="/register">
+              <a href="/signUp">
                 <button
                   onClick={(event) => {
                     event.preventDefault();
-                    navigate("/register");
+                    navigate("/signUp");
                   }}
                   className="bg-transparent border-SECONDARY border-[1px] text-SECONDARY p-3 px-10 rounded-3xl text-base md:text-xl hover:scale-105 duration-200 hover:shadow-2xl"
                 >

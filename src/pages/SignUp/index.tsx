@@ -61,7 +61,7 @@ const SignUp = () => {
             }));
         }
     };
-
+    
     const navigate = useNavigate();
     function handleSubmit(){
         // Documento deve ter no minimo 11 caracteres.
@@ -91,6 +91,17 @@ const SignUp = () => {
                     alert(`Por favor, preencha o campo ${field}`);
                     return;
                 }
+            }
+
+            if (formData.documentoComercio.length !== 14) {
+                alert("CNPJ inválido");
+                return;
+            }
+        }
+        else{
+            if(formData.documento.length < 11){
+                alert('CPF inválido');
+                return;
             }
         }
 

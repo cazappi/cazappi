@@ -8,12 +8,12 @@ import {
 } from '../../utils/responsive-functions';
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import Button from "../../components/Button/Button";
-import { FLEXCOLUMN, FLEXROW, SUBTITLE, INFO, ITEM } from './style';
-import Input from "../../components/Input/Input";
+import { FLEXCOLUMN, FLEXROW, Input, Info } from './style';
 import { useLocation, useNavigate } from 'react-router-dom';
-import { ActionButton, INPUT } from '../SignUp/style';
+import { ActionButton, Container, INPUT, InputsWrapper, TEXT, Title } from '../SignUp/style';
 import api from '../../services/api';
+import { BsInfoCircle } from 'react-icons/bs';
+
 interface FormData {
     lojista: boolean;
     nome: string;
@@ -141,10 +141,8 @@ const DadosBancariosPreenchimento = () => {
                 return;
             }
         }
-        // definir onde redirecionará após essa tela!
-        saveUser().then(()=> { navigate('/') })
-
-        // navigate('/', { state: formData });
+        // definir onde redirecionará após essa tela! a tela de login
+        saveUser().then(()=> { navigate('/Login') })
     };
 
     return (
@@ -153,142 +151,46 @@ const DadosBancariosPreenchimento = () => {
             <Header transparent={false}/>
             {/* ----------------------- Container ----------------------- */}
             <FLEXCOLUMN>
-                <text style={{
-                    fontStyle: 'normal',
-                    fontWeight: '700',
-                    fontSize: rf(48),
-                    color: THEME.COLORS.PRIMARY,
-                    marginTop: rh(60)
-                }}>
-                    Dados bancários
-                </text>
+                <Title> Dados de Transação</Title>
 
-                <div style={{
-                    width: rw(1100),
-                    borderWidth: rw(2),
-                    borderColor: THEME.COLORS.PRIMARY,
-                    borderBlockStyle: 'solid',
-                    marginTop: rh(10)
-                }}>
-                </div> {/* Linha */}
-
-                <div style={{
-                    fontWeight: '400',
-                    fontSize: rf(24),
-                    marginTop: rh(20)
-                }}>
-                    Informe o banco, agência, conta e o dígito  da conta bancária
-                </div>
-
-                <div style={{
-                    width: rw(750),
-                    marginTop: rh(100),
-                    borderRadius: rw(10),
-                    borderColor: THEME.COLORS.PRIMARY,
-                    borderStyle: 'solid'
-                }}>
-                    <FLEXROW style={{
-                        alignItems: 'center',
-                        justifyContent: 'flex-start'
+                <Container>
+                    <span style={{
+                        fontWeight: '400',
+                        fontSize: rf(30),
+                        marginTop: rh(20),
+                        textAlign: 'center',
                     }}>
-                        <div style={{
-                            backgroundColor: THEME.COLORS.PRIMARY,
-                            width: 20,
-                            height: 20,
-                            borderRadius: 1000,
-                            marginLeft: rw(40),
-                        }}>
-                            <Icon icon="mdi:checkbox-blank-circle" width={10} style={{
-                                color: THEME.COLORS.WHITE,
-                                marginLeft: 5,
-                            }} />
-                        </div>
-                        <SUBTITLE style={{
-                            marginTop: rh(25),
-                            marginLeft: rw(10)
-                        }}>
-                            Pessoa Juridica
-                        </SUBTITLE>
-                    </FLEXROW>
+                        Informe seus dados bancários necessários para realização de transações
+                    </span>
 
-                    <FLEXROW>
+                    <InputsWrapper>
+                        <Input>
+                            <TEXT> Banco </TEXT>
+                            <INPUT type='text' name='banco' placeholder='' value={formData.banco} onChange={handleChange} />
+                        </Input>
 
-                        <ITEM>
-                            <SUBTITLE>
-                                Razão Social
-                            </SUBTITLE>
-                            <INFO>
-                                {formData.nome}
-                            </INFO>
-                        </ITEM>
-
-                        <ITEM>
-                            <SUBTITLE>
-                                CNPJ
-                            </SUBTITLE>
-                            <INFO>
-                                {formData.documento}
-                            </INFO>
-                        </ITEM>
-                    </FLEXROW>
-
-                    <ITEM>
-                        <SUBTITLE >
-                            Tipo de negócio (categoria)
-                        </SUBTITLE>
-                        <INFO>
-                            {/* MEI */}
-                            {formData.categoria}
-                        </INFO>
-                    </ITEM>
-
-                </div>
-
-                <div style={{
-                    width: rw(750),
-                    marginTop: rh(80),
-                }}>
-                    <ITEM>
-                        <SUBTITLE>
-                            Banco
-                        </SUBTITLE>
-                        <INPUT type='text' name='banco' placeholder='' value={formData.banco} onChange={handleChange} />
-                    </ITEM>
-
-                    <FLEXROW>
-
-                        <ITEM>
-                            <SUBTITLE>
-                                Agência
-                            </SUBTITLE>
+                        <Input>
+                            <TEXT> Agência </TEXT>
                             <INPUT type='text' name='agencia' placeholder='' value={formData.agencia} onChange={handleChange} />
-                        </ITEM>
-
-
-                        <ITEM>
-                            <SUBTITLE>
-                                Conta
-                            </SUBTITLE>
+                        </Input>
+                        
+                        <Input>
+                            <TEXT> Número de Conta </TEXT>
                             <INPUT type='text' name='conta' placeholder='' value={formData.conta} onChange={handleChange} />
-                        </ITEM>
+                        </Input>
+                    </InputsWrapper>
+                </Container>
+                
+                <Info> Por que precisamos da sua conta? <BsInfoCircle/> </Info>
 
-                        {/* REMOVIDO: DÍGITO? NÃO PRESENTE NAS INFORMAÇÕES DO BACKEND */}
-                        {/* <ITEM>
-                            <SUBTITLE>
-                                Dígito
-                            </SUBTITLE>
-                            <Input type="text" placeholder=''/>
-                        </ITEM> */}
+                <ActionButton onClick={handleSubmit}>
+                    <FLEXROW style = {{marginBlock: 0}}>
+                        <div> Avançar </div>
+                        <Icon icon="mdi:arrow-right" width={25} style={{
+                            color: THEME.COLORS.WHITE,
+                            marginLeft: 5
+                        }}/>
                     </FLEXROW>
-
-                </div>
-
-
-                <ActionButton style={{
-                    backgroundColor: THEME.COLORS.PRIMARY,
-                    marginBottom: rh(80),
-                }} onClick={handleSubmit}>
-                    Confirmar Assinatura
                 </ActionButton>
             </FLEXCOLUMN>
 

@@ -39,6 +39,8 @@ import ShopkeeperFinish from "../pages/ShopkeeperConfig/ShopkeeperFinish";
 import ClientAddresses from "../pages/ClientAddresses";
 import ClientAddAddress from "../pages/ClientAddresses/ClientAddAddress";
 import ClientAddSpecificAddress from "../pages/ClientAddresses/ClientAddSpecificAddress";
+import ProfileClient from "../pages/ProfileClient";
+import ProfileLojista from "../pages/ProfileLojista";
 
 const AppRoutes = () => (
   <>
@@ -68,6 +70,9 @@ const AppRoutes = () => (
       <Route path="/BagList" element={<BagList />} />
       <Route path="/BagWithDraw" element={<BagWithDraw />} />
       <Route path="/DadosBancariosPreenchimento" element={<DadosBancariosPreenchimento />} />
+      {/* vai ser privada (so logado) */}
+      <Route path="/ProfileClient" element={<ProfileClient />} />
+      <Route path="/ProfileLojista" element={<ProfileLojista />} />
     </Routes>
     <PrivateRoute
       path="/shopkeeper/order-chats"
