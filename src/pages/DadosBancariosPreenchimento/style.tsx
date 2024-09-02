@@ -35,6 +35,7 @@ export const FLEXCOLUMN = styled.div`
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding-bottom: ${rh(60)};
 `;
 
 export const LINK = styled.a`
@@ -87,4 +88,21 @@ margin-right: ${rw(40)};
 margin-bottom: ${rh(30)};
 margin-top: ${rh(10)};
 
+`;
+
+export const Input = styled.div`
+  margin-top: ${rh(50)};
+  width: 100%;
+`;
+
+export const Info = styled.span`
+  width: 23%;
+  display: flex;
+  flex-direction: row;
+  justify-content: space-around;
+  align-items: center;
+  margin-bottom: ${rh(40)};
+  color: ${THEME.COLORS.PRIMARY};
+  font-weight: 500;
+  text-decoration: underline;
 `;

@@ -21,7 +21,7 @@ const Politica = () => {
         name: formData.nome,
         document: formData.documento, 
         email: formData.email,
-        documentType: formData.documento.length === 9? 'cpf':'cnpj',
+        documentType: formData.documento.length === 11? 'cpf':'cnpj',
         password: formData.senha,
         confirmedEmail: true,
         isUserDeleted: false,
@@ -64,8 +64,8 @@ const Politica = () => {
             navigate('/PoliticaLojista', {state: formData}) // se for lojista, vai para outra politica
         }
         else{
-            saveUser().then(()=> {navigate('/')})
-            // se for usuario comum, vai para outro lugar ao ser salvo
+            saveUser().then(()=> {navigate('/Login')})
+            // se for usuario comum, vai para o login ao ser salvo
         }
     }
     return (

@@ -13,6 +13,7 @@ export const RedIcon = styled.img`
 `;
 export const Bold = styled.span`
   font-weight: 500;
+  font-size: ${rf(30)};
 `;
 export const Ml = styled.span`
   margin-left: ${rw(5)};
