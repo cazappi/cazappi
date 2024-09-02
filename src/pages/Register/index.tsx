@@ -81,29 +81,9 @@ const Register = () => {
       {/* ----------------------- HEADER ----------------------- */}
       <Header transparent={false}/>
 
-      {/* ----------------------- Content ----------------------- */}
-      {/* ------- Carousel ------- */}
-
-      <div className="h-fit w-full" id="section3" style={{backgroundImage: `url(${Carousel3})`, backgroundRepeat: "no-repeat", backgroundSize: "cover"}}>
-        <div className="inset-0 z-10 md:justify-between flex items-center md:items-baseline  flex-col md:flex-row h-full w-full bg-gradient-to-r py-8 from-BLACK/70 to-BLACK/5 px-10">
-          <Animation type="fromLeft" className="text-WHITE">
-            <div className="text-xl md:text-4xl text-left mb-7 md:mb-20">
-              Alcance o sucesso pessoal<br />e profissional vendendo<br />os seus produtos
-            </div>
-            <div className="text-left text-2xl md:text-5xl italic">Cadastre-se já!</div>
-          </Animation>
-
-          <Cadastro></Cadastro>
-        </div>
-      </div>
-      {/* ------- Second section ------- */}
-
       <div className="flex flex-col items-center justify-center mb-24 w-full p-2">
         <Animation className="w-full md:w-2/3 flex flex-col justify-center items-center my-24  text-center">
-          <div className="flex flex-col justify-center w-2/3">
-            <Animation className='p-2 md:w-2/3 text-center text-BLACK bg-YELLOW rounded-2xl font-medium text-xl md:text-3xl'>Cadastre e tenha</Animation>
-            <Animation className='p-2 md:ml-5 text-BLACK text-center bg-YELLOW rounded-2xl text-base md:text-xl'>a maior plataforma on-line de vendas</Animation>
-          </div>
+            <Animation className='p-2 text-red-600 text-center rounded-2xl font-medium text-xl md:text-3xl'>Cadastre e tenha a maior plataforma on-line de vendas</Animation>
         </Animation>
         <Animation className="w-4/5 flex flex-col md:flex-row items-center justify-between">
           <Animation className={styleGroup.card}> 

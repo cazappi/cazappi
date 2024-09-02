@@ -40,7 +40,7 @@ const Carousel: React.FC = () => {
               className="flex justify-center items-center md:flex-row-reverse md:justify-start w-3/5"
             >
               {!isAuthenticated ? (
-                <a href="/register">
+                <a href="/signup">
                   <button className={styleGroup.button}>Cadastre-se</button>
                 </a>
               ) : undefined}
@@ -66,7 +66,7 @@ const Carousel: React.FC = () => {
               className="flex justify-center items-center md:flex-row-reverse md:justify-start w-3/5"
             >
               {!isAuthenticated ? (
-                <a href="/register">
+                <a href="/signup">
                   <button className={styleGroup.button}>Cadastre-se</button>
                 </a>
               ) : undefined}

@@ -6,7 +6,6 @@ import ForgetPass from "../pages/ForgetPass";
 import MailConfirmation from "../pages/MailConfirmation";
 import EmailVerification from "../pages/EmailVerification";
 import Advertising from "../pages/Advertising";
-import BusinessType from "../pages/BusinessType";
 import ShopConditions from "../pages/ShopConditions";
 import DadosBancariosRevisao from "../pages/DadosBancariosRevisao";
 import DadosBancariosPreenchimento from "../pages/DadosBancariosPreenchimento";
@@ -14,7 +13,6 @@ import BankAccount from "../pages/BankAccount";
 import SignUp from "../pages/SignUp";
 import Register from "../pages/Register";
 import Profile from "../pages/Profile";
-import RegisterShop from "../pages/RegisterShop";
 import ResetPass from "../pages/PasswordReset";
 import Unauthenticated from "../pages/Unauthenticated";
 import PrivateRoute from "./private-route";
@@ -64,7 +62,6 @@ const AppRoutes = () => (
       <Route path="/resetpass" element={<ResetPass />} />
       <Route path="/EmailVerification/:token" element={<EmailVerification />} />
       <Route path="/Advertising" element={<Advertising />} />
-      <Route path="/BusinessType" element={<BusinessType />} />
       <Route path="/ShopConditions" element={<ShopConditions />} />
       <Route path="/unauthorized" element={<Unauthenticated />} />
       <Route path="/BagList" element={<BagList />} />
@@ -97,7 +94,6 @@ const AppRoutes = () => (
 
     <PrivateRoute path="/shopkeeper/config" element={<ShopkeeperConfig />} />
     <PrivateRoute path="/shopkeeper/finish" element={<ShopkeeperFinish />} />
-    <HasShopVerificationRoute path="/registershop" element={<RegisterShop />} />
     <PrivateRoute path="/profile" element={<Profile />} />
     <PrivateRoute
       path="/DadosBancariosRevisao"
