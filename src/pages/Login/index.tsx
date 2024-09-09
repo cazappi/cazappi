@@ -8,6 +8,8 @@ import api from "../../services/api";
 import Input from "../../components/Input/Input";
 import { Formik, Form } from "formik";
 import { getAuth, signInWithCustomToken } from "firebase/auth";
+import { getUser } from "../../utils/user-token-request";
+import { getToken } from "../../utils/get-cookie";
 
 interface LoginValues {
   email: string;
@@ -41,7 +43,26 @@ const Login = () => {
             localStorage.setItem("token_firebase", token_firebase);
             setErrorAcc(false);
             // Definir se é lojista ou cliente, se for lojist ProfileLojista, se for cliente ProfileClient
-            navigate("/profile");
+            api.get(`user/${getUser().user_id}`, {
+              headers: {
+                  "Authorization": `Bearer ${getToken()}`,
+              },
+            })
+            .then((response) => {
+              const role = response.data.user.role;
+              if(role == "client"){
+                navigate("/profileClient")
+              }
+              else if(role == "shopkeeper"){
+                navigate("/profileLojista")
+              }
+              else if(role == "client_shopkeeper"){
+                navigate("/profileLojista")
+              }
+            })
+            .catch((error) => {
+                console.error("Error fetching states:", error);
+            });
           })
           .catch((error) => {
             console.log("erro");
