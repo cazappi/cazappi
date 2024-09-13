@@ -58,7 +58,7 @@ const DadosBancariosPreenchimento = () => {
             name: formData.nome,
             email: formData.email,
             document: formData.documento,
-            documentType: formData.documento.length === 9? 'cpf':'cnpj',
+            documentType: formData.documento.length === 11? 'cpf':'cnpj',
             password:  formData.senha,
             bank: formData.banco,
             account: formData.conta,
@@ -71,7 +71,7 @@ const DadosBancariosPreenchimento = () => {
             delivery: formData.delivery,
             pickup: formData.pickup,
             document: formData.documentoComercio,
-            documentType: formData.documento.length === 9? 'cpf':'cnpj',
+            documentType: formData.documentoComercio.length === 11? 'cpf':'cnpj',
             deliveryFee: 0,
             serviceRadius: 10,
             // nessa tela salvamos o lojista, mas ainda nao temos essas informações, porém elas nao são necessárias para finalizar o cadastro!
@@ -141,7 +141,6 @@ const DadosBancariosPreenchimento = () => {
                 return;
             }
         }
-        // definir onde redirecionará após essa tela! a tela de login
         saveUser().then(()=> { navigate('/Login') })
     };
 

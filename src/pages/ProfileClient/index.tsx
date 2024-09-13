@@ -1,7 +1,7 @@
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import Default from '../../assets/profileExample.png'
-import { useState } from "react";
+import { useEffect, useState } from "react";
+import Default from '../../assets/userProfile.png'
 import { AddImg } from "../../components/ImageUpload/style";
 import {BsFillPencilFill, BsShopWindow, BsPerson, BsChevronRight, BsBell, BsChatLeft, BsGear, BsQuestionCircle} from 'react-icons/bs'
 import { ActionButton, BorderOptions, Container, EditImgContainer, IconEdit, Image, ImgButtonWrapper, Span } from "./style";
@@ -9,17 +9,58 @@ import { THEME } from "../../theme";
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from "../../utils/responsive-functions";
 import { FLEXROW } from "../Politica/style";
 import { useNavigate } from "react-router-dom";
+import api from "../../services/api";
+import { getUser } from "../../utils/user-token-request";
+import { getToken } from "../../utils/get-cookie";
+import { clearToken } from "../../utils/clear-cookie";
 
 const menuOptions = [
-    { label: 'Gerenciar meus dados', icon: <BsPerson />, path: '/Profile' },
+    { label: 'Gerenciar meus dados', icon: <BsPerson />, path: '/GerenciarDadosCadastrais' },
     { label: 'Central de notificações', icon: <BsBell />, path: '/' },
     { label: 'Minhas conversas', icon: <BsChatLeft />, path: '/' },
     { label: 'Configurações', icon: <BsGear />, path: '/' },
     { label: 'Ajuda', icon: <BsQuestionCircle />, path: '/' },
 ];
 
+const defaultData = {
+    data: {
+      user: {
+        email: '',
+        id: '',
+        document: '',
+        documentType: '',
+        role: '',
+        name: '',
+        confirmedEmail: '',
+        isUserDeleted: '',
+        image: '',
+      },
+    },
+};
+  
 const ProfileClient = () => {
-    const [imageSrc, setImageSrc] = useState(Default);
+    const [userData, setUserData] = useState(defaultData);
+    async function getUserData() {
+        await api
+          .get(`user/${getUser().user_id}`, {
+            headers: {
+              "Authorization": `Bearer ${getToken()}`,
+            },
+          })
+          .then((response) => {
+            setUserData(response.data);
+            setImageSrc(response.data.user.image || Default);
+          })
+          .catch((err) => {
+            clearToken();
+            navigate("/unauthorized");
+        });
+    }
+    useEffect(() => {
+        getUserData();
+    }, []);
+
+    const [imageSrc, setImageSrc] = useState('');
     
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -33,15 +74,13 @@ const ProfileClient = () => {
         }
     };
 
-// preciso de ajuda para fazer a verificação se o perfil está logado, se não tiver, navegar para a página unauthorized (colocar essa rota como rota privada na pagina de rotas)
-
-// essa pagina para os usuarios clientes comuns, ProfileLojista para os usuários lojistas.
+    // essa pagina para os usuarios clientes comuns, ProfileLojista para os usuários lojistas.
 
     const navigate = useNavigate();
 
     const handleNavigation = (path: string) => {
         navigate(path); // Navega para a página especificada
-      };
+    };
 
     function handleSubmit(){
         
@@ -55,7 +94,7 @@ const ProfileClient = () => {
             <ImgButtonWrapper>
                 {/* IMAGE PROFILE */}
                 <div>
-                    <Image src={imageSrc} alt="Uploaded"/>
+                    <Image src={imageSrc} alt="Perfil"/>
                     <EditImgContainer>
                         <AddImg id="selecao-arquivo" type="file" accept="image/*" onChange={handleImageChange} />
                         <IconEdit htmlFor='selecao-arquivo'><BsFillPencilFill/></IconEdit>
