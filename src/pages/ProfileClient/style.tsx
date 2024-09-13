@@ -8,7 +8,8 @@ export const Image = styled.img`
     height: ${rw(150)};
     border-radius: 50%;
     object-fit: cover;
-    border: 2px solid ${THEME.COLORS.PRIMARY}
+    border: 2px solid ${THEME.COLORS.PRIMARY};
+    text-align: center;
 `;
 
 export const EditImgContainer = styled.div`

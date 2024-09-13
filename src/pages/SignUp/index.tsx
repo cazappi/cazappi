@@ -93,14 +93,14 @@ const SignUp = () => {
                 }
             }
 
-            if (formData.documentoComercio.length !== 14) {
-                alert("CNPJ inválido");
+            if (formData.documentoComercio.length < 11) {
+                alert("CPF ou CNPJ inválido");
                 return;
             }
         }
         else{
             if(formData.documento.length < 11){
-                alert('CPF inválido');
+                alert('CPF ou CNPJ inválido');
                 return;
             }
         }
@@ -134,16 +134,16 @@ const SignUp = () => {
     ];
 
     const camposPessoaJuridica = [
-        { label: 'Nome', type: 'text', name: 'nome', placeholder: 'Seu Nome' },
-        { label: 'CPF', type: 'text', name: 'documento', placeholder: '123.456.789-10' },
+        { label: 'Nome completo', type: 'text', name: 'nome', placeholder: 'Seu Nome' },
         { label: 'E-mail', type: 'text', name: 'email', placeholder: 'seuemail@email.com' },
+        { label: 'CPF', type: 'text', name: 'documento', placeholder: '123.456.789-10' },
+        { label: 'Nome do comércio', type: 'text', name: 'nomeComercio', placeholder: 'Nome do Comércio' },
+        { label: 'Tipo de comércio', type: 'select', name: 'categoria', placeholder: 'Tipo do Comércio' },
+        { label: 'CPF/CNPJ da loja', type: 'text', name: 'documentoComercio', placeholder: '12.345.678/0001-90' },
         { label: 'Senha', type: 'password', name: 'senha', placeholder: '*************' },
         { label: 'Confirmar senha', type: 'password', name: 'confirmarSenha', placeholder: '*************' },
-        { label: 'Nome da Loja', type: 'text', name: 'nomeComercio', placeholder: 'Nome do Comércio' },
-        { label: 'CNPJ', type: 'text', name: 'documentoComercio', placeholder: '12.345.678/0001-90' },
-        { label: 'Categoria', type: 'select', name: 'categoria', placeholder: 'Tipo do Comércio' },
         { label: 'Permite entregas?', type: 'checkbox', name: 'delivery', placeholder: '' },
-        { label: 'Permite retirada no local?', type: 'checkbox', name: 'pickup', placeholder: '' }
+        { label: 'Permite retirada no local?', type: 'checkbox', name: 'pickup', placeholder: '' },
     ];
     const campos = pf ? camposPessoaFisica : camposPessoaJuridica;
     const categoriaOptions = [

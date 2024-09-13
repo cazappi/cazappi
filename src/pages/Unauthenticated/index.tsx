@@ -11,7 +11,7 @@ const Unauthenticated = () => {
           Para acessar nossos serviços você deve estar logado.
         </p>
 
-        <a className="text-red-500 hover:text-red-700 text-lg" href="/register">
+        <a className="text-red-500 hover:text-red-700 text-lg" href="/signup">
           Caso não tenha conta, clique aqui para se cadastrar.
         </a>
       </div>

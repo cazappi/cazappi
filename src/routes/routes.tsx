@@ -12,7 +12,7 @@ import DadosBancariosPreenchimento from "../pages/DadosBancariosPreenchimento";
 import BankAccount from "../pages/BankAccount";
 import SignUp from "../pages/SignUp";
 import Register from "../pages/Register";
-import Profile from "../pages/Profile";
+import GerenciarDadosCadastrais from "../pages/GerenciarDadosCadastrais";
 import ResetPass from "../pages/PasswordReset";
 import Unauthenticated from "../pages/Unauthenticated";
 import PrivateRoute from "./private-route";
@@ -39,6 +39,7 @@ import ClientAddAddress from "../pages/ClientAddresses/ClientAddAddress";
 import ClientAddSpecificAddress from "../pages/ClientAddresses/ClientAddSpecificAddress";
 import ProfileClient from "../pages/ProfileClient";
 import ProfileLojista from "../pages/ProfileLojista";
+import GerenciarDadosLojista from "../pages/GerenciarDadosLojista";
 
 const AppRoutes = () => (
   <>
@@ -70,6 +71,7 @@ const AppRoutes = () => (
       {/* vai ser privada (so logado) */}
       <Route path="/ProfileClient" element={<ProfileClient />} />
       <Route path="/ProfileLojista" element={<ProfileLojista />} />
+      <Route path="/GerenciarDadosLojista" element={<GerenciarDadosLojista />} />
     </Routes>
     <PrivateRoute
       path="/shopkeeper/order-chats"
@@ -94,7 +96,7 @@ const AppRoutes = () => (
 
     <PrivateRoute path="/shopkeeper/config" element={<ShopkeeperConfig />} />
     <PrivateRoute path="/shopkeeper/finish" element={<ShopkeeperFinish />} />
-    <PrivateRoute path="/profile" element={<Profile />} />
+    <PrivateRoute path="/GerenciarDadosCadastrais" element={<GerenciarDadosCadastrais />} />
     <PrivateRoute
       path="/DadosBancariosRevisao"
       element={<DadosBancariosRevisao />}

@@ -11,8 +11,12 @@ import { useNavigate } from "react-router-dom";
 import HeaderLojista from "../../components/HeaderLojista/HeaderLojista";
 import { BannerImage, BannerWrapper, ContainerLojista, IconEditBanner, IconEditImg, Image } from "./style";
 import bannerDefault from '../../assets/bannerexample.png'
+import api from "../../services/api";
+import { getUser } from "../../utils/user-token-request";
+import { getToken } from "../../utils/get-cookie";
+import { clearToken } from "../../utils/clear-cookie";
 const menuOptions = [
-    { label: 'Gerenciar meus dados', icon: <BsPerson />, path: '/Profile' },
+    { label: 'Gerenciar meus dados', icon: <BsPerson />, path: '/GerenciarDadosLojista' },
     { label: 'Gerenciar produtos', icon: <BsFileText />, path: '/' },
     { label: 'Relatório de vendas', icon: <BsClipboardData/>, path: '/' },
     { label: 'Minhas Conversas', icon: <BsChatLeft />, path: '/' },
@@ -21,8 +25,32 @@ const menuOptions = [
 ];
 
 const ProfileLojista = () => {
-    const [imageSrc, setImageSrc] = useState(Default);
-    const [bannerSrc, setBannerSrc] = useState(bannerDefault); 
+    const navigate = useNavigate();
+    const [userData, setUserData] = useState();
+    async function getUserData() {
+        await api
+          .get(`store/${getUser().user_id}`, {
+            headers: {
+              "Authorization": `Bearer ${getToken()}`,
+            },
+          })
+          .then((response) => {
+            setUserData(response.data);
+            console.log(response.data);
+            setImageSrc(response.data.store.imagePerfil || Default);
+            setBannerSrc(response.data.store.imageBanner || bannerDefault);
+          })
+          .catch((err) => {
+            clearToken();
+            navigate("/unauthorized");
+        });
+    }
+    useEffect(() => {
+        getUserData();
+    }, []);
+
+    const [imageSrc, setImageSrc] = useState('');
+    const [bannerSrc, setBannerSrc] = useState(''); 
     
     const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
@@ -35,6 +63,7 @@ const ProfileLojista = () => {
         reader.readAsDataURL(file);
         }
     };
+    
     const handleBannerChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const file = e.target.files?.[0];
         if (file) {
@@ -47,20 +76,9 @@ const ProfileLojista = () => {
         }
       };
 
-// preciso de ajuda para fazer a verificação se o perfil está logado, se não tiver, navegar para a página unauthorized (colocar essa rota como rota privada na pagina de rotas)
-    const navigate = useNavigate();
-
-    useEffect(() => {
-        const isAuthenticated = true; // aqui necessário implementar a lógica
-        if (!isAuthenticated) {
-            navigate('/unauthorized');
-        }
-    }, [navigate]);
-// essa pagina para os usuarios lojistas, ProfileCLient para os usuários comuns.
-
     const handleNavigation = (path: string) => {
         navigate(path); // Navega para a página especificada
-      };
+    };
 
     return (
         <>
@@ -76,7 +94,7 @@ const ProfileLojista = () => {
 
             {/* IMAGE PROFILE */}
             <div>
-                <Image src={imageSrc} alt="Uploaded"/>
+                <Image src={imageSrc} alt="Perfil"/>
                 <EditImgContainer>
                     <AddImg id="selecao-arquivo" type="file" accept="image/*" onChange={handleImageChange} />
                     <IconEditImg htmlFor='selecao-arquivo'><BsFillPencilFill/></IconEditImg>
