@@ -40,6 +40,7 @@ import ClientAddSpecificAddress from "../pages/ClientAddresses/ClientAddSpecific
 import ProfileClient from "../pages/ProfileClient";
 import ProfileLojista from "../pages/ProfileLojista";
 import GerenciarDadosLojista from "../pages/GerenciarDadosLojista";
+import HomeLojista from "../pages/HomeLojista";
 
 const AppRoutes = () => (
   <>
@@ -70,6 +71,7 @@ const AppRoutes = () => (
       <Route path="/DadosBancariosPreenchimento" element={<DadosBancariosPreenchimento />} />
       {/* vai ser privada (so logado) */}
       <Route path="/ProfileClient" element={<ProfileClient />} />
+      <Route path="/HomeLojista" element={<HomeLojista />} />
       <Route path="/ProfileLojista" element={<ProfileLojista />} />
       <Route path="/GerenciarDadosLojista" element={<GerenciarDadosLojista />} />
     </Routes>
