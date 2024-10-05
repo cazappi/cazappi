@@ -72,15 +72,21 @@ const AppRoutes = () => (
       <Route path="/ProfileClient" element={<ProfileClient />} />
       <Route path="/ProfileLojista" element={<ProfileLojista />} />
       <Route path="/GerenciarDadosLojista" element={<GerenciarDadosLojista />} />
-    </Routes>
-    <PrivateRoute
+      <Route path="/GerenciarDadosCadastrais" element={<GerenciarDadosCadastrais />} />
+      {/* private route */}
+      <Route path="/shopkeeper/finish" element={<ShopkeeperFinish />} />
+      <Route
       path="/shopkeeper/order-chats"
       element={<MinhasConversasLojista />}
     />
-    <PrivateRoute
+    <Route
       path="/shopkeeper/order-chats/:chatId"
       element={<MinhaConversaLojista />}
     />
+      <Route path="/shopkeeper/config" element={<ShopkeeperConfig />} />
+    </Routes>
+    
+    
 
     <PrivateRoute path="/client/address/add" element={<ClientAddAddress />} />
     <PrivateRoute path="/client/address" element={<ClientAddresses />} />
@@ -94,9 +100,9 @@ const AppRoutes = () => (
       element={<MinhaConversaCliente />}
     />
 
-    <PrivateRoute path="/shopkeeper/config" element={<ShopkeeperConfig />} />
-    <PrivateRoute path="/shopkeeper/finish" element={<ShopkeeperFinish />} />
-    <PrivateRoute path="/GerenciarDadosCadastrais" element={<GerenciarDadosCadastrais />} />
+    
+    
+    
     <PrivateRoute
       path="/DadosBancariosRevisao"
       element={<DadosBancariosRevisao />}
