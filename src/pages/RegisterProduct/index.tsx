@@ -9,19 +9,16 @@ import { RiPencilFill } from "react-icons/ri";
 import ImageUpload from '../../components/ImageUpload/ImageUpload';
 import { BsChevronDoubleRight } from 'react-icons/bs';
 import Default from '../../assets/imgDefault.png'
-
-const Categorias = [
-    { value: 'cat1', label: 'Categoria 1' },
-    { value: 'cat2', label: 'Categoria 2' },
-    { value: 'cat3', label: 'Categoria 3' },
-];
+import { getToken } from '../../utils/get-cookie';
+import { getUser } from "../../utils/user-token-request";
+import api from '../../services/api';
   
 interface Adicional {
-    id: number;  // Add a unique ID for each Adicional
+    id: number;
     name: string;
     optional: boolean;
-    description: string;
-    quantity: number;
+    description: string | null;
+    quantity: number | null;
     price: number;
 }
 interface AdicionalComponentProps {
@@ -35,32 +32,27 @@ const AdicionalComponent: React.FC<AdicionalComponentProps> = ({ adicional, onUp
     //controle de edição dos complementos
     const [editedAdicional, setEditedAdicional] = useState<Adicional>(adicional);  
 
-    // Open modal with current adicional data
     const handleOpenModal = () => {
         setEditedAdicional(adicional); // Load the current adicional info
         setIsModalOpen(true);
     };
 
-    // Close modal
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
 
-    // Handle input changes in the modal
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
         setEditedAdicional((prev) => ({
             ...prev,
-            [name]: name === 'price' ? parseFloat(value) : value,  // Ensure price is a number
+            [name]: name === 'price' ? parseFloat(value) : value,
         }));
     };
 
-    // Submit form and update adicional
     const handleFormSubmit = (e: React.FormEvent) => {
-        e.preventDefault(); // Prevent form from refreshing the page
-        console.log("Form Submitted", editedAdicional);  // Debugging line to check if form submission is being caught
-        onUpdateAdicional(editedAdicional);  // Update only the specific Adicional
-        handleCloseModal();  // Close modal after update
+        e.preventDefault(); 
+        onUpdateAdicional(editedAdicional);  
+        handleCloseModal();  
     };
 
     return (
@@ -79,7 +71,6 @@ const AdicionalComponent: React.FC<AdicionalComponentProps> = ({ adicional, onUp
             {isModalOpen && (
     <div className="modal" onClick={handleCloseModal}>
         <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            {/* Input for Nome */}
             <InputDesktopLojista
                 label="Nome"
                 name="name"
@@ -88,16 +79,13 @@ const AdicionalComponent: React.FC<AdicionalComponentProps> = ({ adicional, onUp
                 required
             />
 
-            {/* Input for Descrição */}
             <InputDesktopLojista
                 label="Descrição"
                 name="description"
-                value={editedAdicional.description}
+                value={editedAdicional.description || ''}
                 onChange={handleInputChange}
-                required
             />
 
-            {/* Input for Preço */}
             <InputDesktopLojista
                 label="Preço"
                 name="price"
@@ -109,8 +97,7 @@ const AdicionalComponent: React.FC<AdicionalComponentProps> = ({ adicional, onUp
                 required
             />
 
-            {/* Submit Button */}
-            <button onClick={handleFormSubmit} className='saveAdicional'>Salvar</button> {/* Replace submit with onClick */}
+            <button onClick={handleFormSubmit} className='saveAdicional'>Salvar</button>
         </div>
     </div>
 )}
@@ -121,40 +108,129 @@ const AdicionalComponent: React.FC<AdicionalComponentProps> = ({ adicional, onUp
 
 function RegisterProduct() {
     const [adicionais, setAdicionais] = useState<Adicional[]>([]);
+    const [storeName, setStoreName] = useState('');
+    const [categories, setCategories] = useState<{
+        parentCategoryId: string; label: string; value: string 
+}[]>([]);
+    const [selectedCategory, setSelectedCategory] = useState<{ label: string; value: string } | null>(null);
+    const [subCategories, setSubCategories] = useState<{ label: string; value: string }[]>([]); 
+    const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(null); 
     const [isModalOpen, setIsModalOpen] = useState(false);
+    const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+    const [importSelectedCategory, setImportSelectedCategory] = useState<string | null>(null);
+    const [importFilteredSubCategories, setImportFilteredSubCategories] = useState<{ label: string; value: string }[]>([]);
+    const [importSelectedSubCategory, setImportSelectedSubCategory] = useState<string | null>(null);
+    const [importSelectedProduct, setImportSelectedProduct] = useState<string | null>(null);
+
     const [newAdicional, setNewAdicional] = useState<Adicional>({
-        id: Date.now(),  // Unique ID
+        id: Date.now(),  // ID unico pra cada adicional (não sei se é o melhor método, mas funciona)
         name: '',
         optional: true,
-        description: '',
-        quantity: 1,
+        description: null,
+        quantity: null,
         price: 0.0,
     });
 
-    //controle de imagem do produto
+    async function getCategories() {
+        await api.get(`category`, {
+            headers: {
+                "Authorization": `Bearer ${getToken()}`
+            }
+        }).then((response) => {
+            const formattedCategories = response.data.map((category: any) => ({
+                label: category.name,
+                value: category.id.toString(),
+                parentCategoryId: category.parentCategoryId,
+            }));
+            setCategories(formattedCategories);
+        }).catch((err) => {
+            alert("Ops! Ocorreu um erro: " + err);
+        });
+        
+        await api.get(`store/${getUser().user_id}`, {
+            headers: {
+                "Authorization": `Bearer ${getToken()}`
+            }
+        }).then((response) => {
+            setStoreName(response.data.store[0].name);
+        }).catch((err) => {
+            alert("erro: " + err);
+        });
+
+
+    }
+
+    useEffect(() => {
+        getCategories();
+    }, []);
+
+    async function getSubCategories(categoryId: string) {
+        await api.get(`category`, {
+            headers: {
+                "Authorization": `Bearer ${getToken()}`,
+            },
+        })
+        .then((response) => {
+            const filteredSubCategories = response.data
+                .filter((subcategory: any) => subcategory.parentCategoryId === categoryId)
+                .map((subcategory: any) => ({
+                    label: subcategory.name,  
+                    value: subcategory.id.toString(),  
+                }));
+            setSubCategories(filteredSubCategories);  
+        })
+        .catch((err) => {
+            alert("Ops! Ocorreu um erro: " + err);
+        });
+    }
+
     const [uploadedImage, setUploadedImage] = useState<File | null>(null);
 
-    // Handle image upload
     const handleImageUpload = (imageFile: File | null) => {
         setUploadedImage(imageFile);
         console.log("Uploaded Image: ", imageFile);
     };
     
 
-    // Inputs for Nome, Descrição, Preço in the main form
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
     const [preco, setPreco] = useState(0.0);
 
-    // Function to open modal for adding a new "Adicional"
     const handleOpenModal = () => {
         setIsModalOpen(true);
     };
 
-    // Function to close modal
     const handleCloseModal = () => {
         setIsModalOpen(false);
     };
+
+    const handleOpenImportModal = () => {
+        setIsImportModalOpen(true);
+    };
+    
+    const handleCloseImportModal = () => {
+        setIsImportModalOpen(false);
+    };
+
+    const handleImportMainCategorySelect = (selectedValue: string) => {
+        const selectedCategory = categories.find(category => category.value === selectedValue);
+        
+        if (selectedCategory) {
+            setImportSelectedCategory(selectedValue);
+            const subCategories = categories.filter(category => category.parentCategoryId === selectedValue);
+            setImportFilteredSubCategories(subCategories);
+        }
+    };
+        
+    const handleImportSubCategorySelect = (selectedValue: string) => {
+        setImportSelectedSubCategory(selectedValue);
+    };
+    
+    const handleImportProductSelect = (selectedValue: string) => {
+        setImportSelectedProduct(selectedValue);
+    };
+    
+    
 
     const handleAddAdicional = (adicional: Adicional) => {
         setAdicionais((prevAdicionais) => [...prevAdicionais, adicional]);
@@ -171,14 +247,13 @@ function RegisterProduct() {
     const renderAdicionais = (adicionais: Adicional[]) => {
         return adicionais.map((adicional, index) => (
             <AdicionalComponent
-                key={adicional.id}  // Use id as key for better performance
+                key={adicional.id}
                 adicional={adicional}
                 onUpdateAdicional={handleUpdateAdicional}
             />
         ));
     };
 
-    // Handle input changes for Nome, Descrição, Preço in the main form
     const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
@@ -197,60 +272,84 @@ function RegisterProduct() {
         }
     };
 
-    // Handle input changes for Nome, Descrição, Preço in the modal form
     const handleModalInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
         const { name, value } = e.target;
 
         setNewAdicional((prev) => ({
             ...prev,
-            [name]: name === 'price' ? parseFloat(value) : value,  // Ensure price is a number
+            [name]: name === 'price' ? parseFloat(value) : value,
         }));
     };
 
-    // Handle form submission for the main form
-    const handleFormSubmit = (e: React.FormEvent) => {
+    const handleCategorySelect = (selectedValue: string) => {
+        const selectedCategory = categories.find((category) => category.value === selectedValue);
+        if (selectedCategory) {
+            setSelectedCategory(selectedCategory);
+
+            getSubCategories(selectedCategory.value); 
+        }
+    };
+
+    const handleSubCategorySelect = (selectedValue: string) => {
+        setSelectedSubCategory(selectedValue);
+    };
+
+    const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
-    
-        // If there's an uploaded image, get its name or path; if not, use the default image
+
+        const user = getUser().user_id;  
+
         const imageSrc = uploadedImage ? uploadedImage : Default;
-    
+
         const formattedOutput = {
-            name: nome,  // From input
-            price: preco,  // From input
-            quantity: 50,  // Constant value
-            minQuantity: 8,  // Constant value
-            maxQuantity: 150,  // Constant value
-            description: descricao,  // From input
-            image: imageSrc,  // Use uploaded image file name or the Default image
-            category: "Pizza",  // Constant value
-            subCategory: "Pizza Salgada",  // Constant value
-            storeName: "LojaMVOG",  // Constant value
-            shopkeeperId: "27e769ce-d55f-4580-96f0-f8dc25a17484",  // Constant value
+            name: nome || "",
+            price: preco,
+            quantity: null,
+            minQuantity: null,
+            maxQuantity: null,
+            description: descricao || "",
+            image: imageSrc,
+            category: selectedCategory ? selectedCategory.label : "",
+            subCategory: selectedSubCategory ? selectedSubCategory : "",
+            storeName: storeName || "",
+            shopkeeperId: user,
             complements: adicionais.map(adicional => ({
-                name: adicional.name,
+                name: adicional.name || "",
                 optional: adicional.optional,
-                description: adicional.description,
-                quantity: adicional.quantity,
-                price: adicional.price
+                description: adicional.description || "",
+                quantity: adicional.quantity || 1,
+                price: adicional.price,
             }))
         };
+
+        console.log(JSON.stringify(formattedOutput, null, 2));
+
+        await api.post(`product`, formattedOutput, {
+            headers: {
+                "Authorization": `Bearer ${getToken()}`,
+                "Content-Type": "application/json"
+            },
+        })
+        .then((response) => {
+            console.log("Product created successfully:", response.data);
+        })
+        .catch((error) => {
+            console.error("Error creating product:", error.response?.data || error.message);
+        });
     
-        console.log(formattedOutput);
     };
         
-    // Handle form submission for the modal form
     const handleModalFormSubmit = (e: React.FormEvent) => {
         e.preventDefault();
-        handleAddAdicional(newAdicional);  // Add the new Adicional
-        handleCloseModal();  // Close the modal
+        handleAddAdicional(newAdicional);
+        handleCloseModal();
 
-        // Reset new Adicional
         setNewAdicional({
             id: Date.now(),
             name: '',
             optional: true,
-            description: '',
-            quantity: 1,
+            description: null,
+            quantity: null,
             price: 0.0,
         });
     };
@@ -284,7 +383,6 @@ function RegisterProduct() {
                             name="descricao"
                             value={descricao}
                             onChange={handleInputChange}
-                            required
                         />
                         <InputDesktopLojista
                             label="Preço"
@@ -296,30 +394,31 @@ function RegisterProduct() {
                             step="0.01"
                             required
                         />
-                        {/* ARRUMAR AQUI */}
-                        <Select title='Categoria' options={Categorias} />
+                        <Select title="Categoria" options={categories} onCategorySelect={handleCategorySelect} />
+                        {selectedCategory && (
+                            <Select title="Subcategoria" options={subCategories} onCategorySelect={handleSubCategorySelect} />
+                        )}
+
                         <p className='additionalsTitle'>Complementos</p>
 
-                        {/* Render adicional components */}
                         {renderAdicionais(adicionais)}
 
-                        {/* Button to open the modal */}
                         <div className='buttonsHolder'>
                             <div className='sizeHelper'>
                                 <button type="button" onClick={handleOpenModal} className='newAdditional'>
                                     Cadastrar novo complemento
                                 </button>
-                                <button type="button" className='importAdditionals'>Importar complementos</button>
+                                <button type="button" onClick={handleOpenImportModal} className='importAdditionals'>
+                                    Importar complementos
+                                </button>
                             </div>
                         </div>
                     </Container>
 
-                    {/* Submit Button */}
                     <ActionButton type="submit">Adicionar</ActionButton>
                 </Center>
             </form>
 
-            {/* Modal for adding a new "Adicional" */}
             {isModalOpen && (
                 <ModalPopup onClick={handleCloseModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -334,9 +433,8 @@ function RegisterProduct() {
                             <InputDesktopLojista
                                 label="Descrição"
                                 name="description"
-                                value={newAdicional.description}
+                                value={newAdicional.description || ''}
                                 onChange={handleModalInputChange}
-                                required
                             />
                             <InputDesktopLojista
                                 label="Preço"
@@ -353,6 +451,41 @@ function RegisterProduct() {
                     </div>
                 </ModalPopup>
             )}
+
+            {isImportModalOpen && (
+                <ModalPopup onClick={handleCloseImportModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <form>
+                            <Select 
+                                title="Categoria" 
+                                options={categories} 
+                                onCategorySelect={handleImportMainCategorySelect} 
+                            />
+
+                            {importSelectedCategory && (
+                                <Select 
+                                    title="Sub-categoria" 
+                                    options={importFilteredSubCategories} 
+                                    onCategorySelect={handleImportSubCategorySelect} 
+                                />
+                            )}
+
+                            {importSelectedSubCategory && (
+                                <Select 
+                                    title="Produto" 
+                                    options={importFilteredSubCategories}
+                                    onCategorySelect={handleImportProductSelect} 
+                                />
+                            )}
+
+                            <button type="button" onClick={handleCloseImportModal} className="saveAdicional">
+                                Fechar
+                            </button>
+                        </form>
+                    </div>
+                </ModalPopup>
+            )}
+
 
             <Footer />
         </>

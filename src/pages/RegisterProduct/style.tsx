@@ -228,6 +228,7 @@ export const ActionButton = styled.button`
 
 export const ModalPopup = styled.div`
     position: fixed;
+    flex-wrap: wrap;
     top: 0;
     left: 0;
     width: 100%;

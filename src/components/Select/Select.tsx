@@ -1,46 +1,43 @@
 import React, { useState } from 'react';
-import { FakeSelect, Ml, Option, Conditional, SelectElement} from './style'; // Ajustei OptionsContainer
+import { FakeSelect, Ml, Option, Conditional, SelectElement } from './style'; // Ajustei OptionsContainer
 import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 
 interface SelectProps {
   title: string;
   options: { value: string; label: string; price?: number }[];
+  onCategorySelect?: (selectedValue: string) => void;  // New prop to pass the selected category
 }
 
-const Select: React.FC<SelectProps> = ({ title, options }) => {
+const Select: React.FC<SelectProps> = ({ title, options, onCategorySelect }) => {
   const [Aberto, setAberto] = useState(false);
-  const [valoresSelecionados, setValoresSelecionados] = useState<string[]>([]);
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);  // Only one selection
 
   const SelectAberto = () => {
     setAberto(!Aberto);
   };
 
   const handleOptionClick = (valorClicado: string) => {
-    const estaSelecionado = valoresSelecionados.includes(valorClicado);
-
-    if (estaSelecionado) {
-      const selecoesAtualizadas = valoresSelecionados.filter((value) => value !== valorClicado);
-      setValoresSelecionados(selecoesAtualizadas);
-    } else {
-      setValoresSelecionados([...valoresSelecionados, valorClicado]);
+    setSelectedValue(valorClicado);  // Set only one selected value
+    if (onCategorySelect) {
+      onCategorySelect(valorClicado);  // Call parent function to pass selected value if provided
     }
-
-    console.log(valoresSelecionados);
+    setAberto(false);  // Close the select after selection
   };
-  function FormattedPrice(valor:number){
-      const formattedPrice = valor.toLocaleString('pt-BR', 
-      { style: 'currency',
-        currency: 'BRL',
-        minimumFractionDigits: 2,
-        maximumFractionDigits: 2
-      }); // arruma o valor a ser exibido no formato 0,00
-      return formattedPrice;
-}
+
+  function FormattedPrice(valor: number) {
+    const formattedPrice = valor.toLocaleString('pt-BR', {
+      style: 'currency',
+      currency: 'BRL',
+      minimumFractionDigits: 2,
+      maximumFractionDigits: 2,
+    });
+    return formattedPrice;
+  }
 
   return (
     <div>
       <FakeSelect onClick={SelectAberto}>
-        <Ml>{title}</Ml>
+        <Ml>{selectedValue ? options.find((option) => option.value === selectedValue)?.label : title}</Ml>
         {Aberto ? <BsChevronUp /> : <BsChevronDown />}
       </FakeSelect>
       {Aberto && (
@@ -49,9 +46,9 @@ const Select: React.FC<SelectProps> = ({ title, options }) => {
             <Option
               key={option.value}
               onClick={() => handleOptionClick(option.value)}
-              selected={valoresSelecionados.includes(option.value)}
+              selected={option.value === selectedValue}  // Only one can be selected
             >
-              <Conditional spaceAround={option.price!==undefined}>
+              <Conditional spaceAround={option.price !== undefined}>
                 <span>{option.label}</span>
                 {option.price !== undefined && <span>{FormattedPrice(option.price)}</span>}
               </Conditional>
