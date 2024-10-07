@@ -27,16 +27,17 @@ export const Container = styled.div`
             justify-content: center;
 
             .label {
-                font-size: 16px;
+                font-size: 1rem;
                 font-weight: 400;
-                line-height: 18.75px;
+                line-height: ${rf(18.75)};
                 font-size: ${rf(18.75)};
             }
 
             .subtitle {
-                font-size: 14px;
+                margin-top: 0.0625rem;
+                font-size: 0.875rem;
                 font-weight: 300;
-                line-height: 16.41px;
+                line-height: 1.025rem;
                 font-size: ${rf(16.41)};
                 text-align: justify;
             }
@@ -68,26 +69,26 @@ export const Container = styled.div`
         }
 
         .modal {
-            position: fixed; /* Stays in place, covering the whole screen */
+            position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            background-color: rgba(0, 0, 0, 0.5); /* Black background with transparency */
+            background-color: rgba(0, 0, 0, 0.5);
             display: flex;
             justify-content: center;
             align-items: center;
-            z-index: 1000; /* Ensures it is on top of other content */
+            z-index: 1000;
         }
 
         .modal-content {
             background-color: #fff;
-            padding: 20px;
             border-radius: 8px;
-            max-width: 500px;
+            padding: 1.25rem;
+            max-width: 31.25rem;
             width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-            z-index: 1001; /* Ensures modal content is above the overlay */
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
+            z-index: 1001;
             position: relative;
 
             display: flex;
@@ -103,9 +104,9 @@ export const Container = styled.div`
                 background-color: #32cf15;
                 border-radius: 16px;
 
-                padding: 9px 18.5px;
+                padding: 0.5625rem 1.15625rem;
 
-                line-height: 16.41px;
+                line-height: 1.025625rem;
                 font-size: ${rf(16.41)};
             }
         }
@@ -116,8 +117,11 @@ export const Container = styled.div`
         font-weight: 500;
         font-family: 'Inter', sans-serif;
 
+        text-align: left;
+
         margin-top: 1.5rem;
         margin-bottom: 1.1875rem;
+        margin-left: 0.3125rem;
 
     }
 
@@ -126,21 +130,21 @@ export const Container = styled.div`
         align-items: center;
         flex-direction: column;
         justify-content: center;
-        margin-top: 19px;
-        margin-bottom: 69px;
+        margin-top: 1.1875rem;
+        margin-bottom: 4.3125rem;
 
         .sizeHelper {
             display: flex;
             align-items: center;
             flex-direction: column;
             justify-content: center;
-            gap: 19px;
+            gap: 1.1875rem;
         }
 
         .newAdditional {
             width: fit-content;
             
-            padding: 9px 12px;
+            padding: 0.5625rem 0.75rem;
             background-color: #32cf15;
             color: white;
             border-radius: 32px;
@@ -159,7 +163,7 @@ export const Container = styled.div`
         .importAdditionals {
             width: 100%;
 
-            padding: 9px 23px;
+            padding: 0.5625rem 1.4375rem;
             background-color: white;
             color: #32cf15;
             border: 1px solid #32cf15;
@@ -187,7 +191,7 @@ export const InfoPage = styled.div`
     font-size: ${rf(20)};
 `;
 export const NoWrap = styled.span`
-    font-color: ${THEME.COLORS.GRAY_600};
+    color: ${THEME.COLORS.GRAY_600};
     white-space: nowrap;
     margin-inline: ${rw(8)};
 `;
@@ -215,7 +219,7 @@ export const ActionButton = styled.button`
     font-weight: 500;
 
     border-radius: 32px;
-    padding: 8px 32px;
+    padding: 0.5rem 2rem;
     color: white;
     background-color: #32cf15;
     margin-bottom: ${rh(64)};
@@ -241,11 +245,13 @@ export const ModalPopup = styled.div`
 
         .modal-content {
             background-color: #fff;
-            padding: 20px;
             border-radius: 8px;
-            max-width: 500px;
+            padding: 1.25rem;
+            max-width: 31.25rem;
+            max-height: 31.25rem;
+            overflow-y: auto;
             width: 100%;
-            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+            box-shadow: 0 0.25rem 0.5rem rgba(0, 0, 0, 0.2);
             z-index: 1001;
             position: relative;
 
@@ -253,6 +259,18 @@ export const ModalPopup = styled.div`
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                width: 100%;
+
+                .selectWrapper {
+                    width: 86.9%;
+                }
+
+                .noProducts {
+                    font-family: 'Roboto', sans-serif;
+                    line-height: 1.025625rem;
+                    font-size: ${rf(16.41)};
+                }
+
             }
 
             .addAdicional {
@@ -264,9 +282,9 @@ export const ModalPopup = styled.div`
                 background-color: #32cf15;
                 border-radius: 16px;
 
-                padding: 9px 18.5px;
+                padding: 0.5625rem 1.15625rem;
 
-                line-height: 16.41px;
+                line-height: 1.025625rem;
                 font-size: ${rf(16.41)};
             }
 

@@ -5,23 +5,23 @@ import { BsChevronDown, BsChevronUp } from 'react-icons/bs';
 interface SelectProps {
   title: string;
   options: { value: string; label: string; price?: number }[];
-  onCategorySelect?: (selectedValue: string) => void;  // New prop to pass the selected category
+  onCategorySelect?: (selectedValue: string) => void;
 }
 
 const Select: React.FC<SelectProps> = ({ title, options, onCategorySelect }) => {
   const [Aberto, setAberto] = useState(false);
-  const [selectedValue, setSelectedValue] = useState<string | null>(null);  // Only one selection
+  const [selectedValue, setSelectedValue] = useState<string | null>(null);
 
   const SelectAberto = () => {
     setAberto(!Aberto);
   };
 
   const handleOptionClick = (valorClicado: string) => {
-    setSelectedValue(valorClicado);  // Set only one selected value
+    setSelectedValue(valorClicado);
     if (onCategorySelect) {
-      onCategorySelect(valorClicado);  // Call parent function to pass selected value if provided
+      onCategorySelect(valorClicado);
     }
-    setAberto(false);  // Close the select after selection
+    setAberto(false);
   };
 
   function FormattedPrice(valor: number) {
@@ -46,7 +46,7 @@ const Select: React.FC<SelectProps> = ({ title, options, onCategorySelect }) => 
             <Option
               key={option.value}
               onClick={() => handleOptionClick(option.value)}
-              selected={option.value === selectedValue}  // Only one can be selected
+              selected={option.value === selectedValue}  // Coloquei pra apenas uma opção ser selecionada, não sei se isso afeta outras telas :p
             >
               <Conditional spaceAround={option.price !== undefined}>
                 <span>{option.label}</span>

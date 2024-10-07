@@ -21,11 +21,23 @@ interface Adicional {
     quantity: number | null;
     price: number;
 }
+
+interface Product {
+    id: string;
+    name: string;
+    description: string;
+    price: number;
+    image: string;
+    categories: { id: number; name: string }[];
+    complements: Adicional[];
+}
+
 interface AdicionalComponentProps {
     adicional: Adicional;
     onUpdateAdicional: (updatedAdicional: Adicional) => void;
 }
 
+// Component para mostrar/permitir editar cada complemento
 const AdicionalComponent: React.FC<AdicionalComponentProps> = ({ adicional, onUpdateAdicional }) => {
     //estado modal
     const [isModalOpen, setIsModalOpen] = useState(false);
@@ -33,7 +45,7 @@ const AdicionalComponent: React.FC<AdicionalComponentProps> = ({ adicional, onUp
     const [editedAdicional, setEditedAdicional] = useState<Adicional>(adicional);  
 
     const handleOpenModal = () => {
-        setEditedAdicional(adicional); // Load the current adicional info
+        setEditedAdicional(adicional);
         setIsModalOpen(true);
     };
 
@@ -69,61 +81,69 @@ const AdicionalComponent: React.FC<AdicionalComponentProps> = ({ adicional, onUp
             </div>
 
             {isModalOpen && (
-    <div className="modal" onClick={handleCloseModal}>
-        <div className="modal-content" onClick={(e) => e.stopPropagation()}>
-            <InputDesktopLojista
-                label="Nome"
-                name="name"
-                value={editedAdicional.name}
-                onChange={handleInputChange}
-                required
-            />
+                <div className="modal" onClick={handleCloseModal}>
+                    <div className="modal-content" onClick={(e) => e.stopPropagation()}>
+                        <InputDesktopLojista
+                            label="Nome"
+                            name="name"
+                            value={editedAdicional.name}
+                            onChange={handleInputChange}
+                            required
+                        />
 
-            <InputDesktopLojista
-                label="Descrição"
-                name="description"
-                value={editedAdicional.description || ''}
-                onChange={handleInputChange}
-            />
+                        <InputDesktopLojista
+                            label="Descrição"
+                            name="description"
+                            value={editedAdicional.description || ''}
+                            onChange={handleInputChange}
+                        />
 
-            <InputDesktopLojista
-                label="Preço"
-                name="price"
-                value={editedAdicional.price.toString()}
-                onChange={handleInputChange}
-                type="number"
-                min="0.01"
-                step="0.01"
-                required
-            />
+                        <InputDesktopLojista
+                            label="Preço"
+                            name="price"
+                            value={editedAdicional.price.toString()}
+                            onChange={handleInputChange}
+                            type="number"
+                            min="0.01"
+                            step="0.01"
+                            required
+                        />
 
-            <button onClick={handleFormSubmit} className='saveAdicional'>Salvar</button>
-        </div>
-    </div>
-)}
+                        <button onClick={handleFormSubmit} className='saveAdicional'>Salvar</button>
+                    </div>
+                </div>
+            )}
         </div>
     );
 };
 
 
 function RegisterProduct() {
-    const [adicionais, setAdicionais] = useState<Adicional[]>([]);
+    const [adicionais, setAdicionais] = useState<Adicional[]>([]); // Lista de complementos
     const [storeName, setStoreName] = useState('');
-    const [categories, setCategories] = useState<{
-        parentCategoryId: string; label: string; value: string 
-}[]>([]);
+
+    // Categorias e subcategorias para os Selects (Testar quando tivermos subcategorias no backend)
+    const [categories, setCategories] = useState<{ parentCategoryId: string; label: string; value: string }[]>([]);
     const [selectedCategory, setSelectedCategory] = useState<{ label: string; value: string } | null>(null);
     const [subCategories, setSubCategories] = useState<{ label: string; value: string }[]>([]); 
     const [selectedSubCategory, setSelectedSubCategory] = useState<string | null>(null); 
+    
+    // modais
     const [isModalOpen, setIsModalOpen] = useState(false);
     const [isImportModalOpen, setIsImportModalOpen] = useState(false);
+    
+    // Importação de complementos
     const [importSelectedCategory, setImportSelectedCategory] = useState<string | null>(null);
     const [importFilteredSubCategories, setImportFilteredSubCategories] = useState<{ label: string; value: string }[]>([]);
     const [importSelectedSubCategory, setImportSelectedSubCategory] = useState<string | null>(null);
+    const [importedProducts, setImportedProducts] = useState<Product[]>([]);
     const [importSelectedProduct, setImportSelectedProduct] = useState<string | null>(null);
+    const [productsLoaded, setProductsLoaded] = useState(false);  // Flag pra marcar se os produtos já foram carregados
+
+    const navigate = useNavigate();
 
     const [newAdicional, setNewAdicional] = useState<Adicional>({
-        id: Date.now(),  // ID unico pra cada adicional (não sei se é o melhor método, mas funciona)
+        id: Date.now(),  // ID unico pra cada adicional (não sei se é o melhor método, mas funciona :p)
         name: '',
         optional: true,
         description: null,
@@ -131,6 +151,7 @@ function RegisterProduct() {
         price: 0.0,
     });
 
+    // Função para buscar as categorias e subcategorias do lojista, além do nome da loja, aproveitando a viagem
     async function getCategories() {
         await api.get(`category`, {
             headers: {
@@ -156,14 +177,13 @@ function RegisterProduct() {
         }).catch((err) => {
             alert("erro: " + err);
         });
-
-
     }
 
     useEffect(() => {
         getCategories();
     }, []);
 
+    // 'tentativa' de função pra pegar as subcategorias da categoria selecionada (testar quando tivermos subcategorias no backend)
     async function getSubCategories(categoryId: string) {
         await api.get(`category`, {
             headers: {
@@ -186,16 +206,17 @@ function RegisterProduct() {
 
     const [uploadedImage, setUploadedImage] = useState<File | null>(null);
 
+    // corrigir pra integrar com o backend (salvar a imagem no servidor e armazenar o link)
     const handleImageUpload = (imageFile: File | null) => {
         setUploadedImage(imageFile);
         console.log("Uploaded Image: ", imageFile);
     };
     
-
     const [nome, setNome] = useState('');
     const [descricao, setDescricao] = useState('');
     const [preco, setPreco] = useState(0.0);
 
+    // funções para abrir e fechar os modais de adição e importação de complementos
     const handleOpenModal = () => {
         setIsModalOpen(true);
     };
@@ -209,6 +230,9 @@ function RegisterProduct() {
     };
     
     const handleCloseImportModal = () => {
+        setImportedProducts([]);
+        setImportSelectedProduct(null);
+        setIsImportModalOpen(false);        
         setIsImportModalOpen(false);
     };
 
@@ -229,13 +253,74 @@ function RegisterProduct() {
     const handleImportProductSelect = (selectedValue: string) => {
         setImportSelectedProduct(selectedValue);
     };
-    
-    
 
+    //função para filtrar os produtos de acordo com a categoria e subcategoria selecionadas na importação
+    const filteredProducts = importedProducts.filter(product => {
+        const productCategoryId = product.categories[0].id;
+
+        const isCategoryMatch = productCategoryId === parseInt(importSelectedCategory || '');
+
+        // Olhar também a subcategoria
+        const isSubCategoryMatch = importSelectedSubCategory
+            ? productCategoryId === parseInt(importSelectedSubCategory)
+            : true;
+
+        return isCategoryMatch && isSubCategoryMatch;
+    });
+
+    //função para adicionar os complementos do produto importado
+    const handleAddComplements = () => {
+        const selectedProduct = importedProducts.find(product => product.id === importSelectedProduct);
+
+        if (selectedProduct && selectedProduct.complements.length > 0) {
+            const mappedComplements: Adicional[] = selectedProduct.complements.map((complement: Adicional) => ({
+                id: Date.now(),
+                name: complement.name,
+                optional: complement.optional,
+                description: complement.description,
+                quantity: complement.quantity,
+                price: complement.price,
+            }));
+
+            setAdicionais((prevAdicionais) => [...prevAdicionais, ...mappedComplements]);
+
+            setImportedProducts([]);
+            setImportSelectedProduct(null);
+            setIsImportModalOpen(false);
+        }
+    };
+
+
+    useEffect(() => {
+        // Chama a API para buscar os produtos da categoria/subcategoria selecionada se a categoria (ou ambas) foram escolhidas
+        if (importSelectedCategory) {
+            const getProducts = async () => {
+                try {
+                    const response = await api.get(`product/${storeName}/${getUser().user_id}`, { 
+                        headers: {
+                            "Authorization": `Bearer ${getToken()}`
+                        }
+                    });
+                    console.log(response.data);
+                    setImportedProducts(response.data);
+                } catch (error) {
+                    alert("erro: " + error);
+                } finally {
+                    setProductsLoaded(true);
+                }
+            };
+
+            getProducts();
+        }
+    }, [importSelectedCategory, importSelectedSubCategory, storeName]);
+
+    
+    //adicionar novo complemento
     const handleAddAdicional = (adicional: Adicional) => {
         setAdicionais((prevAdicionais) => [...prevAdicionais, adicional]);
     };
 
+    //editar complemento
     const handleUpdateAdicional = (updatedAdicional: Adicional) => {
         setAdicionais((prevAdicionais) =>
             prevAdicionais.map((adicional) =>
@@ -244,6 +329,7 @@ function RegisterProduct() {
         );
     };
 
+    //renderizar os complementos na tela
     const renderAdicionais = (adicionais: Adicional[]) => {
         return adicionais.map((adicional, index) => (
             <AdicionalComponent
@@ -294,6 +380,7 @@ function RegisterProduct() {
         setSelectedSubCategory(selectedValue);
     };
 
+    //função para adicionar o produto, de fato
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
@@ -308,7 +395,7 @@ function RegisterProduct() {
             minQuantity: null,
             maxQuantity: null,
             description: descricao || "",
-            image: imageSrc,
+            image: imageSrc, // corrigir para enviar a imagem para o backend na outra rota e enviar aqui o link da imagem
             category: selectedCategory ? selectedCategory.label : "",
             subCategory: selectedSubCategory ? selectedSubCategory : "",
             storeName: storeName || "",
@@ -319,10 +406,12 @@ function RegisterProduct() {
                 description: adicional.description || "",
                 quantity: adicional.quantity || 1,
                 price: adicional.price,
-            }))
+            })),
+            categoryId: selectedCategory ? parseFloat(selectedCategory.value) : null,
         };
 
-        console.log(JSON.stringify(formattedOutput, null, 2));
+        // veja aqui como que o objeto formattedOutput está estruturado
+        //console.log(JSON.stringify(formattedOutput, null, 2));
 
         await api.post(`product`, formattedOutput, {
             headers: {
@@ -331,10 +420,11 @@ function RegisterProduct() {
             },
         })
         .then((response) => {
-            console.log("Product created successfully:", response.data);
+            // console.log("Produto criado com sucesso:", response.data);
+            navigate('/profileLojista/gerenciarProdutos/produtos');
         })
         .catch((error) => {
-            console.error("Error creating product:", error.response?.data || error.message);
+            console.error("Erro:", error.response?.data || error.message);
         });
     
     };
@@ -456,31 +546,54 @@ function RegisterProduct() {
                 <ModalPopup onClick={handleCloseImportModal}>
                     <div className="modal-content" onClick={(e) => e.stopPropagation()}>
                         <form>
-                            <Select 
-                                title="Categoria" 
-                                options={categories} 
-                                onCategorySelect={handleImportMainCategorySelect} 
-                            />
+                            <div className="selectWrapper">
+                                <Select 
+                                    title="Categoria" 
+                                    options={categories} 
+                                    onCategorySelect={handleImportMainCategorySelect}
+                                />
+                            </div>
 
                             {importSelectedCategory && (
-                                <Select 
-                                    title="Sub-categoria" 
-                                    options={importFilteredSubCategories} 
-                                    onCategorySelect={handleImportSubCategorySelect} 
-                                />
+                                <div className="selectWrapper">
+                                    <Select 
+                                        title="Sub-categoria" 
+                                        options={importFilteredSubCategories} 
+                                        onCategorySelect={handleImportSubCategorySelect} 
+                                    />
+                                </div>
                             )}
 
                             {importSelectedSubCategory && (
-                                <Select 
-                                    title="Produto" 
-                                    options={importFilteredSubCategories}
-                                    onCategorySelect={handleImportProductSelect} 
-                                />
+                                <div className="selectWrapper">
+                                    <Select 
+                                        title="Produto" 
+                                        options={importFilteredSubCategories}
+                                        onCategorySelect={handleImportProductSelect} 
+                                    />
+                                </div>
                             )}
 
-                            <button type="button" onClick={handleCloseImportModal} className="saveAdicional">
-                                Fechar
-                            </button>
+                            {productsLoaded && (  // Only check for products once they are loaded
+                                filteredProducts.length > 0 ? (  // Show Select for filtered products if available
+                                    <div className="selectWrapper">
+                                        <Select 
+                                            title="Produtos" 
+                                            options={filteredProducts.map(product => ({ value: product.id, label: product.name }))}
+                                            onCategorySelect={handleImportProductSelect} 
+                                        />
+                                    </div>
+                                ) : (  // If no products are filtered, show "Nothing"
+                                    <p className='noProducts'>Nenhum produto encontrado.</p>
+                                )
+                            )}
+
+                            {/* Add button to add complements */}
+                            {importSelectedProduct && (
+                                <button type="button" onClick={handleAddComplements} className="addComplements">
+                                    Importar
+                                </button>
+                            )}
                         </form>
                     </div>
                 </ModalPopup>
