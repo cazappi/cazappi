@@ -15,9 +15,9 @@ function ManageStockItem() {
     const { product } = location.state || {};
     console.log('produto: ', product);
 
-    const [minQuantity, setMinQuantity] = useState<number>(parseInt(product.minQuantity, 10) || 0);
-    const [maxQuantity, setMaxQuantity] = useState<number>(parseInt(product.maxQuantity, 10) || 0);
-    const [quantity, setQuantity] = useState<number>(parseInt(product.quantity, 10) || 0);
+    const [minQuantity, setMinQuantity] = useState<number | null>(product.minQuantity ? parseInt(product.minQuantity, 10) : null);
+    const [maxQuantity, setMaxQuantity] = useState<number | null>(product.maxQuantity ? parseInt(product.maxQuantity, 10) : null);
+    const [quantity, setQuantity] = useState<number>(product.quantity ? parseInt(product.quantity, 10) : 0);
 
     const handleMinQuantityChange = (event: React.ChangeEvent<HTMLInputElement>) => {
         setMinQuantity(Number(event.target.value));  // Converte o valor para número
@@ -28,13 +28,13 @@ function ManageStockItem() {
     };
 
     const handleIncreaseQuantity = () => {
-        if (quantity < maxQuantity) {
+        if (quantity < (maxQuantity || 0)) {
             setQuantity(quantity + 1);
         }
     };
 
     const handleDecreaseQuantity = () => {
-        if (quantity > minQuantity) {
+        if (quantity > (minQuantity || 0)) {
             setQuantity(quantity - 1);
         }
     };
@@ -44,13 +44,38 @@ function ManageStockItem() {
     };
 
     const handleConfirm = () => {
-
         product.minQuantity = minQuantity;
         product.maxQuantity = maxQuantity;
         product.quantity = quantity;
 
+        /**
+   * 
+   * {
+    "id": "6a6ba903-676d-435c-9761-931bea9c7fb7",
+    "name": "Pizza de 4 queijos-79",
+    "image": "imgpizza4queijos",
+    "description": "Uma pizza de 4 queijos muito boa e barata.",
+    "price": 10,
+    "quantity": 60,
+    "minQuantity": 5,
+    "maxQuantity": 160,
+    "storeName": "Store8cf9e655-ea00-4c5c-b029-18673fefaf5c",
+    "shopkeeperId": "7fc22f5c-c7c5-44a4-91f3-f787c71aa1fe",
+}
+   */
+
+
         let newProduct = {
-            product
+            id: product.id,
+            name: product.name,
+            image: product.image,
+            description: product.description,
+            price: product.price,
+            quantity: product.quantity,
+            minQuantity: product.minQuantity,
+            maxQuantity: product.maxQuantity,
+            storeName: product.storeName,
+            shopkeeperId: product.shopkeeperId,
         }
 
         console.log('new produto: ', newProduct);
@@ -91,16 +116,18 @@ function ManageStockItem() {
                         <p>Mínimo</p>
                         <input
                             type="number"
-                            value={minQuantity}
+                            value={minQuantity !== null ? minQuantity : ''}
                             onChange={handleMinQuantityChange}
+                            placeholder={minQuantity === null ? '' : undefined}
                         />
                     </div>
                     <div className="minMaxInput">
                         <p>Máximo</p>
                         <input
                             type="number"
-                            value={maxQuantity}
+                            value={maxQuantity !== null ? maxQuantity : ''}
                             onChange={handleMaxQuantityChange}
+                            placeholder={maxQuantity === null ? '' : undefined}
                         />
                     </div>
                 </div>
