@@ -37,8 +37,8 @@ export const CardsHolder = styled.div`
         border: 1px solid #EB1212;
         border-radius: 16px;
         padding: 1.125rem;
-        height: fit-content;
-        width: fit-content;
+        height: auto;
+        width: auto;
         max-width: ${rw(359)};
 
 
@@ -49,7 +49,7 @@ export const CardsHolder = styled.div`
             display: flex;
             flex-direction: row;
             justify-content: space-between;
-            margin-bottom: 0.5rem;
+            margin-bottom: 1.5rem;
 
             .titleAbout {
                 font-size: ${rf(20)};
@@ -62,45 +62,38 @@ export const CardsHolder = styled.div`
             }
         }
 
+        .aboutContent{
+            display: flex;
+            flex-direction: row;
+            gap: 3rem;
+        }
+
         .upperInfo {
             display: flex;
             flex-direction: row;
             justify-content: left;
             gap: 3rem;
-            margin-bottom: 0.75rem;
 
             .upperSubtitle {
-                font-size: 0.875rem;
-                font-weight: 400;
-                line-height: 1.025625rem;
+                font-family: 'Roboto', sans-serif;
+                font-size: 1rem;
+                font-weight: 500;
+                line-height: 1.171875rem;
                 text-align: center;
             }
 
             .valueStand {
-                font-size: 1.5rem;
+                font-size: 1.625rem;
                 font-weight: 600;
-                line-height: 1.758125rem;
+                line-height: 1.904375rem;
                 text-align: left;
                 color: #00A650;
-                margin-top: 0.5rem;
+                margin-top: 1.625rem;
                 margin-left: 0.7rem;
+
+                font-family: 'Roboto', sans-serif;
             }
 
-            .iconText {
-                display: flex;
-                flex-direction: row;
-                gap: 0.25rem; /* 4px to rem */
-                align-items: center;
-
-                font-size: 1.5rem; /* 24px to rem */
-                font-weight: 600;
-                line-height: 1.758125rem; /* 28.13px to rem */
-                text-align: left;
-                color: #00A650;
-
-                margin-top: 0.5rem; /* 8px to rem */
-                margin-left: 1.4375rem; /* 23px to rem */
-            }
         }
         .lowerInfo {
             display: flex;
@@ -108,14 +101,17 @@ export const CardsHolder = styled.div`
             justify-content: left;
             width: fit-content;
             gap: 1.25rem;
-            margin-bottom: 0.75rem;
             flex-wrap: wrap;
 
             .lowerSubtitle {
-                font-size: 0.875rem;
-                font-weight: 400;
-                line-height: 1.025625rem; 
                 text-align: center;
+
+                font-family: 'Roboto', sans-serif;
+                font-size: 1rem;
+                font-weight: 500;
+                line-height: 1.171875rem;
+                text-align: center;
+
             }
 
             .ordersHolder {
@@ -126,68 +122,23 @@ export const CardsHolder = styled.div`
             }
 
             .orderNumber {
-                font-size: 1.5rem; 
+                font-size: 2rem; 
                 font-weight: 600;
-                line-height: 1.758125rem;
+                line-height: 2.34375rem;
                 text-align: left;
                 color: #00A650;
+
+                font-family: 'Roboto', sans-serif;
             }
+
             .deliveryImg {
                 border: 2px solid black;
                 border-radius: 50%;
                 width: 2.805rem; 
-                height: 3.123125rem;            }
-
-            .mostSoldHolder {
-                display: flex;
-                flex-direction: column;
-                align-items: flex-start;
-                gap: 0.5rem;
-
-                .mostSold {
-                    border: 1px solid #EB1212;
-                    border-radius: 16px;
-                    display: flex;
-                    flex-direction: row;
-                    justify-content: space-around;
-                    align-items: center;
-
-                    gap: 0.25rem;
-
-                    width: fit-content;
-
-                    padding: 0.5rem;
-
-                    .mostSoldImg {
-                        width: 64px;
-                        height: 36px;
-                        border-radius: 8px;
-                    }
-
-                    .orderInfo {
-                        display: flex;
-                        flex-direction: column;
-                        justify-content: start;
-
-                        .nameHolder {
-                            font-size: 12px;
-                            font-weight: 400;
-                            line-height: 14.06px;
-                            text-align: left;
-                        }
-                        .priceHolder {
-                            font-size: 12px;
-                            font-weight: 500;
-                            line-height: 14.06px;
-                            text-align: left;
-                        }
-
-                    }
-
-                }
-
+                height: 3.123125rem;
+                margin-top: .5rem;
+                margin-left: .75rem;
             }
-
 
         }
     }
@@ -196,21 +147,21 @@ export const CardsHolder = styled.div`
         border: 1px solid #EB1212;
         border-radius: 16px;
         height: fit-content;
-        padding-top: 10px;
+        padding-top: 0.5rem;
 
         .titleStatus {
             font-size: 24px;
             font-weight: 600;
             line-height: 28.13px;
             text-align: center;
-            margin-bottom: 35px;
+            margin-bottom: 1.5rem;
         }
 
         .buttonsHolder {
             display: flex;
             flex-direction: row;
             gap: 22px;
-            margin-bottom: 50px;
+            margin-bottom: 19.5px;
             margin-left: 23px;
             margin-right: 28px;
 
@@ -319,4 +270,115 @@ export const BannerImage = styled.img`
 export const ContainerLojista = styled(Container)`
     margin-bottom: ${rh(24)};
     margin-top: ${rh(24)};
+
+    .mostSoldHolder {
+        width: 90%;
+        height: max-content;
+
+        .mostSoldTitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.75rem;
+            text-align: left;
+            margin-bottom: 1.5rem;
+
+            font-family: 'Roboto', sans-serif;
+            line-height: 28.13px;
+
+            margin-bottom: 28px;
+        }
+
+        .productsGrid {
+            width: 100%;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 1rem;
+            margin-bottom: 2.5rem;
+
+            @media (max-width: 1500px) {
+                grid-template-columns: 1fr; /* Switch to a single column on smaller screens */
+            }
+
+        }
+
+        .clientsButtonHolder {
+            display: flex;
+            flex-direction: row;
+            justify-content: flex-end;
+            margin-bottom: 4.5rem;
+
+            .clientsReviewButton {
+                border: 1px solid #CC0000;
+                border-radius: 16px;
+                padding: 0.5rem 1rem;
+
+                color: #CC0000;
+                font-family: 'Roboto', sans-serif;
+                font-size: 1rem;
+                font-weight: 500;
+                text-align: left;
+
+                display: flex;
+                flex-direction: row;
+                align-items: center;
+                gap: 1rem;
+            }
+
+        }
+
+    }
 `
+export const ItemCard = styled.div`
+    box-shadow: 0px 4px 10px 0px #00000026;
+    border-radius: 16px;
+    padding: 0.5rem 1rem;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+
+    .leftContent {
+        width: 44%;
+        height: 4rem;
+
+        .productImage {
+            align-self: center;
+            height: 4rem;
+            border-radius: 16px;
+        }
+    }
+
+    .rightContent {
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        width: 56%;
+        height: fit-content;
+
+        .upperRight {
+            display: flex;
+            flex-direction: row;
+            justify-content: space-between;
+        }
+
+        .title {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.87875rem;
+            font-weight: 400;
+        }
+
+        .description {
+            font-family: 'Roboto', sans-serif;
+            font-size: 0.7325rem;
+            font-weight: 300;
+        }
+
+        .price {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.025625rem;
+            font-weight: 500;
+            text-align: right;
+        }
+    }
+`;
