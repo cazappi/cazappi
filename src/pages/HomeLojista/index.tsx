@@ -76,10 +76,10 @@ interface ProductProps {
     subCategory: string;
     quantity_sold: number;
     average_rating: number;
+    price: number;
   }
   
 const ProductCard: React.FC<ProductProps> = ({
-    id,
     name,
     description,
     image,
@@ -87,6 +87,7 @@ const ProductCard: React.FC<ProductProps> = ({
     subCategory,
     quantity_sold,
     average_rating,
+    price,
   }) => {
     return (
       <>
@@ -113,7 +114,7 @@ const ProductCard: React.FC<ProductProps> = ({
 
             {/* PREÇO */}
             <p className="price">
-              R$ 22,00
+              {price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}
             </p>
           </div>
         </ItemCard>
@@ -131,36 +132,40 @@ const ProductCard: React.FC<ProductProps> = ({
       subCategory: "Sandwiches",
       quantity_sold: 250,
       average_rating: 4.5,
+      price: 25.00,
     },
     {
       id: "2",
       name: "Pizza Margherita",
       description: "Pizza com molho de tomate, queijo mussarela e manjericão",
-      image: Default, // Use a different image if available
+      image: Default,
       category: "Food",
       subCategory: "Pizza",
       quantity_sold: 100,
       average_rating: 4.7,
+      price: 22.00,
     },
     {
       id: "3",
       name: "Suco Natural de Laranja",
       description: "Suco fresco e natural de laranja sem açúcar",
-      image: Default, // Use a different image if available
+      image: Default,
       category: "Beverage",
       subCategory: "Juices",
       quantity_sold: 150,
       average_rating: 4.2,
+      price: 22.00,
     },
     {
       id: "4",
       name: "Bolo de Cenoura",
       description: "Bolo de cenoura com cobertura de chocolate",
-      image: Default, // Use a different image if available
+      image: Default,
       category: "Dessert",
       subCategory: "Cakes",
       quantity_sold: 75,
       average_rating: 4.8,
+      price: 22.00,
     },
   ];  
 
@@ -174,7 +179,7 @@ const HomeLojista = () => {
     const getCurrentDate = (): string => {
       const today = new Date();
       const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, '0'); // Add 1 because months are 0-indexed
+      const month = String(today.getMonth() + 1).padStart(2, '0');
       const day = String(today.getDate()).padStart(2, '0');
       
       return `${year}-${month}-${day}`;
@@ -288,6 +293,7 @@ const HomeLojista = () => {
             subCategory={product.subCategory}
             quantity_sold={product.quantity_sold}
             average_rating={product.average_rating}
+            price={product.price}
           />
         ));
     };
