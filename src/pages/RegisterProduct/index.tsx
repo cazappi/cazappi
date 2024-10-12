@@ -386,8 +386,6 @@ function RegisterProduct() {
 
         const user = getUser().user_id;  
 
-        const imageSrc = uploadedImage ? uploadedImage : Default;
-
         const formattedOutput = {
             name: nome || "",
             price: preco,
@@ -395,7 +393,7 @@ function RegisterProduct() {
             minQuantity: null,
             maxQuantity: null,
             description: descricao || "",
-            image: imageSrc, // corrigir para enviar a imagem para o backend na outra rota e enviar aqui o link da imagem
+            image: "imagem",
             category: selectedCategory ? selectedCategory.label : "",
             subCategory: selectedSubCategory ? selectedSubCategory : "",
             storeName: storeName || "",
@@ -413,20 +411,38 @@ function RegisterProduct() {
         // veja aqui como que o objeto formattedOutput está estruturado
         //console.log(JSON.stringify(formattedOutput, null, 2));
 
-        await api.post(`product`, formattedOutput, {
-            headers: {
-                "Authorization": `Bearer ${getToken()}`,
-                "Content-Type": "application/json"
-            },
-        })
-        .then((response) => {
-            // console.log("Produto criado com sucesso:", response.data);
-            navigate('/profileLojista/gerenciarProdutos/produtos');
-        })
-        .catch((error) => {
-            console.error("Erro:", error.response?.data || error.message);
-        });
+        try {
+            const productResponse = await api.post(`product`, formattedOutput, {
+                headers: {
+                    "Authorization": `Bearer ${getToken()}`,
+                    "Content-Type": "application/json"
+                },
+            });
     
+            const productId = productResponse.data.id; 
+    
+            if (uploadedImage) {
+                // const formData = new FormData();
+                // formData.append('file', uploadedImage);
+    
+                const imageResponse = await api.post(`/storage/product/productImage/${productId}`, uploadedImage, {
+                    headers: {
+                        "Authorization": `Bearer ${getToken()}`,
+                        // "Content-Type": "multipart/form-data"
+                    },
+                });
+    
+                console.log("Image upload response:", imageResponse.data);
+            }
+    
+            // Navegar para os produtos depois de adicionar o novo produto
+            navigate('/profileLojista/gerenciarProdutos/produtos');
+        } catch (error) {
+            const err = error as any; // Cast error to any
+            console.log("Erro:" + err.response?.data || err.message);
+            console.error("Error details:", err);
+        }
+        
     };
         
     const handleModalFormSubmit = (e: React.FormEvent) => {
