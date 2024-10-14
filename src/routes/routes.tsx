@@ -40,6 +40,7 @@ import ClientAddSpecificAddress from "../pages/ClientAddresses/ClientAddSpecific
 import ProfileClient from "../pages/ProfileClient";
 import ProfileLojista from "../pages/ProfileLojista";
 import GerenciarDadosLojista from "../pages/GerenciarDadosLojista";
+import Store from "../pages/Store";
 
 const AppRoutes = () => (
   <>
@@ -52,6 +53,7 @@ const AppRoutes = () => (
       <Route path="/register" element={<Register />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+      <Route path="/store/:idDaLoja" element={<Store />} />
       <Route path="/ProductView" element={<ProductView />}/>
       <Route path="/BagPagment" element={<BagPagment />}/>
       <Route path="/OrderHistoryClient" element={<OrderHistoryClient />}/>
