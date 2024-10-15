@@ -206,10 +206,8 @@ function RegisterProduct() {
 
     const [uploadedImage, setUploadedImage] = useState<File | null>(null);
 
-    // corrigir pra integrar com o backend (salvar a imagem no servidor e armazenar o link)
     const handleImageUpload = (imageFile: File | null) => {
         setUploadedImage(imageFile);
-        console.log("Uploaded Image: ", imageFile);
     };
     
     const [nome, setNome] = useState('');
@@ -384,6 +382,18 @@ function RegisterProduct() {
     const handleFormSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
 
+        //se não tiver imagem, não deixa adicionar >:(
+        if (!uploadedImage) {
+            alert('Selecione uma imagem para o produto.');
+            return;
+        }
+
+        if (!selectedCategory) {
+            alert('Selecione uma categoria para o produto.');
+            return;
+        }
+    
+
         const user = getUser().user_id;  
 
         const formattedOutput = {
@@ -476,7 +486,7 @@ function RegisterProduct() {
             <form onSubmit={handleFormSubmit}>
                 <Center>
                     <Container>
-                        <ImageUpload defaultImageSrc={Default} onImageUpload={handleImageUpload} />
+                        <ImageUpload defaultImageSrc={Default} onImageUpload={handleImageUpload}/>
                         <InputDesktopLojista
                             label="Nome"
                             name="nome"

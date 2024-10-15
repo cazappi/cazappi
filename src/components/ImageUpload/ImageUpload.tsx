@@ -4,7 +4,7 @@ import {BsFillPencilFill} from 'react-icons/bs'
 
 interface ImageUploadProps {
   defaultImageSrc: string;
-  onImageUpload: (imageFile: File | null) => void;  // Add the prop here
+  onImageUpload: (imageFile: File | null) => void;
 }
 
 const ImageUpload: React.FC<ImageUploadProps> = ({ defaultImageSrc, onImageUpload }) => {
@@ -16,12 +16,12 @@ const ImageUpload: React.FC<ImageUploadProps> = ({ defaultImageSrc, onImageUploa
       const reader = new FileReader();
       reader.onload = () => {
         const newImageSrc = reader.result as string;
-        setImageSrc(newImageSrc);  // Set image source for preview
-        onImageUpload(file);  // Send the file to the parent
+        setImageSrc(newImageSrc);
+        onImageUpload(file);
       };
       reader.readAsDataURL(file);
     } else {
-      onImageUpload(null);  // No file selected, send null to parent
+      onImageUpload(null);
     }
   };
 
