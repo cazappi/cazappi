@@ -151,7 +151,7 @@ function RegisterProduct() {
         price: 0.0,
     });
 
-    // Função para buscar as categorias e subcategorias do lojista, além do nome da loja, aproveitando a viagem
+    // Função para buscar as categorias e subcategorias do lojista, além do nome da loja, já aproveitando a viagem
     async function getCategories() {
         await api.get(`category`, {
             headers: {
@@ -409,7 +409,7 @@ function RegisterProduct() {
         };
 
         // veja aqui como que o objeto formattedOutput está estruturado
-        //console.log(JSON.stringify(formattedOutput, null, 2));
+        // console.log(JSON.stringify(formattedOutput, null, 2));
 
         try {
             const productResponse = await api.post(`product`, formattedOutput, {
@@ -422,25 +422,25 @@ function RegisterProduct() {
             const productId = productResponse.data.id; 
     
             if (uploadedImage) {
-                // const formData = new FormData();
-                // formData.append('file', uploadedImage);
-    
-                const imageResponse = await api.post(`/storage/product/productImage/${productId}`, uploadedImage, {
+                const formData = new FormData();
+                formData.append('file', uploadedImage);    
+                const imageResponse = await api.post(`/storage/product/productImage/${productId}`, formData, {
                     headers: {
                         "Authorization": `Bearer ${getToken()}`,
-                        // "Content-Type": "multipart/form-data"
+                        "Content-Type": "multipart/form-data"
                     },
                 });
-    
-                console.log("Image upload response:", imageResponse.data);
+                
+                // Se a imagem for enviada com sucesso, ver a resposta aqui:
+                // console.log("Image upload response:", imageResponse.data);
             }
     
             // Navegar para os produtos depois de adicionar o novo produto
             navigate('/profileLojista/gerenciarProdutos/produtos');
         } catch (error) {
-            const err = error as any; // Cast error to any
+            const err = error as any;
             console.log("Erro:" + err.response?.data || err.message);
-            console.error("Error details:", err);
+            console.error("Detalhes do erro:", err);
         }
         
     };
@@ -590,8 +590,8 @@ function RegisterProduct() {
                                 </div>
                             )}
 
-                            {productsLoaded && (  // Only check for products once they are loaded
-                                filteredProducts.length > 0 ? (  // Show Select for filtered products if available
+                            {productsLoaded && (  // Só ver os produtos depois de carregados
+                                filteredProducts.length > 0 ? (
                                     <div className="selectWrapper">
                                         <Select 
                                             title="Produtos" 
@@ -599,12 +599,11 @@ function RegisterProduct() {
                                             onCategorySelect={handleImportProductSelect} 
                                         />
                                     </div>
-                                ) : (  // If no products are filtered, show "Nothing"
+                                ) : (  // Se nenhum produto for encontrado com isso, mostrar mensagem
                                     <p className='noProducts'>Nenhum produto encontrado.</p>
                                 )
                             )}
 
-                            {/* Add button to add complements */}
                             {importSelectedProduct && (
                                 <button type="button" onClick={handleAddComplements} className="addComplements">
                                     Importar
