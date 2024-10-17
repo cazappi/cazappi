@@ -13,7 +13,6 @@ function ManageStockItem() {
     const { id } = useParams();
     const location = useLocation();
     const { product } = location.state || {};
-    console.log('produto: ', product);
 
     const [minQuantity, setMinQuantity] = useState<number | null>(product.minQuantity ? parseInt(product.minQuantity, 10) : null);
     const [maxQuantity, setMaxQuantity] = useState<number | null>(product.maxQuantity ? parseInt(product.maxQuantity, 10) : null);
@@ -43,42 +42,29 @@ function ManageStockItem() {
         navigate('/profileLojista/gerenciarProdutos/gerenciarEstoque');
     };
 
+    const searchCategoryId = (product: any) => {
+        for (let i = 0; i < product.categories.length; i++) {
+            if (product.categories[i].parentCategoryId === null) {
+                return product.categories[i].id;
+            }
+        }
+    }
+
     const handleConfirm = () => {
-        product.minQuantity = minQuantity;
-        product.maxQuantity = maxQuantity;
-        product.quantity = quantity;
-
-        /**
-   * 
-   * {
-    "id": "6a6ba903-676d-435c-9761-931bea9c7fb7",
-    "name": "Pizza de 4 queijos-79",
-    "image": "imgpizza4queijos",
-    "description": "Uma pizza de 4 queijos muito boa e barata.",
-    "price": 10,
-    "quantity": 60,
-    "minQuantity": 5,
-    "maxQuantity": 160,
-    "storeName": "Store8cf9e655-ea00-4c5c-b029-18673fefaf5c",
-    "shopkeeperId": "7fc22f5c-c7c5-44a4-91f3-f787c71aa1fe",
-}
-   */
-
 
         let newProduct = {
-            id: product.id,
             name: product.name,
             image: product.image,
             description: product.description,
             price: product.price,
-            quantity: product.quantity,
-            minQuantity: product.minQuantity,
-            maxQuantity: product.maxQuantity,
+            quantity: quantity,
+            minQuantity: minQuantity,
+            maxQuantity: maxQuantity,
             storeName: product.storeName,
             shopkeeperId: product.shopkeeperId,
+            categoryId: searchCategoryId(product),
         }
 
-        console.log('new produto: ', newProduct);
 
         api.put(`product/${id}`,
             newProduct,
@@ -88,7 +74,7 @@ function ManageStockItem() {
                 }
             }
         ).then((response) => {
-            console.log('resposta: ', response);
+            navigate('/profileLojista/gerenciarProdutos/gerenciarEstoque');
         }).catch((err) => {
             alert("Ops! Ocorreu um erro: " + err)
         });
