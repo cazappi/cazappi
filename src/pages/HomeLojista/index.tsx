@@ -3,13 +3,9 @@ import Default from '../../assets/userProfile.png'
 import { useEffect, useState } from "react";
 import deliveryImage from '../../assets/entrega-rapida.svg';
 import sanduiche from '../../assets/sanduiche.png';
-import { AddImg } from "../../components/ImageUpload/style";
 import {BsBagCheck, BsPlusLg} from 'react-icons/bs'
 import { FaPen } from "react-icons/fa";
-import { THEME } from "../../theme";
-import { responsiveHeight } from "../../utils/responsive-functions";
-import { FLEXROW } from "../Politica/style";
-import { MdOutlineGrade, MdOutlineKeyboardDoubleArrowRight, MdOutlinePendingActions } from "react-icons/md";
+import { MdOutlineKeyboardDoubleArrowRight, MdOutlinePendingActions } from "react-icons/md";
 import { BsThreeDotsVertical } from "react-icons/bs";
 import { AiOutlineReload } from "react-icons/ai";
 import { useNavigate } from "react-router-dom";
@@ -20,9 +16,8 @@ import api from "../../services/api";
 import { getUser } from "../../utils/user-token-request";
 import { getToken } from "../../utils/get-cookie";
 import { clearToken } from "../../utils/clear-cookie";
-import { string } from "yup";
-import { Star, StarBorder, StarHalf } from '@mui/icons-material';
-import { Box, Rating, Typography } from '@mui/material';
+import { Star } from '@mui/icons-material';
+import { Box, Rating } from '@mui/material';
 
 
 interface StarRatingProps {
@@ -93,17 +88,17 @@ const ProductCard: React.FC<ProductProps> = ({
       <>
         <ItemCard>
           <div className="leftContent">
-            {/* Imagem */}
-            <img className="productImage" src={sanduiche}/>
+            {/* Imagem, coloquei pra usar a imagem constante do sanduiche se não tiver a imagem, 
+            apenas para testes com as rotas, os pedidos por si só devem ter a imagem por padrão, 
+            mas é algo para se editar posteriormente */}
+            <img className="productImage" src={image || sanduiche}/>
           </div>
           <div className="rightContent">
             <div className="upperRight">
-
               {/* nome do produto */}
               <p className="title">
                 {name}
               </p>
-
               <button className="optionsButton"> <BsThreeDotsVertical size={9.75}/> </button>
             </div>
       
@@ -122,52 +117,53 @@ const ProductCard: React.FC<ProductProps> = ({
       );
   };
 
-  const products = [
-    {
-      id: "1",
-      name: "Sanduiche Natural",
-      description: "Pão italiano, queijo prato, tomate, ovo, alface e rúcula",
-      image: sanduiche,
-      category: "Food",
-      subCategory: "Sandwiches",
-      quantity_sold: 250,
-      average_rating: 4.5,
-      price: 25.00,
-    },
-    {
-      id: "2",
-      name: "Pizza Margherita",
-      description: "Pizza com molho de tomate, queijo mussarela e manjericão",
-      image: Default,
-      category: "Food",
-      subCategory: "Pizza",
-      quantity_sold: 100,
-      average_rating: 4.7,
-      price: 22.00,
-    },
-    {
-      id: "3",
-      name: "Suco Natural de Laranja",
-      description: "Suco fresco e natural de laranja sem açúcar",
-      image: Default,
-      category: "Beverage",
-      subCategory: "Juices",
-      quantity_sold: 150,
-      average_rating: 4.2,
-      price: 22.00,
-    },
-    {
-      id: "4",
-      name: "Bolo de Cenoura",
-      description: "Bolo de cenoura com cobertura de chocolate",
-      image: Default,
-      category: "Dessert",
-      subCategory: "Cakes",
-      quantity_sold: 75,
-      average_rating: 4.8,
-      price: 22.00,
-    },
-  ];  
+  // const de produtos para se usar no map, caso queira testar o display sem usar os produtos recuperados da rota do backend.
+  // const products = [
+  //   {
+  //     id: "1",
+  //     name: "Sanduiche Natural",
+  //     description: "Pão italiano, queijo prato, tomate, ovo, alface e rúcula",
+  //     image: sanduiche,
+  //     category: "Food",
+  //     subCategory: "Sandwiches",
+  //     quantity_sold: 250,
+  //     average_rating: 4.5,
+  //     price: 25.00,
+  //   },
+  //   {
+  //     id: "2",
+  //     name: "Pizza Margherita",
+  //     description: "Pizza com molho de tomate, queijo mussarela e manjericão",
+  //     image: Default,
+  //     category: "Food",
+  //     subCategory: "Pizza",
+  //     quantity_sold: 100,
+  //     average_rating: 4.7,
+  //     price: 22.00,
+  //   },
+  //   {
+  //     id: "3",
+  //     name: "Suco Natural de Laranja",
+  //     description: "Suco fresco e natural de laranja sem açúcar",
+  //     image: Default,
+  //     category: "Beverage",
+  //     subCategory: "Juices",
+  //     quantity_sold: 150,
+  //     average_rating: 4.2,
+  //     price: 22.00,
+  //   },
+  //   {
+  //     id: "4",
+  //     name: "Bolo de Cenoura",
+  //     description: "Bolo de cenoura com cobertura de chocolate",
+  //     image: Default,
+  //     category: "Dessert",
+  //     subCategory: "Cakes",
+  //     quantity_sold: 75,
+  //     average_rating: 4.8,
+  //     price: 22.00,
+  //   },
+  // ];  
 
   
 const HomeLojista = () => {
@@ -189,49 +185,72 @@ const HomeLojista = () => {
     const [totalRevenue, setTotalRevenue] = useState(0);
     
     async function getUserData() {
-        const data = {
-          date: getCurrentDate(),
-          status: "Completed",
-          numberOfProducts: 4,
-        };
+      const data = {
+        date: getCurrentDate(),
+        status: "Completed",
+        numberOfProducts: 4,
+      };
     
-        await api
-          .get(`store/${getUser().user_id}`, {
-            headers: {
-              "Authorization": `Bearer ${getToken()}`,
-            },
-          })
-          .then((response) => {
-            console.log(response.data);
-            console.log('------------------');
-            setStoreRating(response.data.store[0].rating);
-            setOpeningTime(response.data.store[0].schedule[0].openingTime);
-            setClosingTime(response.data.store[0].schedule[0].closingTime);
-            setStoreName(response.data.store[0].name);
-            setImageSrc(response.data.store.imagePerfil || Default);
-            setBannerSrc(response.data.store.imageBanner || bannerDefault);
-          })
-          .catch((err) => {
-            clearToken();
-            navigate("/unauthorized");
+      try {
+        const storeResponse = await api.get(`store/${getUser().user_id}`, {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
         });
-
-        await api
-          .post(`store/dailyReport/shopkeeper1`, data, {
-            headers: {
-              "Authorization": `Bearer ${getToken()}`,
-            },
-          })
-          .then((response) => {
-            console.log(response.data);
-            setMostOrderedProducts(response.data.mostOrderedProducts);
-            setTotalOrders(response.data.totalOrders);
-            setTotalRevenue(response.data.totalRevenue);
-          })
-          .catch((err) => {
-            alert("ops! ocorreu um erro: " + err);
+    
+        const { rating, schedule, name, imagePerfil, imageBanner } = storeResponse.data.store[0];
+        setStoreRating(rating);
+        setOpeningTime(schedule[0].openingTime);
+        setClosingTime(schedule[0].closingTime);
+        setStoreName(name);
+        setImageSrc(imagePerfil || Default);
+        setBannerSrc(imageBanner || bannerDefault);
+    
+        const productsResponse = await api.post(`store/dailyReport/shopkeeper1`, data, {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
         });
+    
+        const products = productsResponse.data.mostOrderedProducts;
+        setTotalOrders(productsResponse.data.totalOrders);
+        setTotalRevenue(productsResponse.data.totalRevenue);
+    
+        if (products.length > 0) {
+          const productsWithImages = await Promise.all(
+            products.map(async (product: ProductProps) => {
+              const image = await fetchProductImage(product.id);
+              return { ...product, image };
+            })
+          );
+          setMostOrderedProducts(productsWithImages);
+        } else {
+          setMostOrderedProducts([]); // Nenhum produto vendido!
+        }
+      } catch (err) {
+        clearToken();
+        navigate("/unauthorized");
+        console.error("Erro:", err);
+      }
     }
+
+    const fetchProductImage = async (productId: string) => {
+      try {
+        const response = await api.get(`/storage/product/productImage/${productId}`, {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+          responseType: 'blob',
+        });
+    
+        return URL.createObjectURL(response.data);
+      } catch (err) {
+        console.error(`Imagem do produto ${productId} não carregada`, err);
+        return Default; // Coloquei pra teste, caso nao conseguir pegar a imagem, usar a Default. (Mudar depois de testes reais!)
+      }
+    };
+    
+
     useEffect(() => {
         getUserData();
     }, []);
@@ -250,7 +269,6 @@ const HomeLojista = () => {
         }
       
         if (!openingTimes[day] || !closingTimes[day]) {
-          console.error(`No opening or closing time found for the current day: ${day}`);
           return false;
         }
       
@@ -282,7 +300,11 @@ const HomeLojista = () => {
 
 
       const renderProductCards = () => {
-        return products.map((product) => (
+        if (mostOrderedProducts.length === 0) {
+          return <p>Nenhum produto vendido hoje.</p>; // Mostrar se nenhum produto for recuperado no post.
+        }
+      
+        return mostOrderedProducts.map((product) => (
           <ProductCard
             key={product.id}
             id={product.id}
@@ -296,8 +318,8 @@ const HomeLojista = () => {
             price={product.price}
           />
         ));
-    };
-    
+      };
+          
             
     return (
         <>        
