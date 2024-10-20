@@ -14,7 +14,7 @@ import { BsChevronLeft, BsChevronRight, BsPlusLg } from "react-icons/bs";
 import { AiOutlineReload } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import HeaderLojista from "../../components/HeaderLojista/HeaderLojista";
-import { BackButton, BannerImage, BannerWrapper, CardsHolder, ContainerLojista, Image, InfosWrapper, ItemCard, StoreWrapper, TEXT } from "./style";
+import { BackButton, BannerImage, BannerWrapper, CardsHolder, ContainerLojista, Image, InfosWrapper, ItemCard, SearchInput, StoreWrapper, TEXT } from "./style";
 import bannerDefault from '../../assets/bannerexample.png'
 import api from "../../services/api";
 import { getUser } from "../../utils/user-token-request";
@@ -118,53 +118,6 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     </>
   );
 };
-    
-const productsConst = [
-  {
-    id: "1",
-    name: "Sanduiche Natural",
-    description: "Pão italiano, queijo prato, tomate, ovo, alface e rúcula",
-    image: sanduiche,
-    category: "Food",
-    subCategory: "Sandwiches",
-    quantity_sold: 250,
-    average_rating: 4.5,
-    price: 25.00,
-  },
-  {
-    id: "2",
-    name: "Pizza Margherita",
-    description: "Pizza com molho de tomate, queijo mussarela e manjericão",
-    image: Default,
-    category: "Food",
-    subCategory: "Pizza",
-    quantity_sold: 100,
-    average_rating: 4.7,
-    price: 22.00,
-  },
-  {
-    id: "3",
-    name: "Suco Natural de Laranja",
-    description: "Suco fresco e natural de laranja sem açúcar",
-    image: Default,
-    category: "Beverage",
-    subCategory: "Juices",
-    quantity_sold: 150,
-    average_rating: 4.2,
-    price: 22.00,
-  },
-  {
-    id: "4",
-    name: "Bolo de Cenoura",
-    description: "Bolo de cenoura com cobertura de chocolate",
-    image: Default,
-    category: "Dessert",
-    subCategory: "Cakes",
-    quantity_sold: 75,
-    average_rating: 4.8,
-    price: 22.00,
-  },
-];  
 
 const NextArrow = ({ onClick }: { onClick?: React.MouseEventHandler<HTMLDivElement> }) => (
   <div onClick={onClick} style={{ display: 'block', position: 'absolute', right: '-25px', top: '50%', transform: 'translateY(-50%)', cursor: 'pointer' }}>
@@ -183,7 +136,9 @@ const Store = () => {
 
     const navigate = useNavigate();
     const [storeName, setStoreName] = useState('');
-    const [storeCategory, setStoreCategory] = useState('');
+    const [serviceRadius, setServiceRadius] = useState(0);
+    const [deliveryFee, setDeliveryFee] = useState(0);
+    const [storeType, setStoreType] = useState('');
     const [storeRating, setStoreRating] = useState(0);
     const [openingTime, setOpeningTime] = useState<Schedule>(schedule);
     const [closingTime, setClosingTime] = useState<Schedule>(schedule);
@@ -196,6 +151,9 @@ const Store = () => {
       return `${year}-${month}-${day}`;
     };
     const [products, setProducts] = useState<Product[]>([]);
+    const [searchVisible, setSearchVisible] = useState(false); // Controla a visibilidade do campo de busca
+    const [searchTerm, setSearchTerm] = useState(''); // Guarda o termo da busca
+  
 
     const settings = {
       dots: false,
@@ -236,23 +194,26 @@ const Store = () => {
         console.log(response.data.store[0].products);
         setProducts(response.data.store[0].products);
   
+        setDeliveryFee(response.data.store[0].deliveryFee);
+        setServiceRadius(response.data.store[0].serviceRadius);
         setStoreRating(response.data.store[0].rating);
         setOpeningTime(response.data.store[0].schedule[0].openingTime);
         setClosingTime(response.data.store[0].schedule[0].closingTime);
         setStoreName(response.data.store[0].name);
         setImageSrc(response.data.store.imagePerfil || Default);
         setBannerSrc(response.data.store.imageBanner || bannerDefault);
-        setStoreCategory(response.data.store[0].category);
+        setStoreType(response.data.store[0].category);
       })
       .catch((err) => {
         clearToken();
         console.error(err);
       });
     }
+
     useEffect(() => {
         console.log('Id da loja pego na url: ' + idDaLoja);
         getUserData();
-        console.log("oiiii " + storeCategory)
+        console.log("oiiii " + storeType)
     }, []);
 
     const [imageSrc, setImageSrc] = useState('');
@@ -323,7 +284,35 @@ const Store = () => {
           ))}
         </Slider>
       );
-    };        
+    };
+
+  //Funções de busca
+  // Mostra o input para busca
+  const handleSearchClick = () => {
+    if (searchVisible) {
+      setSearchTerm(''); // Limpa a busca quando for fechada
+    }
+    setSearchVisible((prev) => !prev); // Muda o estado de visibilidade
+  };
+  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setSearchTerm(e.target.value);
+  };
+
+  // Filtra os produtos de acordo com o termo de busca
+  const renderFilteredProducts = (searchTerm: string) => {
+    const filteredProducts = products.filter((product) =>
+      product.name.toLowerCase().includes(searchTerm.toLowerCase())
+    );
+
+    return filteredProducts.length > 0 ? (
+      filteredProducts.map((product) => (
+        <ProductCard key={product.id} product={product} />
+      ))
+    ) : (
+      <p>Nenhum produto encontrado para esta busca.</p>
+    );
+  };
+
             
     return (
         <>        
@@ -359,26 +348,48 @@ const Store = () => {
                         </div>
                     </div>
                     <div className="deliveryInfo">
-                      <p className="storeAbout">Entrega - 1,5km</p>
-                      <p className="storeAbout">23 a 30min - R$3,99</p>
+                    <p className="storeAbout">
+                      Entrega - {serviceRadius.toLocaleString('pt-BR')}km
+                    </p>
+
+                    {/* !! Lembrar de editar o tempo de entrega, placeholder !!*/}
+                    <p className="storeAbout">
+                      23 a 30min - R${deliveryFee.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                    </p>
                     </div>
                     <div className="ratingSearch">
                       <a href={`/store/${idDaLoja}/reviews`} className="ratingNumber">
                         <StarRating rating={storeRating? storeRating : 0} />
                         {storeRating ? <p className="storeAbout">{storeRating.toFixed(1)}</p> : <p className="storeAbout">0,0</p>}
                       </a>
-                      <button> <IoMdSearch fontSize={'1.5rem'} color="#909090"/> </button>
+                      <div className="searchContainer" style={{ display: 'flex', gap: '0.5rem' }}>
+                        {searchVisible && (
+                          <SearchInput
+                            type="text"
+                            value={searchTerm}
+                            onChange={handleInputChange}
+                            placeholder="Buscar produtos"
+                          />
+                        )}
+                        <button onClick={handleSearchClick} style={{ background: 'none', border: 'none' }}>
+                          <IoMdSearch fontSize={'1.5rem'} color="#909090" />
+                        </button>
+                      </div>
                     </div>
                 </StoreWrapper>
             </InfosWrapper>
 
-            <CardsHolder>
-              {renderProductCards()}
-            </CardsHolder>
-
-            {/* <div className="carouselHolder">
-              {renderProductsCarousel(products)}
-            </div> */}
+            {/* ----------------------- PRODUTOS ----------------------- */}
+            {/* Se a loja for de categoria restaurante, renderiza os produtos em cards, senão, nos carroséis */}
+            {storeType === 'restaurant' ? (
+              <CardsHolder>
+                {searchTerm ? renderFilteredProducts(searchTerm) : renderProductCards()}
+              </CardsHolder>
+            ) : (
+              <div className="carouselHolder">
+                {searchTerm ? renderFilteredProducts(searchTerm) : renderProductsCarousel(products)}
+              </div>
+            )}
         </ContainerLojista>
 
 

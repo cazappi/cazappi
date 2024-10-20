@@ -19,6 +19,21 @@ export const TEXT = styled.p`
     margin: ${rh(17)} 0 ${rh(16)} 0;
 `;
 
+export const SearchInput = styled.input`
+    border: 1px solid #EB1212;
+    border-radius: 8px;
+    padding: 0 1rem;
+    height: min-content;
+    outline: none;
+    width: 20rem;
+
+    :focus {
+        border-color: #EB1212;
+        box-shadow: 0 0 8px #EB1212;
+    }
+
+`;
+
 export const BannerWrapper = styled.div`
     width: 100%;
 `;
