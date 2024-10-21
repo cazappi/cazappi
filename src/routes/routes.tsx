@@ -40,12 +40,14 @@ import ClientAddSpecificAddress from "../pages/ClientAddresses/ClientAddSpecific
 import ProfileClient from "../pages/ProfileClient";
 import ProfileLojista from "../pages/ProfileLojista";
 import GerenciarDadosLojista from "../pages/GerenciarDadosLojista";
+import HomeCliente from "../pages/HomeCliente";
 
 const AppRoutes = () => (
   <>
     <Routes>
       {/* exemplo de rota: <Route path="/novaRota" element={<ArquivoImportado />} /> */}
       <Route path="/" element={<Home />} />
+      <Route path="/home" element={<HomeCliente />} />
       <Route path="/MailConfirmation" element={<MailConfirmation />} />
       <Route path="/Politica" element={<Politica />} />
       <Route path="/PoliticaLojista" element={<PoliticaLojista />} />
