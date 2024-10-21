@@ -13,13 +13,15 @@ import { IoMdArrowBack, IoMdSearch } from "react-icons/io";
 import { BsChevronLeft, BsChevronRight, BsPlusLg } from "react-icons/bs";
 import { AiOutlineReload } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
-import HeaderLojista from "../../components/HeaderLojista/HeaderLojista";
+import Header from "../../components/Header/Header";
 import { BackButton, BannerImage, BannerWrapper, CardsHolder, ContainerLojista, Image, InfosWrapper, ItemCard, SearchInput, StoreWrapper, TEXT } from "./style";
 import bannerDefault from '../../assets/bannerexample.png'
 import api from "../../services/api";
 import { getUser } from "../../utils/user-token-request";
 import { getToken } from "../../utils/get-cookie";
 import { clearToken } from "../../utils/clear-cookie";
+import { useDispatch } from 'react-redux';
+import { addItem } from '../../redux/reducers/cartSlice';
 import { string } from "yup";
 import { Star, StarBorder, StarHalf } from '@mui/icons-material';
 import { Box, Rating, Typography } from '@mui/material';
@@ -94,12 +96,51 @@ interface Complement {
 }
   
 const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+  const dispatch = useDispatch();
+  const [imageSrc, setImageSrc] = useState<string>(sanduiche);
+  const [imageError, setImageError] = useState<boolean>(false);
+
+  const handleAddToCart = () => {
+    dispatch(addItem(product));
+  };
+
+  const fetchProductImage = async (productId: string) => {
+    try {
+      const response = await fetch(`/storage/product/productImage/${productId}`, {
+        headers: {
+          "Authorization": `Bearer ${getToken()}`,
+        },
+      });
+  
+      if (response.ok) {
+        const blob = await response.blob();
+        const url = URL.createObjectURL(blob);
+        return url;
+      } else {
+        console.warn(`Image not found for product ${productId}, using fallback.`);
+        return sanduiche; 
+      }
+    } catch (error) {
+      console.error(`Failed to load image for product ${productId}:`, error);
+      return sanduiche;
+    }
+  };
+
+  useEffect(() => {
+    const loadImage = async () => {
+      const imageUrl = await fetchProductImage(product.id); 
+      setImageSrc(imageUrl);
+    };
+
+    loadImage();
+  }, [product.id]);
+
   return (
     <>
       <ItemCard>
         <div className="leftContent">
           {/* Imagem */}
-          <img className="productImage" src={sanduiche} alt={product.name} />
+          <img className="productImage" src={imageSrc} alt={product.name} onError={() => setImageSrc(sanduiche)}/>
           <div className="titleDescription">
             {/* nome */}
             <p className="title">{product.name}</p>
@@ -107,7 +148,7 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           </div>
         </div>
         <div className="rightContent">
-          <button className="optionsButton">
+          <button className="addButton" onClick={handleAddToCart}>
             <BsPlusLg size={'1rem'} />
           </button>
           <p className="price">
@@ -142,14 +183,7 @@ const Store = () => {
     const [storeRating, setStoreRating] = useState(0);
     const [openingTime, setOpeningTime] = useState<Schedule>(schedule);
     const [closingTime, setClosingTime] = useState<Schedule>(schedule);
-    const getCurrentDate = (): string => {
-      const today = new Date();
-      const year = today.getFullYear();
-      const month = String(today.getMonth() + 1).padStart(2, '0');
-      const day = String(today.getDate()).padStart(2, '0');
-      
-      return `${year}-${month}-${day}`;
-    };
+    const [categories, setCategories] = useState<{ parentCategoryId: string; label: string; value: string }[]>([]);
     const [products, setProducts] = useState<Product[]>([]);
     const [searchVisible, setSearchVisible] = useState(false); // Controla a visibilidade do campo de busca
     const [searchTerm, setSearchTerm] = useState(''); // Guarda o termo da busca
@@ -188,10 +222,6 @@ const Store = () => {
         },
       })
       .then((response) => {
-        console.log(response.data);
-        console.log('------------------');
-
-        console.log(response.data.store[0].products);
         setProducts(response.data.store[0].products);
   
         setDeliveryFee(response.data.store[0].deliveryFee);
@@ -208,12 +238,30 @@ const Store = () => {
         clearToken();
         console.error(err);
       });
+
+      //aproveita a viagem pra ja pegar as categorias de produtos neee :p
+      await api.get(`category`, {
+        headers: {
+            "Authorization": `Bearer ${getToken()}`
+        }
+      }).then((response) => {
+          // console.log(response.data);
+          const formattedCategories = response.data.map((category: any) => ({
+              label: category.name,
+              value: category.id.toString(),
+              parentCategoryId: category.parentCategoryId,
+          }));
+          setCategories(formattedCategories);
+      }).catch((err) => {
+          alert("Ops! Ocorreu um erro: " + err);
+      });
+
     }
 
     useEffect(() => {
-        console.log('Id da loja pego na url: ' + idDaLoja);
+        // console.log('Id da loja pego na url: ' + idDaLoja);
         getUserData();
-        console.log("oiiii " + storeType)
+        // console.log("oiiii " + storeType)
     }, []);
 
     const [imageSrc, setImageSrc] = useState('');
@@ -317,7 +365,7 @@ const Store = () => {
     return (
         <>        
         {/* ----------------------- HEADER ----------------------- */}
-        <HeaderLojista transparent={false}/>
+        <Header transparent={false}/>
         {/* BANNER IMAGE */}
         <BannerWrapper>
           <BannerImage src={bannerSrc} alt="Banner" />
@@ -328,9 +376,7 @@ const Store = () => {
         <ContainerLojista>
             <InfosWrapper>
                 {/* IMAGE PROFILE */}
-                <button className="imgButton" onClick={() => navigate("/profilelojista")}>
-                  <Image src={imageSrc} alt="Perfil"/>
-                </button>
+                <Image className="profileImage" src={imageSrc} alt="Perfil"/>
 
                 <StoreWrapper>
                     <p className="storeName">{storeName}</p>

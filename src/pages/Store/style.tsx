@@ -57,7 +57,7 @@ export const InfosWrapper = styled.div`
     display: flex;
     flex-direction: column;
 
-    .imgButton {
+    .profileImage {
         width: ${rw(106)};
         height: ${rw(106)};
         border: none;
@@ -66,7 +66,6 @@ export const InfosWrapper = styled.div`
         top: -6.5rem;
         left: ${rw(850)};
         background: none; 
-        cursor: pointer; 
         display: inline-block;
     }
 `;
@@ -364,10 +363,23 @@ export const ItemCard = styled.div`
             text-align: right;
         }
 
-        .optionsButton {
+        .addButton {
             padding: .25rem;
             border-radius: 50%;
             border: .25px solid black;
+            transition: border-color 0.3s ease;
+
+            svg {
+                transition: color 0.3s ease;
+            }
+
+            &:hover {
+                border: .25px solid red;
+
+                svg {
+                    color: red;
+                }
+            }
         }
     }
 `;
