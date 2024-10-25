@@ -20,11 +20,13 @@ import api from "../../services/api";
 import { getUser } from "../../utils/user-token-request";
 import { getToken } from "../../utils/get-cookie";
 import { clearToken } from "../../utils/clear-cookie";
-import { useDispatch } from 'react-redux';
-import { addItem } from '../../redux/reducers/cartSlice';
+import { useDispatch, useSelector } from 'react-redux';
+import { addItem, clearCart, StoreInfo } from '../../redux/reducers/cartSlice';
 import { string } from "yup";
 import { Star, StarBorder, StarHalf } from '@mui/icons-material';
 import { Box, Rating, Typography } from '@mui/material';
+import { RootState } from '../../redux/store';
+import ConfirmModal from '../../components/ConfirmModal/ConfirmModal';
 import "slick-carousel/slick/slick.css";
 import "slick-carousel/slick/slick-theme.css";
 
@@ -95,14 +97,13 @@ interface Complement {
   price: number;
 }
   
-const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
+const ProductCard: React.FC<{ product: Product; store: StoreInfo }> = ({ product, store }) => {
   const dispatch = useDispatch();
+  const cartStore = useSelector((state: RootState) => state.cart.storeInfo);
   const [imageSrc, setImageSrc] = useState<string>(sanduiche);
   const [imageError, setImageError] = useState<boolean>(false);
 
-  const handleAddToCart = () => {
-    dispatch(addItem(product));
-  };
+  const [isModalOpen, setIsModalOpen] = useState(false);
 
   const fetchProductImage = async (productId: string) => {
     try {
@@ -135,6 +136,24 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
     loadImage();
   }, [product.id]);
 
+  const handleAddToCart = () => {
+    if (!cartStore || cartStore.shopkeeperId === store.shopkeeperId) {
+      dispatch(addItem({ product, store }));
+    } else {
+      setIsModalOpen(true); // Abre o modal se o carrinho tiver produtos de outra loja
+    }
+  };
+
+  const handleConfirm = () => {
+    dispatch(clearCart()); // Limpa o carrinho
+    dispatch(addItem({ product, store })); // Bota novo produto
+    setIsModalOpen(false); // Fecha o modal
+  };
+
+  const handleCancel = () => {
+    setIsModalOpen(false); // Só fecha o modal :p
+  };
+
   return (
     <>
       <ItemCard>
@@ -156,6 +175,13 @@ const ProductCard: React.FC<{ product: Product }> = ({ product }) => {
           </p>
         </div>
       </ItemCard>
+
+      <ConfirmModal
+        isOpen={isModalOpen}
+        onConfirm={handleConfirm}
+        onCancel={handleCancel}
+      />
+
     </>
   );
 };
@@ -176,6 +202,9 @@ const Store = () => {
     const { idDaLoja } = useParams<{ idDaLoja: string }>();
 
     const navigate = useNavigate();
+
+    const [storeInfo, setStoreInfo] = useState<StoreInfo | null>(null);
+
     const [storeName, setStoreName] = useState('');
     const [serviceRadius, setServiceRadius] = useState(0);
     const [deliveryFee, setDeliveryFee] = useState(0);
@@ -223,6 +252,19 @@ const Store = () => {
       })
       .then((response) => {
         setProducts(response.data.store[0].products);
+
+        console.log(response.data.store[0]);
+
+
+        const store = response.data.store[0];
+        setStoreInfo({
+          name: store.name,
+          shopkeeperId: store.shopkeeperId,
+          deliveryFee: store.deliveryFee,
+          pickup: store.pickup,
+          delivery: store.delivery,
+        });
+    
   
         setDeliveryFee(response.data.store[0].deliveryFee);
         setServiceRadius(response.data.store[0].serviceRadius);
@@ -310,9 +352,11 @@ const Store = () => {
 
 
     const renderProductCards = () => {
-      return products && products.length > 0
+      if (!storeInfo) return null; // Ensure storeInfo is available
+
+      return products.length > 0
         ? products.map((product) => (
-            <ProductCard key={product.id} product={product} />
+            <ProductCard key={product.id} product={product} store={storeInfo} />
           ))
         : <p>Nenhum produto disponível</p>;
     };
@@ -348,13 +392,15 @@ const Store = () => {
 
   // Filtra os produtos de acordo com o termo de busca
   const renderFilteredProducts = (searchTerm: string) => {
+    if (!storeInfo) return null; // Ensure storeInfo is available
+
     const filteredProducts = products.filter((product) =>
       product.name.toLowerCase().includes(searchTerm.toLowerCase())
     );
 
     return filteredProducts.length > 0 ? (
       filteredProducts.map((product) => (
-        <ProductCard key={product.id} product={product} />
+        <ProductCard key={product.id} product={product} store={storeInfo}/>
       ))
     ) : (
       <p>Nenhum produto encontrado para esta busca.</p>
@@ -427,14 +473,16 @@ const Store = () => {
 
             {/* ----------------------- PRODUTOS ----------------------- */}
             {/* Se a loja for de categoria restaurante, renderiza os produtos em cards, senão, nos carroséis */}
-            {storeType === 'restaurant' ? (
-              <CardsHolder>
-                {searchTerm ? renderFilteredProducts(searchTerm) : renderProductCards()}
-              </CardsHolder>
-            ) : (
-              <div className="carouselHolder">
-                {searchTerm ? renderFilteredProducts(searchTerm) : renderProductsCarousel(products)}
-              </div>
+            {storeInfo && (
+              storeType === 'restaurant' ? (
+                <CardsHolder>
+                  {searchTerm ? renderFilteredProducts(searchTerm) : renderProductCards()}
+                </CardsHolder>
+              ) : (
+                <div className="carouselHolder">
+                  {searchTerm ? renderFilteredProducts(searchTerm) : renderProductsCarousel(products)}
+                </div>
+              )
             )}
         </ContainerLojista>
 

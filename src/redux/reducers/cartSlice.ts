@@ -5,24 +5,43 @@ interface CartItem extends Product {
   quantity: number; // Para manter a quantidade de cada item no carrinho
 }
 
+export interface StoreInfo {
+  name: string;
+  shopkeeperId: string;
+  deliveryFee: number;
+  pickup: boolean;
+  delivery: boolean;
+}
+
 interface CartState {
   items: CartItem[];
+  storeInfo: StoreInfo | null; // Informações da loja dos produtos no carrinho
 }
 
 const initialState: CartState = {
   items: [],
+  storeInfo: null,
 };
 
 const cartSlice = createSlice({
   name: 'cart',
   initialState,
   reducers: {
-    addItem: (state, action: PayloadAction<Product>) => {
-      const existingItem = state.items.find((item) => item.id === action.payload.id);
+    addItem: (
+      state,
+      action: PayloadAction<{ product: Product; store: StoreInfo }>
+    ) => {
+      const { product, store } = action.payload;
+
+      if (!state.storeInfo) {
+        state.storeInfo = store; // Set the storeInfo if it's the first item
+      }
+
+      const existingItem = state.items.find((item) => item.id === product.id);
       if (existingItem) {
-        existingItem.quantity++; // Se o produto já existe, aumenta a quantidade
+        existingItem.quantity++;
       } else {
-        state.items.push({ ...action.payload, quantity: 1 }); // Senão, adiciona um novo produto com quantidade 1 :)
+        state.items.push({ ...product, quantity: 1 });
       }
     },
     increaseQuantity: (state, action: PayloadAction<string>) => {
@@ -43,6 +62,7 @@ const cartSlice = createSlice({
     },
     clearCart: (state) => {
       state.items = []; // Limpa o carrinho todo >:)
+      state.storeInfo = null; // Limpa as informações da loja também! >:D
     },
   },
 });
