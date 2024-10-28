@@ -40,6 +40,7 @@ import ClientAddSpecificAddress from "../pages/ClientAddresses/ClientAddSpecific
 import ProfileClient from "../pages/ProfileClient";
 import ProfileLojista from "../pages/ProfileLojista";
 import GerenciarDadosLojista from "../pages/GerenciarDadosLojista";
+import Search from "../pages/Search";
 
 const AppRoutes = () => (
   <>
@@ -52,13 +53,13 @@ const AppRoutes = () => (
       <Route path="/register" element={<Register />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/ProductView" element={<ProductView />}/>
-      <Route path="/BagPagment" element={<BagPagment />}/>
-      <Route path="/OrderHistoryClient" element={<OrderHistoryClient />}/>
-      <Route path="/RegisterProduct" element={<RegisterProduct />}/>
-      <Route path="/EditProduct" element={<EditProduct />}/>
-      <Route path="/OrderResume" element={<OrderResume />}/>
-      <Route path="/OrderResumeLojista" element={<OrderResumeLojista />}/>
+      <Route path="/ProductView" element={<ProductView />} />
+      <Route path="/BagPagment" element={<BagPagment />} />
+      <Route path="/OrderHistoryClient" element={<OrderHistoryClient />} />
+      <Route path="/RegisterProduct" element={<RegisterProduct />} />
+      <Route path="/EditProduct" element={<EditProduct />} />
+      <Route path="/OrderResume" element={<OrderResume />} />
+      <Route path="/OrderResumeLojista" element={<OrderResumeLojista />} />
       <Route path="/forgetPass" element={<ForgetPass />} />
       <Route path="/resetpass" element={<ResetPass />} />
       <Route path="/EmailVerification/:token" element={<EmailVerification />} />
@@ -72,6 +73,7 @@ const AppRoutes = () => (
       <Route path="/ProfileClient" element={<ProfileClient />} />
       <Route path="/ProfileLojista" element={<ProfileLojista />} />
       <Route path="/GerenciarDadosLojista" element={<GerenciarDadosLojista />} />
+      <Route path="/search" element={<Search />} />
     </Routes>
     <PrivateRoute
       path="/shopkeeper/order-chats"
