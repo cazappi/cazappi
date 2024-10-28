@@ -206,6 +206,58 @@ export const SearchWrapper = styled.div`
             }
         }
     }
+
+    .product {
+        width: 400px;
+        height: fit-content;
+        background-color: white;
+        box-shadow: 0px 4px 4px rgba(0, 0, 0, 0.25);
+        border-radius: 16px;
+        padding: 0.6rem 1rem;
+        display: flex;
+        align-items: center;
+        gap: 1rem;
+        cursor: pointer;
+
+        img {
+            width: 164px;
+            height: auto;
+            border-radius: 8px;
+        }
+
+        .productInfo {
+            display: flex;
+            flex-direction: column;
+        }
+
+        h3 {
+            font-size: 1rem;
+            color: rgba(255, 0, 0, 1);
+            font-weight: 500;
+            margin-bottom: 5px;
+        }
+
+        h4 {
+            font-size: 1rem;
+            color: black;
+            font-weight: 400;
+            margin-bottom: 5px;
+        }
+
+        p {
+            font-size: 0.9rem;
+            color: black;
+            font-weight: 300;
+        }
+
+        .productPrice {
+            display: flex;
+            align-self: flex-end;
+            font-size: 1rem;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+    }
 `
 
 export const LocationIcon = styled(FaLocationDot)`

@@ -21,6 +21,7 @@ import {
 function Search() {
   const [categories, setCategories] = useState<any>([]);
   const [nearStores, setNearStores] = useState<any>([]);
+  const [nearProducts, setNearProducts] = useState<any>([]);
   const [user, setUser] = useState<any>();
   const [addresses, setAddresses] = useState([]);
   const [selectedAddress, setSelectedAddress] = useState<number>();
@@ -62,10 +63,21 @@ function Search() {
     });
   }
 
+  async function getNearProducts() {
+    api.get(`/product/nearProducts?lat=5&long=5555`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    }).then(response => {
+      setNearProducts(response.data);
+    }).catch(error => {
+      alert('Ops! ocorreu um erro: ' + error);
+    });
+  }
+
   useEffect(() => {
     getCategories();
     getAddresses();
     getNearStores();
+    getNearProducts();
   }, []);
 
   const translation: any = {
@@ -102,6 +114,7 @@ function Search() {
       store.name.toLowerCase().includes(search.toLowerCase())
 
     );
+
     content = (
       <>
         {filteredStores.map((store: any, index: number) => (
@@ -120,6 +133,28 @@ function Search() {
               <p style={{ display: "flex", alignItems: "center", gap: '5px' }}>
                 <ClockIcon /> 23 a 30min - R$ {store.deliveryFee.toFixed(2).replace('.', ',')}
               </p>
+            </div>
+          </div>
+        ))}
+      </>
+    );
+  } else if (type === 'produtos') {
+
+    // Filtrar produtos com base na busca
+    const filteredProducts = nearProducts.filter((product: any) =>
+      product.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    content = (
+      <>
+        {filteredProducts.map((product: any, index: number) => (
+          <div key={index} className="product">
+            <img src={product.image} alt={`imagem de ${product.name}`} />
+            <div className="productInfo">
+              <h3>{product.storeName}</h3>
+              <h4>{product.name}</h4>
+              <p>{product.description}</p>
+              <p className="productPrice">{`R$ ${product.price.toFixed(2).replace('.', ',')}`}</p>
             </div>
           </div>
         ))}
