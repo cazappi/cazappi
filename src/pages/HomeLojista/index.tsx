@@ -1,5 +1,6 @@
 import Footer from "../../components/Footer/Footer";
 import Default from '../../assets/userProfile.png'
+import noProductImage from '../../assets/noProductImage.svg'
 import { useEffect, useState } from "react";
 import deliveryImage from '../../assets/entrega-rapida.svg';
 import sanduiche from '../../assets/sanduiche.png';
@@ -88,10 +89,7 @@ const ProductCard: React.FC<ProductProps> = ({
       <>
         <ItemCard>
           <div className="leftContent">
-            {/* Imagem, coloquei pra usar a imagem constante do sanduiche se não tiver a imagem, 
-            apenas para testes com as rotas, os pedidos por si só devem ter a imagem por padrão, 
-            mas é algo para se editar posteriormente */}
-            <img className="productImage" src={image || sanduiche}/>
+            <img className="productImage" src={image || noProductImage} />
           </div>
           <div className="rightContent">
             <div className="upperRight">
@@ -190,7 +188,7 @@ const HomeLojista = () => {
         status: "Completed",
         numberOfProducts: 4,
       };
-    
+      // pega a loja do usuário logado
       try {
         const storeResponse = await api.get(`store/${getUser().user_id}`, {
           headers: {
@@ -205,7 +203,8 @@ const HomeLojista = () => {
         setStoreName(name);
         setImageSrc(imagePerfil || Default);
         setBannerSrc(imageBanner || bannerDefault);
-    
+        
+        // pega os produtos mais vendidos do dia
         const productsResponse = await api.post(`store/dailyReport/shopkeeper1`, data, {
           headers: {
             Authorization: `Bearer ${getToken()}`,
@@ -213,44 +212,18 @@ const HomeLojista = () => {
         });
     
         const products = productsResponse.data.mostOrderedProducts;
+        console.log(productsResponse.data);
         setTotalOrders(productsResponse.data.totalOrders);
         setTotalRevenue(productsResponse.data.totalRevenue);
     
-        if (products.length > 0) {
-          const productsWithImages = await Promise.all(
-            products.map(async (product: ProductProps) => {
-              const image = await fetchProductImage(product.id);
-              return { ...product, image };
-            })
-          );
-          setMostOrderedProducts(productsWithImages);
-        } else {
-          setMostOrderedProducts([]); // Nenhum produto vendido!
-        }
+        setMostOrderedProducts(products);
       } catch (err) {
         clearToken();
         navigate("/unauthorized");
         console.error("Erro:", err);
       }
     }
-
-    const fetchProductImage = async (productId: string) => {
-      try {
-        const response = await api.get(`/storage/product/productImage/${productId}`, {
-          headers: {
-            Authorization: `Bearer ${getToken()}`,
-          },
-          responseType: 'blob',
-        });
     
-        return URL.createObjectURL(response.data);
-      } catch (err) {
-        console.error(`Imagem do produto ${productId} não carregada`, err);
-        return Default; // Coloquei pra teste, caso nao conseguir pegar a imagem, usar a Default. (Mudar depois de testes reais!)
-      }
-    };
-    
-
     useEffect(() => {
         getUserData();
     }, []);
