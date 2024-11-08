@@ -14,6 +14,8 @@ import {
   CloseIcon,
   FilterIcon,
   StarIcon,
+  CategoriesWrapper,
+  CategoryClass,
   SearchWrapper,
   ClockIcon
 } from './styles';
@@ -99,13 +101,14 @@ function Search() {
   // Renderização condicional com base no tipo e busca
   if (search === '') {
     content = (
-      <>
+      <CategoriesWrapper size={categories.length}>
         {categories.map((category: any, index: number) => (
-          <div key={index} className="category">
+          < CategoryClass key={index} index={index} >
             <p>{category.name}</p>
-          </div>
-        ))}
-      </>
+          </CategoryClass>
+        ))
+        }
+      </CategoriesWrapper >
     );
   } else if (type === 'lojas') {
 
@@ -115,8 +118,9 @@ function Search() {
 
     );
 
+
     content = (
-      <>
+      <SearchWrapper>
         {filteredStores.map((store: any, index: number) => (
           <div key={index} className="store">
             <img src={ProfileIcon} alt="" />
@@ -136,7 +140,7 @@ function Search() {
             </div>
           </div>
         ))}
-      </>
+      </SearchWrapper>
     );
   } else if (type === 'produtos') {
 
@@ -146,7 +150,7 @@ function Search() {
     );
 
     content = (
-      <>
+      <SearchWrapper>
         {filteredProducts.map((product: any, index: number) => (
           <div key={index} className="product">
             <img src={product.image} alt={`imagem de ${product.name}`} />
@@ -158,7 +162,7 @@ function Search() {
             </div>
           </div>
         ))}
-      </>
+      </SearchWrapper>
     );
   }
 
@@ -218,9 +222,7 @@ function Search() {
             <FilterIcon />
           </section>
         </div>
-        <SearchWrapper>
-          {content}
-        </SearchWrapper>
+        {content}
       </ContentWrapper>
       <Footer />
     </PageWrapper>
