@@ -7,6 +7,7 @@ interface CartItem extends Product {
 
 export interface StoreInfo {
   name: string;
+  image: string;
   shopkeeperId: string;
   deliveryFee: number;
   pickup: boolean;
@@ -33,8 +34,12 @@ const cartSlice = createSlice({
     ) => {
       const { product, store } = action.payload;
 
+      if (state.storeInfo && state.storeInfo.shopkeeperId !== store.shopkeeperId) {
+        throw new Error('Você só pode comprar produtos de uma loja por vez!');
+      }
+    
       if (!state.storeInfo) {
-        state.storeInfo = store; // Set the storeInfo if it's the first item
+        state.storeInfo = store;
       }
 
       const existingItem = state.items.find((item) => item.id === product.id);

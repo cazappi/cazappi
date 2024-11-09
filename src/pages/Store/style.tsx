@@ -38,7 +38,112 @@ export const BannerWrapper = styled.div`
     width: 100%;
 `;
 
+export const Banner = styled.div`
+  background-image: url(${(props: { src: string }) => props.src});
+  background-size: cover;
+  background-position: center;
+  height: 10rem;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+`;
+
+export const StoreInfoWrapper = styled.div`
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+
+    padding: 1rem;
+    width: 63%;
+
+    margin-top: 8.2rem;
+
+    @media (max-width: 768px) {
+    flex-direction: column;
+    text-align: center;
+    }
+
+    .storeName {
+        font-size: 1.5rem;
+        line-height: ${rf(25.78)};
+        text-align: left;
+        color: #FEFEFE;
+        font-family: 'Roboto', sans-serif;
+        font-weight: 900;
+    }
+
+    .storeAbout {
+        font-family: 'Roboto', sans-serif;
+        font-size: 14px;
+        font-weight: 400;
+        line-height: 16.41px;
+        text-align: left;
+    }
+
+    .storeStatus{
+        display: flex;
+        flex-direction: row;
+        gap: 6px;
+
+        .statusHolder{
+            margin-top: .5rem;
+            display: flex;
+            flex-direction: row;
+            justify-content: space-around;
+
+            width: ${rw(236)};
+            padding: 0.25rem 1.5rem 0.25rem 1.5rem;
+            border-radius: 8px;
+
+            background: 
+                linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+                linear-gradient(0deg, #39FF14, #39FF14);
+
+            p{
+                color: white;
+                font-family: 'Roboto', sans-serif;
+                font-size: ${rf(14)};
+                font-weight: 700;
+                line-height: 1rem;
+                text-align: left;
+
+            }
+        }
+    }
+
+`;
+
+export const ProfileImage = styled.img`
+  width: ${rw(100)};
+  height: ${rw(100)};
+  border-radius: 50%;
+  object-fit: cover;
+
+  @media (max-width: 768px) {
+    width: ${rw(75)};
+    height: ${rw(75)};
+  }
+`;
+
+export const StoreDetails = styled.div`
+  color: #fff;
+
+  .storeName {
+    font-size: ${rf(20)};
+    font-weight: bold;
+  }
+
+  .storeStatus, .deliveryInfo {
+    font-size: ${rf(14)};
+  }
+`;
+
+
+
 export const CardsHolder = styled.div`
+    margin-top: 2rem;
     width: 75%;
     display: flex;
     flex-direction: row;
@@ -47,8 +152,17 @@ export const CardsHolder = styled.div`
     padding: 0 ${rw(22)};
     flex-wrap: wrap;
 
-    position: relative;
-    bottom: ${rw(130)};
+    overflow: visible;
+`;
+
+export const FilteredCardsDiv = styled.div`
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+    flex-wrap: wrap;
+
+    overflow: visible;
 `;
 
 export const InfosWrapper = styled.div`
@@ -72,8 +186,6 @@ export const InfosWrapper = styled.div`
 
 export const StoreWrapper = styled.div`
     margin-left: 11.5rem;
-    position: relative;
-    bottom: ${rw(150)};
     display: flex;
     flex-direction: column;
 
@@ -181,6 +293,7 @@ export const ContainerLojista = styled(Container)`
     margin-top: ${rh(24)};
     width: 100%;
     padding-inline: ${rw(154)};
+    overflow: visible;
 
     .mostSoldHolder {
         width: 90%;
@@ -243,18 +356,34 @@ export const ContainerLojista = styled(Container)`
         width: 70%;
         height: 13rem;
         min-height: max-content;
-        overflow: visible;
+        overflow: hidden;
         z-index: 1;
-
-
+        margin-bottom: 8rem;
 
         .slick-slide {
             padding: 0 0.625rem;
         }
 
+        .slick-track {
+            overflow: visible;
+        }
+
         .slick-list {
-            overflow-x: hidden;  // Hide horizontal overflow
-            overflow-y: visible; // Ensure vertical overflow (for shadows) is visible
+            overflow: visible;
+        }
+
+        .sliderTitle {
+            font-size: 1.5rem;
+            font-weight: 600;
+            line-height: 1.75rem;
+            text-align: left;
+            margin-bottom: 1.5rem;
+
+            font-family: 'Roboto', sans-serif;
+            line-height: 28.13px;
+
+            margin-top: 28px;
+            margin-bottom: 20x;
         }
 
 
@@ -268,10 +397,47 @@ export const ContainerLojista = styled(Container)`
             justify-content: space-between;
             align-items: center;
 
+            .upperInfo {
+                display: flex;
+                flex-direction: row;
+                align-items: end;
+                justify-content: center;
+                margin-bottom: .5rem;
+            }
+
             .productImage {
-                height: auto;
-                width: 78%;
-                min-height: 4.5rem;
+                height: 72px;
+                width: 90px;
+                max-height: 7.5rem;
+                border-radius: 8px;
+                object-fit: cover;
+            }
+
+            .addButton {
+                padding: .25rem;
+                border-radius: 50%;
+                border: .25px solid black;
+                transition: border-color 0.3s ease;
+
+                svg {
+                    transition: color 0.3s ease;
+                }
+                &:hover {
+                    border: .25px solid red;
+                    transform: scale(1.05);
+
+                    svg {
+                        color: red;
+                    }
+                }
+            }
+
+            .productInfo {
+                display: flex;
+                flex-direction: column;
+                justify-content: space-between;
+                margin-top: 1rem;
+                height: 100%;
             }
 
             .productName {
@@ -279,6 +445,11 @@ export const ContainerLojista = styled(Container)`
                 font-weight: 500;
                 line-height: 18.75px;
                 text-align: left;
+                display: -webkit-box;
+                -webkit-line-clamp: 2; 
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis;
             }
 
             .productDescription {
@@ -286,7 +457,11 @@ export const ContainerLojista = styled(Container)`
                 font-weight: 300;
                 line-height: 16.41px;
                 text-align: justify;
-
+                display: -webkit-box;
+                -webkit-line-clamp: 1; 
+                -webkit-box-orient: vertical;
+                overflow: hidden;
+                text-overflow: ellipsis; 
             }
 
             .productPrice {
@@ -294,6 +469,9 @@ export const ContainerLojista = styled(Container)`
                 font-weight: 500;
                 line-height: 16.41px;
                 text-align: right;
+
+                position: relative;
+                bottom: 5.5rem;
             }
 
         }
@@ -309,6 +487,8 @@ export const ItemCard = styled.div`
     justify-content: space-between;
     align-items: center;
 
+    overflow: visible;
+
     .leftContent {
         height: 4rem;
         display: flex;
@@ -319,7 +499,7 @@ export const ItemCard = styled.div`
             align-self: center;
             height: 4rem;
             border-radius: 8px;
-            max-width: 8rem;
+            width: 7rem;
         }
 
         .titleDescription {

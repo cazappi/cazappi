@@ -1,20 +1,14 @@
 import Footer from "../../components/Footer/Footer";
 import Default from '../../assets/userProfile.png'
+import noProductImage from '../../assets/noProductImage.svg'
 import { useEffect, useState } from "react";
 import sanduiche from '../../assets/sanduiche.png';
 import Slider from "react-slick";
-import { AddImg } from "../../components/ImageUpload/style";
-import { FaPen } from "react-icons/fa";
-import { THEME } from "../../theme";
-import { responsiveHeight } from "../../utils/responsive-functions";
-import { FLEXROW } from "../Politica/style";
-import { MdOutlineGrade, MdOutlineKeyboardDoubleArrowRight, MdOutlinePendingActions } from "react-icons/md";
 import { IoMdArrowBack, IoMdSearch } from "react-icons/io";
 import { BsChevronLeft, BsChevronRight, BsPlusLg } from "react-icons/bs";
-import { AiOutlineReload } from "react-icons/ai";
 import { useNavigate, useParams } from "react-router-dom";
 import Header from "../../components/Header/Header";
-import { BackButton, BannerImage, BannerWrapper, CardsHolder, ContainerLojista, Image, InfosWrapper, ItemCard, SearchInput, StoreWrapper, TEXT } from "./style";
+import { BackButton, Banner, BannerImage, BannerWrapper, CardsHolder, ContainerLojista, FilteredCardsDiv, Image, InfosWrapper, ItemCard, ProfileImage, SearchInput, StoreInfoWrapper, StoreWrapper, TEXT } from "./style";
 import bannerDefault from '../../assets/bannerexample.png'
 import api from "../../services/api";
 import { getUser } from "../../utils/user-token-request";
@@ -96,70 +90,64 @@ interface Complement {
   optional: boolean;
   price: number;
 }
-  
-const ProductCard: React.FC<{ product: Product; store: StoreInfo }> = ({ product, store }) => {
+
+export const useAddToCart = () => {
   const dispatch = useDispatch();
   const cartStore = useSelector((state: RootState) => state.cart.storeInfo);
-  const [imageSrc, setImageSrc] = useState<string>(sanduiche);
-  const [imageError, setImageError] = useState<boolean>(false);
-
   const [isModalOpen, setIsModalOpen] = useState(false);
+  const [selectedProduct, setSelectedProduct] = useState<Product | null>(null);
 
-  const fetchProductImage = async (productId: string) => {
-    try {
-      const response = await fetch(`/storage/product/productImage/${productId}`, {
-        headers: {
-          "Authorization": `Bearer ${getToken()}`,
-        },
-      });
-  
-      if (response.ok) {
-        const blob = await response.blob();
-        const url = URL.createObjectURL(blob);
-        return url;
-      } else {
-        console.warn(`Image not found for product ${productId}, using fallback.`);
-        return sanduiche; 
-      }
-    } catch (error) {
-      console.error(`Failed to load image for product ${productId}:`, error);
-      return sanduiche;
-    }
-  };
-
-  useEffect(() => {
-    const loadImage = async () => {
-      const imageUrl = await fetchProductImage(product.id); 
-      setImageSrc(imageUrl);
-    };
-
-    loadImage();
-  }, [product.id]);
-
-  const handleAddToCart = () => {
+  const handleAddToCart = (product: Product, store: StoreInfo) => {
     if (!cartStore || cartStore.shopkeeperId === store.shopkeeperId) {
       dispatch(addItem({ product, store }));
     } else {
-      setIsModalOpen(true); // Abre o modal se o carrinho tiver produtos de outra loja
+      setSelectedProduct(product);
+      setIsModalOpen(true);
     }
   };
 
   const handleConfirm = () => {
-    dispatch(clearCart()); // Limpa o carrinho
-    dispatch(addItem({ product, store })); // Bota novo produto
-    setIsModalOpen(false); // Fecha o modal
+    if (selectedProduct && cartStore) {
+      dispatch(clearCart());
+      dispatch(addItem({ product: selectedProduct, store: cartStore }));
+      setIsModalOpen(false);
+      setSelectedProduct(null);
+    }
   };
 
   const handleCancel = () => {
-    setIsModalOpen(false); // Só fecha o modal :p
+    setIsModalOpen(false);
+    setSelectedProduct(null);
   };
+
+  return {
+    handleAddToCart,
+    handleConfirm,
+    handleCancel,
+    isModalOpen,
+    selectedProduct,
+  };
+};
+
+const isValidImage = (url: string) => url.startsWith('https://storage.googleapis.com');
+
+const ProductCard: React.FC<{ product: Product; store: StoreInfo }> = ({ product, store }) => {
+  const dispatch = useDispatch();
+  const cartStore = useSelector((state: RootState) => state.cart.storeInfo);
+
+  const { handleAddToCart, handleConfirm, handleCancel, isModalOpen } = useAddToCart();
+
 
   return (
     <>
       <ItemCard>
         <div className="leftContent">
           {/* Imagem */}
-          <img className="productImage" src={imageSrc} alt={product.name} onError={() => setImageSrc(sanduiche)}/>
+          <img 
+            className="productImage" 
+            src={isValidImage(product.image) ? product.image : noProductImage} 
+            alt={product.name} 
+            onError={(e) => (e.currentTarget.src = noProductImage)} />
           <div className="titleDescription">
             {/* nome */}
             <p className="title">{product.name}</p>
@@ -167,7 +155,7 @@ const ProductCard: React.FC<{ product: Product; store: StoreInfo }> = ({ product
           </div>
         </div>
         <div className="rightContent">
-          <button className="addButton" onClick={handleAddToCart}>
+          <button className="addButton" onClick={() => handleAddToCart(product, store)}>
             <BsPlusLg size={'1rem'} />
           </button>
           <p className="price">
@@ -216,33 +204,37 @@ const Store = () => {
     const [products, setProducts] = useState<Product[]>([]);
     const [searchVisible, setSearchVisible] = useState(false); // Controla a visibilidade do campo de busca
     const [searchTerm, setSearchTerm] = useState(''); // Guarda o termo da busca
-  
-
-    const settings = {
+    // código das configs dos carrosséis :p
+    const getSliderSettings = (productCount: number) => ({
       dots: false,
-      infinite: true,
+      infinite: productCount > 5,
       speed: 500,
       slidesToShow: 5,
-      slidesToScroll: 5,
-      nextArrow: <NextArrow />, // Custom next arrow
-      prevArrow: <PrevArrow />, // Custom prev arrow  
+      slidesToScroll: Math.min(productCount, 5),
+      nextArrow: productCount > 5 ? <NextArrow /> : null,
+      prevArrow: productCount > 5 ? <PrevArrow /> : null,
       responsive: [
         {
           breakpoint: 1024,
           settings: {
-            slidesToShow: 2,
+            slidesToShow: Math.min(productCount, 2),
+            slidesToScroll: Math.min(productCount, 2),
+            nextArrow: productCount > 2 ? <NextArrow /> : null,
+            prevArrow: productCount > 2 ? <PrevArrow /> : null,    
           },
         },
         {
           breakpoint: 600,
           settings: {
             slidesToShow: 1,
+            slidesToScroll: 1,
+            nextArrow: null,
+            prevArrow: null,    
           },
         },
       ],
-    };
-  
-        
+    });
+            
     async function getUserData() {
       await api
       .get(`store/${idDaLoja}`, {
@@ -257,8 +249,10 @@ const Store = () => {
 
 
         const store = response.data.store[0];
+        console.log(store);
         setStoreInfo({
           name: store.name,
+          image: store.imagePerfil,
           shopkeeperId: store.shopkeeperId,
           deliveryFee: store.deliveryFee,
           pickup: store.pickup,
@@ -301,9 +295,7 @@ const Store = () => {
     }
 
     useEffect(() => {
-        // console.log('Id da loja pego na url: ' + idDaLoja);
         getUserData();
-        // console.log("oiiii " + storeType)
     }, []);
 
     const [imageSrc, setImageSrc] = useState('');
@@ -352,7 +344,7 @@ const Store = () => {
 
 
     const renderProductCards = () => {
-      if (!storeInfo) return null; // Ensure storeInfo is available
+      if (!storeInfo) return null;
 
       return products.length > 0
         ? products.map((product) => (
@@ -361,24 +353,71 @@ const Store = () => {
         : <p>Nenhum produto disponível</p>;
     };
 
-    const renderProductsCarousel = (products: Product[]) => {
+    interface ProductsCarouselProps {
+      products: Product[];
+      categoryName: string;
+      settings: any;
+      storeInfo: StoreInfo;
+    }
+        
+    const ProductsCarousel: React.FC<ProductsCarouselProps> = ({ products, categoryName, settings, storeInfo }) => {
+      const { handleAddToCart, handleConfirm, handleCancel, isModalOpen } = useAddToCart();    
       return (
-        <Slider {...settings}>
-          {products.map((product) => (
-            <div className="productHolder" key={product.id}>
-              <img className="productImage" src={sanduiche} alt={product.name} />
-              <div>
-                <p className="productName">{product.name}</p>
-                <p className="productDescription">{product.description}</p>
-                <p className="productPrice">{product.price.toLocaleString('pt-BR', { style: 'currency', currency: 'BRL' })}</p>
+        <div>
+          <p className="sliderTitle">{categoryName}</p>
+          <Slider {...settings}>
+            {products.map((product) => (
+              <div className="productHolder" key={product.id}>
+                <div className="upperInfo">
+                  <img
+                    className="productImage"
+                    src={isValidImage(product.image) ? product.image : noProductImage}
+                    alt={product.name}
+                    onError={(e) => (e.currentTarget.src = noProductImage)}
+                  />
+                  <button
+                    className="addButton"
+                    onClick={() => handleAddToCart(product, storeInfo)}
+                  >
+                    <BsPlusLg size={'1rem'} />
+                  </button>
+                </div>
+                <div className="productInfo">
+                  <div>
+                    <p className="productName">{product.name}</p>
+                    <p className="productDescription">{product.description}</p>
+                  </div>
+                  <p className="productPrice">
+                    {product.price.toLocaleString('pt-BR', {
+                      style: 'currency',
+                      currency: 'BRL',
+                    })}
+                  </p>
+                </div>
               </div>
-            </div>
-          ))}
-        </Slider>
+            ))}
+          </Slider>
+    
+          <ConfirmModal isOpen={isModalOpen} onConfirm={handleConfirm} onCancel={handleCancel} />
+        </div>
       );
     };
 
-  //Funções de busca
+    const groupProductsByCategory = (products: Product[]) => {
+      return products.reduce((acc: { [key: string]: Product[] }, product) => {
+        product.categories.forEach((category) => {
+          if (!acc[category.name]) {
+            acc[category.name] = [];
+          }
+          acc[category.name].push(product);
+        });
+        return acc;
+      }, {});
+    };
+    
+    const groupedProducts = groupProductsByCategory(products);
+          
+  // Funções de busca
   // Mostra o input para busca
   const handleSearchClick = () => {
     if (searchVisible) {
@@ -399,14 +438,15 @@ const Store = () => {
     );
 
     return filteredProducts.length > 0 ? (
-      filteredProducts.map((product) => (
-        <ProductCard key={product.id} product={product} store={storeInfo}/>
-      ))
+      <FilteredCardsDiv>
+        {filteredProducts.map((product) => (
+          <ProductCard key={product.id} product={product} store={storeInfo}/>
+        ))}
+      </FilteredCardsDiv>
     ) : (
       <p>Nenhum produto encontrado para esta busca.</p>
     );
   };
-
             
     return (
         <>        
@@ -414,40 +454,46 @@ const Store = () => {
         <Header transparent={false}/>
         {/* BANNER IMAGE */}
         <BannerWrapper>
-          <BannerImage src={bannerSrc} alt="Banner" />
+          <Banner src={bannerSrc}>
+            <StoreInfoWrapper>
+              <div className="storeDetails">
+                <p className="storeName">{storeName}</p>
+                <div className="storeStatus">
+                    <div className="statusHolder">
+                    {isOpen(openingTime, closingTime) ? (
+                        <>
+                        <p>Loja Aberta</p>
+                        <p>-</p>
+                        <p>{openingTime[day].replace('h', ':')} até {closingTime[day].replace('h', ':')}</p>
+                        </>
+                    ) : (
+                        <p>Loja Fechada</p>
+                    )}
+                    </div>
+                </div>
+              </div>
+              <ProfileImage src={imageSrc} alt="Perfil" />
+            </StoreInfoWrapper>
+          </Banner>
         </BannerWrapper>
 
-        <BackButton> <IoMdArrowBack /> voltar </BackButton>
+        <BackButton onClick={() => navigate("/home")}> <IoMdArrowBack /> voltar </BackButton>
 
         <ContainerLojista>
             <InfosWrapper>
                 {/* IMAGE PROFILE */}
-                <Image className="profileImage" src={imageSrc} alt="Perfil"/>
+                {/* <Image className="profileImage" src={imageSrc} alt="Perfil"/> */}
 
                 <StoreWrapper>
-                    <p className="storeName">{storeName}</p>
-                    <div className="storeStatus">
-                        <div className="statusHolder">
-                        {isOpen(openingTime, closingTime) ? (
-                            <>
-                            <p>Loja Aberta</p>
-                            <p>-</p>
-                            <p>{openingTime[day].replace('h', ':')} até {closingTime[day].replace('h', ':')}</p>
-                            </>
-                        ) : (
-                            <p>Loja Fechada</p>
-                        )}
-                        </div>
-                    </div>
                     <div className="deliveryInfo">
-                    <p className="storeAbout">
-                      Entrega - {serviceRadius.toLocaleString('pt-BR')}km
-                    </p>
+                      <p className="storeAbout">
+                        Entrega - {serviceRadius.toLocaleString('pt-BR')}km
+                      </p>
 
-                    {/* !! Lembrar de editar o tempo de entrega, placeholder !!*/}
-                    <p className="storeAbout">
-                      23 a 30min - R${deliveryFee.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
-                    </p>
+                      {/* !! Lembrar de editar o tempo de entrega, placeholder !!*/}
+                      <p className="storeAbout">
+                        23 a 30min - R${deliveryFee.toLocaleString('pt-BR', { minimumFractionDigits: 2 })}
+                      </p>
                     </div>
                     <div className="ratingSearch">
                       <a href={`/store/${idDaLoja}/reviews`} className="ratingNumber">
@@ -474,13 +520,24 @@ const Store = () => {
             {/* ----------------------- PRODUTOS ----------------------- */}
             {/* Se a loja for de categoria restaurante, renderiza os produtos em cards, senão, nos carroséis */}
             {storeInfo && (
-              storeType === 'restaurant' ? (
+              storeType !== 'restaurant' ? (
                 <CardsHolder>
                   {searchTerm ? renderFilteredProducts(searchTerm) : renderProductCards()}
                 </CardsHolder>
               ) : (
                 <div className="carouselHolder">
-                  {searchTerm ? renderFilteredProducts(searchTerm) : renderProductsCarousel(products)}
+                  {searchTerm 
+                    ? renderFilteredProducts(searchTerm) 
+                    : Object.entries(groupProductsByCategory(products)).map(([categoryName, filteredProducts]) => (
+                        <ProductsCarousel
+                          key={categoryName}
+                          products={filteredProducts}
+                          categoryName={categoryName}
+                          settings={getSliderSettings(filteredProducts.length)}
+                          storeInfo={storeInfo!}
+                        />
+                      ))
+                  }
                 </div>
               )
             )}
