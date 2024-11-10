@@ -12,11 +12,11 @@ export const Image = styled.img`
 
 export const TEXT = styled.p`
     color: #EB1212;
-    font-size: ${rf(37.5)};
+    font-size: 2.34375rem;
     align-self: flex-start;
     font-weight: 700;
-    line-height: 37.5px;
-    margin: ${rh(17)} 0 ${rh(16)} 0;
+    line-height: 2.34375rem;
+    margin: 1.0625rem 0 1rem 0;
 `;
 
 export const SearchInput = styled.input`
@@ -29,7 +29,7 @@ export const SearchInput = styled.input`
 
     :focus {
         border-color: #EB1212;
-        box-shadow: 0 0 8px #EB1212;
+        box-shadow: 0 0 0.5rem #EB1212;
     }
 
 `;
@@ -77,16 +77,16 @@ export const StoreInfoWrapper = styled.div`
 
     .storeAbout {
         font-family: 'Roboto', sans-serif;
-        font-size: 14px;
+        font-size: 0.875rem;
         font-weight: 400;
-        line-height: 16.41px;
+        line-height: 1.025625rem;
         text-align: left;
     }
 
     .storeStatus{
         display: flex;
         flex-direction: row;
-        gap: 6px;
+        gap: 0.375rem;
 
         .statusHolder{
             margin-top: .5rem;
@@ -201,16 +201,16 @@ export const StoreWrapper = styled.div`
 
     .storeAbout {
         font-family: 'Roboto', sans-serif;
-        font-size: 14px;
+        font-size: 0.875rem;
         font-weight: 400;
-        line-height: 16.41px;
+        line-height: 1.025625rem;
         text-align: left;
     }
 
     .storeStatus{
         display: flex;
         flex-direction: row;
-        gap: 6px;
+        gap: 0.375rem;
 
         .statusHolder{
             margin-top: .5rem;
@@ -251,7 +251,6 @@ export const StoreWrapper = styled.div`
         justify-content: space-between;
         flex-direction: row;
         align-items: center;
-        /* gap: .25rem; */
 
         margin-top: .5rem;
 
@@ -305,12 +304,9 @@ export const ContainerLojista = styled(Container)`
             font-weight: 600;
             line-height: 1.75rem;
             text-align: left;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.75rem;
 
             font-family: 'Roboto', sans-serif;
-            line-height: 28.13px;
-
-            margin-bottom: 28px;
         }
 
         .productsGrid {
@@ -378,13 +374,10 @@ export const ContainerLojista = styled(Container)`
             font-weight: 600;
             line-height: 1.75rem;
             text-align: left;
-            margin-bottom: 1.5rem;
+            margin-bottom: 1.25rem;
 
             font-family: 'Roboto', sans-serif;
-            line-height: 28.13px;
-
-            margin-top: 28px;
-            margin-bottom: 20x;
+            margin-top: 1.75rem;
         }
 
 
@@ -407,8 +400,8 @@ export const ContainerLojista = styled(Container)`
             }
 
             .productImage {
-                height: 72px;
-                width: 90px;
+                height: 4.5rem;
+                width: 5.625rem;
                 max-height: 7.5rem;
                 border-radius: 8px;
                 object-fit: cover;
@@ -442,9 +435,9 @@ export const ContainerLojista = styled(Container)`
             }
 
             .productName {
-                font-size: 16px;
+                font-size: 1rem;
                 font-weight: 500;
-                line-height: 18.75px;
+                line-height: 1.171875rem;
                 text-align: left;
                 display: -webkit-box;
                 -webkit-line-clamp: 2; 
@@ -454,9 +447,9 @@ export const ContainerLojista = styled(Container)`
             }
 
             .productDescription {
-                font-size: 14px;
+                font-size: 0.875rem;
                 font-weight: 300;
-                line-height: 16.41px;
+                line-height: 1.025625rem;
                 text-align: justify;
                 display: -webkit-box;
                 -webkit-line-clamp: 1; 
@@ -466,9 +459,9 @@ export const ContainerLojista = styled(Container)`
             }
 
             .productPrice {
-                font-size: 14px;
+                font-size: 0.875rem;
                 font-weight: 500;
-                line-height: 16.41px;
+                line-height: 1.025625rem;
                 text-align: right;
 
                 position: relative;
