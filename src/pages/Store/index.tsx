@@ -520,7 +520,7 @@ const Store = () => {
             {/* ----------------------- PRODUTOS ----------------------- */}
             {/* Se a loja for de categoria restaurante, renderiza os produtos em cards, senão, nos carroséis */}
             {storeInfo && (
-              storeType !== 'restaurant' ? (
+              storeType === 'restaurant' ? (
                 <CardsHolder>
                   {searchTerm ? renderFilteredProducts(searchTerm) : renderProductCards()}
                 </CardsHolder>

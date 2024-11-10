@@ -54,6 +54,7 @@ export const StoreInfoWrapper = styled.div`
     flex-direction: row;
     align-items: center;
     justify-content: space-between;
+    flex-shrink: 1;
 
     padding: 1rem;
     width: 63%;
