@@ -41,6 +41,7 @@ import ProfileClient from "../pages/ProfileClient";
 import ProfileLojista from "../pages/ProfileLojista";
 import GerenciarDadosLojista from "../pages/GerenciarDadosLojista";
 import Search from "../pages/Search";
+import GerenciarProdutos from "../pages/GerenciarProdutos";
 
 const AppRoutes = () => (
   <>
@@ -73,6 +74,7 @@ const AppRoutes = () => (
       <Route path="/ProfileClient" element={<ProfileClient />} />
       <Route path="/ProfileLojista" element={<ProfileLojista />} />
       <Route path="/GerenciarDadosLojista" element={<GerenciarDadosLojista />} />
+      <Route path="/profileLojista/gerenciarProdutos" element={<GerenciarProdutos />} />
       <Route path="/search" element={<Search />} />
     </Routes>
     <PrivateRoute
