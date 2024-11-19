@@ -310,10 +310,11 @@ export const SearchWrapper = styled.div`
         cursor: pointer;
 
         img {
-            width: 164px;
-            height: auto;
-            border-radius: 8px;
-        }
+    width: 164px; /* Ou uma porcentagem específica */
+    height: 78px;
+    border-radius: 8px;
+    object-fit: contain;
+}
 
         .productInfo {
             display: flex;

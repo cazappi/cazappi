@@ -5,7 +5,8 @@ import { getUser } from '../../utils/user-token-request';
 import { getToken } from "../../utils/get-cookie";
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
-import ProfileIcon from "../../assets/profileLojista.png";
+import StoreDefaultImage from "../../assets/storeDefault.svg";
+import ProductDefaultImage from "../../assets/productDefault.svg";
 import {
   PageWrapper,
   ContentWrapper,
@@ -69,6 +70,7 @@ function Search() {
     api.get(`/product/nearProducts?lat=5&long=5555`, {
       headers: { Authorization: `Bearer ${getToken()}` }
     }).then(response => {
+      console.log(response.data);
       setNearProducts(response.data);
     }).catch(error => {
       alert('Ops! ocorreu um erro: ' + error);
@@ -121,25 +123,29 @@ function Search() {
 
     content = (
       <SearchWrapper>
-        {filteredStores.map((store: any, index: number) => (
-          <div key={index} className="store">
-            <img src={ProfileIcon} alt="" />
-            <div className="storeInfo">
-              <section>
-                <p style={{ fontWeight: 'bold' }}>{store.name}</p>
-                {store.rating !== null ? (
-                  <p style={{ display: "flex", gap: "5px" }}><StarIcon /> {store.rating}</p>
-                ) : (
-                  <></>
-                )}
-              </section>
-              <p>{translation[store.category]}</p>
-              <p style={{ display: "flex", alignItems: "center", gap: '5px' }}>
-                <ClockIcon /> 23 a 30min - R$ {store.deliveryFee.toFixed(2).replace('.', ',')}
-              </p>
+        {filteredStores.map((store: any, index: number) => {
+          // Verifica se a imagem é um link válido do Google Cloud Storage
+          const isValidImage = store.imagePerfil?.startsWith('https://storage.googleapis.com/');
+          return (
+            <div key={index} className="store">
+              <img src={isValidImage ? store.imagePerfil : StoreDefaultImage} alt="Store Profile" />
+              <div className="storeInfo">
+                <section>
+                  <p style={{ fontWeight: 'bold' }}>{store.name}</p>
+                  {store.rating !== null ? (
+                    <p style={{ display: "flex", gap: "5px" }}>
+                      <StarIcon /> {store.rating}
+                    </p>
+                  ) : null}
+                </section>
+                <p>{translation[store.category]}</p>
+                <p style={{ display: "flex", alignItems: "center", gap: '5px' }}>
+                  <ClockIcon /> 23 a 30min - R$ {store.deliveryFee.toFixed(2).replace('.', ',')}
+                </p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </SearchWrapper>
     );
   } else if (type === 'produtos') {
@@ -151,17 +157,24 @@ function Search() {
 
     content = (
       <SearchWrapper>
-        {filteredProducts.map((product: any, index: number) => (
-          <div key={index} className="product">
-            <img src={product.image} alt={`imagem de ${product.name}`} />
-            <div className="productInfo">
-              <h3>{product.storeName}</h3>
-              <h4>{product.name}</h4>
-              <p>{product.description}</p>
-              <p className="productPrice">{`R$ ${product.price.toFixed(2).replace('.', ',')}`}</p>
+        {filteredProducts.map((product: any, index: number) => {
+          // Verifica se a imagem do produto é um link válido do Google Cloud Storage
+          const isValidProductImage = product.image?.startsWith('https://storage.googleapis.com/');
+          return (
+            <div key={index} className="product">
+              <img
+                src={isValidProductImage ? product.image : ProductDefaultImage}
+                alt={`imagem de ${product.name}`}
+              />
+              <div className="productInfo">
+                <h3>{product.storeName}</h3>
+                <h4>{product.name}</h4>
+                <p>{product.description}</p>
+                <p className="productPrice">{`R$ ${product.price.toFixed(2).replace('.', ',')}`}</p>
+              </div>
             </div>
-          </div>
-        ))}
+          );
+        })}
       </SearchWrapper>
     );
   }
