@@ -42,6 +42,8 @@ import ProfileLojista from "../pages/ProfileLojista";
 import GerenciarDadosLojista from "../pages/GerenciarDadosLojista";
 import ManageStock from "../pages/ManageStock";
 import ManageStockItem from "../pages/ManageStockItem";
+import ManageSubCategories from "../pages/ManageSubCategories";
+import Search from "../pages/Search";
 
 const AppRoutes = () => (
   <>
@@ -76,7 +78,9 @@ const AppRoutes = () => (
       <Route path="/ProfileLojista" element={<ProfileLojista />} />
       <Route path="/profileLojista/gerenciarProdutos/gerenciarEstoque" element={<ManageStock />} />
       <Route path="/profileLojista/gerenciarProdutos/gerenciarEstoque/:id" element={<ManageStockItem />} />
+      <Route path="/profileLojista/gerenciarProdutos/subcategorias" element={<ManageSubCategories />} />
       <Route path="/GerenciarDadosLojista" element={<GerenciarDadosLojista />} />
+      <Route path="/search" element={<Search />} />
     </Routes>
     <PrivateRoute
       path="/shopkeeper/order-chats"
