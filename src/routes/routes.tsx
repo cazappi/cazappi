@@ -40,6 +40,7 @@ import ClientAddSpecificAddress from "../pages/ClientAddresses/ClientAddSpecific
 import ProfileClient from "../pages/ProfileClient";
 import ProfileLojista from "../pages/ProfileLojista";
 import GerenciarDadosLojista from "../pages/GerenciarDadosLojista";
+import HomeLojista from "../pages/HomeLojista";
 import ManageStock from "../pages/ManageStock";
 import ManageStockItem from "../pages/ManageStockItem";
 import ManageSubCategories from "../pages/ManageSubCategories";
@@ -76,6 +77,7 @@ const AppRoutes = () => (
 
       {/* vai ser privada (so logado) */}
       <Route path="/ProfileClient" element={<ProfileClient />} />
+      <Route path="/HomeLojista" element={<HomeLojista />} />
       <Route path="/ProfileLojista" element={<ProfileLojista />} />
       <Route path="/profileLojista/gerenciarProdutos/gerenciarEstoque" element={<ManageStock />} />
       <Route path="/profileLojista/gerenciarProdutos/gerenciarEstoque/:id" element={<ManageStockItem />} />
