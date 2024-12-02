@@ -60,7 +60,9 @@ function EditProduct(){
                 <Center>
                     <Container>
                         {/* Colocar que a imagem e labels, categorias e adicionais venham do produto */}
-                        <ImageUpload defaultImageSrc={productData.image}></ImageUpload>
+                        <ImageUpload defaultImageSrc={productData.image} onImageUpload={function (imageFile: File | null): void {
+                        throw new Error('Function not implemented.');
+                    } }></ImageUpload>
                         <InputDesktopLojista label='Nome' value={productData.name}></InputDesktopLojista>
                         <InputDesktopLojista label='Descrição' value={productData.description}></InputDesktopLojista>
                         <InputDesktopLojista label='Preço' value={FormattedPrice(productData.price)}></InputDesktopLojista>
