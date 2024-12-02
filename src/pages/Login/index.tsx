@@ -76,6 +76,15 @@ const Login = () => {
       });
   };
 
+  // Função para fazer o login ao apertar enter nos inputs :D
+  const handleKeyDown = (event: React.KeyboardEvent) => {
+    if (event.key === "Enter") {
+      event.preventDefault();
+      const form = document.getElementById("login-form") as HTMLFormElement;
+      form?.requestSubmit();
+    }
+  };
+  
   return (
     <div>
       {/* ----------------------- HEADER ----------------------- */}
@@ -95,7 +104,7 @@ const Login = () => {
           onSubmit={loginHook}
         >
           {({ values, handleChange }) => (
-            <Form className="flex flex-col w-1/5 min-w-[250px] justify-center items-center">
+            <Form id="login-form" className="flex flex-col w-1/5 min-w-[250px] justify-center items-center">
               <div className="flex mb-24 flex-col w-full justify-center">
                 <div className="mb-6 flex flex-col">
                   <label className="text-xl mb-1 text-black" htmlFor="email">
@@ -107,6 +116,7 @@ const Login = () => {
                     name="email"
                     value={values.email}
                     onChange={handleChange}
+                    onKeyDown={handleKeyDown}
                   />
                 </div>
                 <div className="mb-1 flex flex-col">
@@ -119,6 +129,7 @@ const Login = () => {
                     name="password"
                     value={values.password}
                     onChange={handleChange}
+                    onKeyDown={handleKeyDown}
                   />
                 </div>
                 <div className="text-sm">
