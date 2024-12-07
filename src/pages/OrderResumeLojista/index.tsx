@@ -14,6 +14,7 @@ import { ActionButton, DeleteButton } from '../EditProduct/style';
 import "leaflet/dist/leaflet.css";
 import { MapContainer, TileLayer, Marker, Popup } from 'react-leaflet';
 import { responsiveHeight } from '../../utils/responsive-functions';
+import HeaderLojista from '../../components/HeaderLojista/HeaderLojista';
 
 
 // AINDA NÃO ESTAO INTEGRADAS COM O BACKEND
@@ -57,7 +58,7 @@ function OrderResumeLojista(){
 
     return(
         <>
-        <Header transparent={false}/>
+        <HeaderLojista transparent={false}/>
         <Container>
             <NoWrap> Solicitação de Pedido</NoWrap>
             <OrderStatus>

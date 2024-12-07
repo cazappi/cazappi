@@ -9,6 +9,7 @@ import ImageUpload from '../../components/ImageUpload/ImageUpload';
 import { BsChevronDoubleRight } from 'react-icons/bs';
 import { clearToken } from '../../utils/clear-cookie';
 import Default from '../../assets/imgDefault.png'
+import { getToken } from '../../utils/get-cookie';
 
 const Categorias = [
     { value: 'cat1', label: 'Categoria 1' },
@@ -37,7 +38,12 @@ function RegisterProduct(){
                     </InfoPage>
                 <Center>
                             <Container>
-                                <ImageUpload defaultImageSrc={Default}></ImageUpload>
+                                <ImageUpload 
+                                defaultImageSrc={Default} 
+                                onChange={getToken}
+                                altText='Product'
+                                inputId='selecao-arquivo'
+                                />
                                 <InputDesktopLojista label='Nome'></InputDesktopLojista>
                                 <InputDesktopLojista label='Descrição'></InputDesktopLojista>
                                 <InputDesktopLojista label='Preço'></InputDesktopLojista>

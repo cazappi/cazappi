@@ -6,6 +6,7 @@ import '@fortawesome/fontawesome-free/css/all.css';
 import { Bold, GreenIcon, RedIcon, MenuOptions, OptionButton, Ml, MenuMoreOptions, Relative} from "./style";
 import ProfileIcon from "../../assets/profileIcon.png"
 import { BsClipboardData, BsPerson, BsFileText, BsChatLeft, BsGear, BsQuestionCircle } from 'react-icons/bs';
+import { useNavigate } from "react-router-dom";
 // AS ROTAS DA HEADER ESTÃO COMO AS ROTAS DA HEADER COMUM, POIS NÃO ACHEI O DIRECIONAMENTO DELAS! DEPOIS DE DESENVOLVIDAS, ADICIONAR AS ROTAS PARA AS TELAS CORRETAS!
 
 interface HeaderProps {
@@ -19,30 +20,30 @@ const HeaderLojista: React.FC<HeaderProps> = ({ transparent }) => {
       label: "Gerenciar Dados",
       icon: <BsPerson />,
       subMenuItems: [
-        { label: "Dados Cadastrais", icon: <BsPerson /> },
-        { label: "Dados Bancários", icon: <BsFileText /> },
-        { label: "Alternar Loja", icon: <BsChatLeft /> },
-        { label: "Políticas", icon: <BsQuestionCircle /> },
+        { label: "Dados Cadastrais", icon: <BsPerson />, path: '/GerenciarDadosCadastrais' },
+        { label: "Dados Bancários", icon: <BsFileText />, path: '/' },
+        { label: "Alternar Loja", icon: <BsChatLeft />, path: '/' },
+        { label: "Políticas", icon: <BsQuestionCircle />, path: '/' },
       ],
     },
     {
       label: "Gerenciar Produtos",
       icon: <BsFileText />,
       subMenuItems: [
-        { label: "Produtos Já Cadastrados", icon: <BsPerson /> },
-        { label: "Cadastrar Novo Produto", icon: <BsFileText /> },
-        { label: "Gerenciar Estoque", icon: <BsChatLeft /> },
-        { label: "Gerenciar Adicionais", icon: <BsQuestionCircle /> },
+        { label: "Produtos Já Cadastrados", icon: <BsPerson />, path: '/' },
+        { label: "Cadastrar Novo Produto", icon: <BsFileText />, path: '/RegisterProduct' },
+        { label: "Gerenciar Estoque", icon: <BsChatLeft />, path: '/' },
+        { label: "Gerenciar Adicionais", icon: <BsQuestionCircle />, path: '/' },
       ],
     },
-    { label: "Relatórios de Venda", icon: <BsClipboardData /> },
-    { label: "Minhas Conversas", icon: <BsChatLeft /> },
-    { label: "Configurações", icon: <BsGear /> },
-    { label: "Ajuda", icon: <BsQuestionCircle /> },
+    { label: "Relatórios de Venda", icon: <BsClipboardData />, path: '/' },
+    { label: "Minhas Conversas", icon: <BsChatLeft />, path: '/' },
+    { label: "Configurações", icon: <BsGear />, path: '/' },
+    { label: "Ajuda", icon: <BsQuestionCircle />, path: '/' },
   ];
   
-
-  const [responsive, setResponsive] = useState(false);
+  const navigate = useNavigate();
+  const [responsive, setResponsive] = useState(false);  
   const [menuAberto, setMenuAberto] = useState(false);
   const [subMenu, setSubMenu] = useState("");
   const isAuthenticated = getUser().user_id;
@@ -52,8 +53,10 @@ const HeaderLojista: React.FC<HeaderProps> = ({ transparent }) => {
     setMenuAberto(!menuAberto);
   };
 
-  const mudarSubMenu = (option:string) => {
+  const mudarSubMenu = (option:string, path:string|null) => {
     setSubMenu(option === subMenu ? "" : option);
+    if(path)
+      navigate(path);
   }; 
 
   const styleGroup = {
@@ -131,7 +134,7 @@ const HeaderLojista: React.FC<HeaderProps> = ({ transparent }) => {
                 <MenuOptions>
                   {/* Itens do Menu principal */}
                   {menuItems.map((item) => (
-                  <OptionButton key={item.label} onClick={() => mudarSubMenu(item.label)}>
+                  <OptionButton key={item.label} onClick={() => mudarSubMenu(item.label, (item.path? item.path : null))}>
                     {item.icon}
                     <Ml>{item.label}</Ml>
                   </OptionButton>
@@ -206,7 +209,7 @@ const HeaderLojista: React.FC<HeaderProps> = ({ transparent }) => {
                   <MenuOptions>
                   {/* Itens do Menu principal */}
                     {menuItems.map((item) => (
-                    <OptionButton key={item.label} onClick={() => mudarSubMenu(item.label)}>
+                    <OptionButton key={item.label} onClick={() => mudarSubMenu(item.label, (item.path? item.path : null))}>
                       {item.icon}
                       <Ml>{item.label}</Ml>
                     </OptionButton>
@@ -216,7 +219,7 @@ const HeaderLojista: React.FC<HeaderProps> = ({ transparent }) => {
                         {/* Itens do subMenu */}
                           {menuItems.find((menuItem) => menuItem.label === subMenu)?.subMenuItems?.map(
                             (subItem) => (
-                              <OptionButton key={subItem.label}>
+                              <OptionButton key={subItem.label} onClick={() => mudarSubMenu(subItem.label, (subItem.path? subItem.path : null))}>
                                 {subItem.icon}
                                 <Ml>{subItem.label}</Ml>
                               </OptionButton>

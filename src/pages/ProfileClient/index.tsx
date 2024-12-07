@@ -1,11 +1,8 @@
 import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import { useEffect, useState } from "react";
-import Default from '../../assets/userProfile.png'
-import { AddImg } from "../../components/ImageUpload/style";
-import {BsFillPencilFill, BsShopWindow, BsPerson, BsChevronRight, BsBell, BsChatLeft, BsGear, BsQuestionCircle} from 'react-icons/bs'
-import { ActionButton, BorderOptions, Container, EditImgContainer, IconEdit, Image, ImgButtonWrapper, Span } from "./style";
-import { THEME } from "../../theme";
+import {BsShopWindow, BsPerson, BsChevronRight, BsBell, BsChatLeft, BsGear, BsQuestionCircle} from 'react-icons/bs'
+import { ActionButton, BorderOptions, Container, ImgButtonWrapper, Span } from "./style";
 import { responsiveFontSize, responsiveHeight, responsiveWidth } from "../../utils/responsive-functions";
 import { FLEXROW } from "../Politica/style";
 import { useNavigate } from "react-router-dom";
@@ -16,15 +13,14 @@ import { clearToken } from "../../utils/clear-cookie";
 
 const menuOptions = [
     { label: 'Gerenciar meus dados', icon: <BsPerson />, path: '/GerenciarDadosCadastrais' },
-    { label: 'Central de notificações', icon: <BsBell />, path: '/' },
+    { label: 'Central de notificações', icon: <BsBell />, path: '/Notificacoes' },
     { label: 'Minhas conversas', icon: <BsChatLeft />, path: '/' },
-    { label: 'Configurações', icon: <BsGear />, path: '/' },
+    { label: 'Configurações', icon: <BsGear />, path: '/Configs' },
     { label: 'Ajuda', icon: <BsQuestionCircle />, path: '/' },
 ];
 
 const defaultData = {
-    data: {
-      user: {
+    user: {
         email: '',
         id: '',
         document: '',
@@ -34,7 +30,6 @@ const defaultData = {
         confirmedEmail: '',
         isUserDeleted: '',
         image: '',
-      },
     },
 };
   
@@ -49,7 +44,6 @@ const ProfileClient = () => {
           })
           .then((response) => {
             setUserData(response.data);
-            setImageSrc(response.data.user.image || Default);
           })
           .catch((err) => {
             clearToken();
@@ -59,21 +53,6 @@ const ProfileClient = () => {
     useEffect(() => {
         getUserData();
     }, []);
-
-    const [imageSrc, setImageSrc] = useState('');
-    
-    const handleImageChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        const file = e.target.files?.[0];
-        if (file) {
-        const reader = new FileReader();
-        reader.onload = () => {
-            const newImageSrc = reader.result as string;
-            setImageSrc(newImageSrc);
-        };
-        reader.readAsDataURL(file);
-        }
-    };
-
     // essa pagina para os usuarios clientes comuns, ProfileLojista para os usuários lojistas.
 
     const navigate = useNavigate();
@@ -91,16 +70,8 @@ const ProfileClient = () => {
         {/* ----------------------- HEADER ----------------------- */}
         <Header transparent={false}></Header>
         <Container>
-            <ImgButtonWrapper>
-                {/* IMAGE PROFILE */}
-                <div>
-                    <Image src={imageSrc} alt="Perfil"/>
-                    <EditImgContainer>
-                        <AddImg id="selecao-arquivo" type="file" accept="image/*" onChange={handleImageChange} />
-                        <IconEdit htmlFor='selecao-arquivo'><BsFillPencilFill/></IconEdit>
-                    </EditImgContainer>
-                </div>
-                {/* IMAGE PROFILE */}
+            {userData?.user.role === "client" && (
+                // Se for um cliente comum, aparecerá a opção de se tornar um vendedor
                 <ActionButton onClick={handleSubmit}>
                     <ImgButtonWrapper>
                         <BsShopWindow style={{
@@ -112,7 +83,8 @@ const ProfileClient = () => {
                         }}> Se torne um vendedor </div>
                     </ImgButtonWrapper>
                 </ActionButton>
-            </ImgButtonWrapper>
+            )}
+            
             {menuOptions.map((option, index) => (
                 <BorderOptions key={index}>
                     <ImgButtonWrapper style={{

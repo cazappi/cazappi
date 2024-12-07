@@ -40,6 +40,9 @@ import ClientAddSpecificAddress from "../pages/ClientAddresses/ClientAddSpecific
 import ProfileClient from "../pages/ProfileClient";
 import ProfileLojista from "../pages/ProfileLojista";
 import GerenciarDadosLojista from "../pages/GerenciarDadosLojista";
+import Init from "../pages/Init";
+import Notificacoes from "../pages/Notificacoes";
+import Configs from "../pages/Configs";
 
 const AppRoutes = () => (
   <>
@@ -68,10 +71,12 @@ const AppRoutes = () => (
       <Route path="/BagList" element={<BagList />} />
       <Route path="/BagWithDraw" element={<BagWithDraw />} />
       <Route path="/DadosBancariosPreenchimento" element={<DadosBancariosPreenchimento />} />
-      {/* vai ser privada (so logado) */}
       <Route path="/ProfileClient" element={<ProfileClient />} />
       <Route path="/ProfileLojista" element={<ProfileLojista />} />
       <Route path="/GerenciarDadosLojista" element={<GerenciarDadosLojista />} />
+      <Route path="/Init" element={<Init />} />
+      <Route path="/Notificacoes" element={<Notificacoes />} />
+      <Route path="/Configs" element={<Configs />} />
     </Routes>
     <PrivateRoute
       path="/shopkeeper/order-chats"

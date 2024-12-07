@@ -1,38 +1,5 @@
 import styled from 'styled-components';
-import { THEME } from '../../theme';
 import { responsiveWidth as rw, responsiveHeight as rh, responsiveFontSize as rf } from '../../utils/responsive-functions';
-import { Button } from '../ProductView/style';
-
-export const Image = styled.img`
-    width: ${rw(150)};
-    height: ${rw(150)};
-    border-radius: 50%;
-    object-fit: cover;
-    border: 2px solid ${THEME.COLORS.PRIMARY};
-    text-align: center;
-`;
-
-export const EditImgContainer = styled.div`
-    display:flex;
-    flex-direction: column;
-    margin-bottom: ${rh(50)};
-`;
-
-export const IconEdit = styled.label`
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    background-color: ${THEME.COLORS.PRIMARY};
-    border-radius: 50%;
-    width: ${rw(30)};
-    height: ${rw(30)};
-    color: white;
-    cursor: pointer;
-    position: absolute;
-    font-size: ${rf(23)};
-    margin-top: -${rh(75)};
-    margin-left: ${rw(130)};
-`;
 
 export const Container = styled.div`
     display:flex;

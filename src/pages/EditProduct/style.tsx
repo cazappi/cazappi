@@ -28,16 +28,18 @@ export const ActionButton = styled.button`
         color:white;
     }
 `;
-export const DeleteButton = styled(ActionButton)`
-    color: ${THEME.COLORS.PRIMARY};
-    background-color: white;
-    border: 2px solid ${THEME.COLORS.PRIMARY};
 
-    &:hover {
-        background-color: ${THEME.COLORS.PRIMARY};
-        color:white;
-    }
+export const DeleteButton = styled(ActionButton)`
+  color: ${THEME.COLORS.PRIMARY};
+  background-color: white;
+  border: 2px solid ${THEME.COLORS.PRIMARY};
+
+  &:hover {
+    background-color: ${THEME.COLORS.PRIMARY};
+    color:white;
+  }
 `;
+
 export const BackgroundModal = styled.div`
   position: fixed;
   top: 0;

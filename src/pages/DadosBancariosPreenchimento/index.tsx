@@ -141,7 +141,7 @@ const DadosBancariosPreenchimento = () => {
                 return;
             }
         }
-        saveUser().then(()=> { navigate('/Login') })
+        saveUser().then(()=> { navigate('/Init') })
     };
 
     return (
