@@ -623,8 +623,6 @@ function RegisterProduct() {
                     </div>
                 </ModalPopup>
             )}
-
-
             <Footer />
         </>
     );

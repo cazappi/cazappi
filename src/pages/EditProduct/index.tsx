@@ -10,6 +10,7 @@ import { clearToken } from '../../utils/clear-cookie';
 import Lanche from '../../assets/sanduiche.png'
 import {AtualPage, Center, InfoPage, Container, NoWrap, RedLine, Titulo } from '../RegisterProduct/style';
 import { ActionButton, Botoes, DeleteButton, ModalButton, ModalContainer, ModalContent, BackgroundModal, Red } from './style';
+import { getToken } from '../../utils/get-cookie';
 
 function EditProduct(){
     // Aqui necessário pegar os dados do produto clicado. Apenas como exemplo os dados constantes. Assim como as categorias.
@@ -60,12 +61,18 @@ function EditProduct(){
                 <Center>
                     <Container>
                         {/* Colocar que a imagem e labels, categorias e adicionais venham do produto */}
-                        <ImageUpload defaultImageSrc={productData.image} onImageUpload={function (imageFile: File | null): void {
-                        throw new Error('Function not implemented.');
-                    } }></ImageUpload>
-                        <InputDesktopLojista label='Nome' value={productData.name}></InputDesktopLojista>
-                        <InputDesktopLojista label='Descrição' value={productData.description}></InputDesktopLojista>
-                        <InputDesktopLojista label='Preço' value={FormattedPrice(productData.price)}></InputDesktopLojista>
+                        <ImageUpload 
+                            defaultImageSrc={productData.image} 
+                            onChange={getToken}
+                            onImageUpload={function (imageFile: File | null): void {
+                                throw new Error('Function not implemented.');
+                            } }
+                            altText='Product'
+                            inputId='selecao-arquivo'
+                        />
+                        <InputDesktopLojista label='Nome' value={productData.name}/>
+                        <InputDesktopLojista label='Descrição' value={productData.description}/>
+                        <InputDesktopLojista label='Preço' value={FormattedPrice(productData.price)}/>
                         <Select title='Categoria' options={productData.category} />
                         <Select title='Inserir Adicionais' options={productData.additional} />
                     </Container>

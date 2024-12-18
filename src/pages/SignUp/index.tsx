@@ -11,6 +11,7 @@ import {
 } from '../../utils/responsive-functions';
 import { useNavigate } from 'react-router-dom';
 import SelectS from '../../components/SelectSimples/SelectS';
+import RoleButtons from '../../components/RoleButtons';
 
 interface FormData {
     lojista: boolean;
@@ -159,22 +160,14 @@ const SignUp = () => {
             <Title>Crie sua conta</Title>
 
             {/* BOTOES PF E PJ */}
-            <FLEXROW>
-                <ButtonRegister isActive={pf} onClick={() => pf? null : changeType(true)}>
-                    <Icon icon="material-symbols:person" width={rw(26)} style={{
-                        color: pf ? '#32cf15': THEME.COLORS.GRAY_300,
-                        marginRight: "10px"
-                    }}/>
-                    Pessoa física
-                </ButtonRegister>
-                <ButtonRegister isActive={!pf} onClick={() => pf? changeType(false) : null}>
-                    <Icon icon="ic:round-business-center" width={rw(26)} style={{
-                        color: pf? THEME.COLORS.GRAY_300 : '#32cf15',
-                        marginRight: "10px"
-                    }}/>
-                    Pessoa Juridica
-                </ButtonRegister>
-            </FLEXROW>
+            <Container style={{marginBlock: 0, width: '35%'}}>
+                <RoleButtons
+                    isActive={pf} 
+                    onChangeType={changeType}
+                    leftLabel="Cliente"
+                    rightLabel="Lojista"
+                />
+            </Container>
             {/* BOTOES PF E PJ */}
             
             {/* INPUTS */}
