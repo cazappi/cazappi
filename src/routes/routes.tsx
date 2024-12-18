@@ -40,6 +40,12 @@ import ClientAddSpecificAddress from "../pages/ClientAddresses/ClientAddSpecific
 import ProfileClient from "../pages/ProfileClient";
 import ProfileLojista from "../pages/ProfileLojista";
 import GerenciarDadosLojista from "../pages/GerenciarDadosLojista";
+import HomeLojista from "../pages/HomeLojista";
+import ManageStock from "../pages/ManageStock";
+import ManageStockItem from "../pages/ManageStockItem";
+import ManageSubCategories from "../pages/ManageSubCategories";
+import Search from "../pages/Search";
+import GerenciarProdutos from "../pages/GerenciarProdutos";
 
 const AppRoutes = () => (
   <>
@@ -52,13 +58,13 @@ const AppRoutes = () => (
       <Route path="/register" element={<Register />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
-      <Route path="/ProductView" element={<ProductView />}/>
-      <Route path="/BagPagment" element={<BagPagment />}/>
-      <Route path="/OrderHistoryClient" element={<OrderHistoryClient />}/>
-      <Route path="/RegisterProduct" element={<RegisterProduct />}/>
-      <Route path="/EditProduct" element={<EditProduct />}/>
-      <Route path="/OrderResume" element={<OrderResume />}/>
-      <Route path="/OrderResumeLojista" element={<OrderResumeLojista />}/>
+      <Route path="/ProductView" element={<ProductView />} />
+      <Route path="/BagPagment" element={<BagPagment />} />
+      <Route path="/OrderHistoryClient" element={<OrderHistoryClient />} />
+      <Route path="/RegisterProduct" element={<RegisterProduct />} />
+      <Route path="/EditProduct" element={<EditProduct />} />
+      <Route path="/OrderResume" element={<OrderResume />} />
+      <Route path="/OrderResumeLojista" element={<OrderResumeLojista />} />
       <Route path="/forgetPass" element={<ForgetPass />} />
       <Route path="/resetpass" element={<ResetPass />} />
       <Route path="/EmailVerification/:token" element={<EmailVerification />} />
@@ -68,14 +74,21 @@ const AppRoutes = () => (
       <Route path="/BagList" element={<BagList />} />
       <Route path="/BagWithDraw" element={<BagWithDraw />} />
       <Route path="/DadosBancariosPreenchimento" element={<DadosBancariosPreenchimento />} />
+
       {/* vai ser privada (so logado) */}
       <Route path="/ProfileClient" element={<ProfileClient />} />
+      <Route path="/HomeLojista" element={<HomeLojista />} />
       <Route path="/ProfileLojista" element={<ProfileLojista />} />
+      <Route path="/profileLojista/gerenciarProdutos/gerenciarEstoque" element={<ManageStock />} />
+      <Route path="/profileLojista/gerenciarProdutos/gerenciarEstoque/:id" element={<ManageStockItem />} />
+      <Route path="/profileLojista/gerenciarProdutos/subcategorias" element={<ManageSubCategories />} />
       <Route path="/GerenciarDadosLojista" element={<GerenciarDadosLojista />} />
       <Route path="/GerenciarDadosCadastrais" element={<GerenciarDadosCadastrais />} />
       {/* private route */}
       <Route path="/shopkeeper/finish" element={<ShopkeeperFinish />} />
-      <Route
+      <Route path="/profileLojista/gerenciarProdutos" element={<GerenciarProdutos />} />
+      <Route path="/search" element={<Search />} />
+    <PrivateRoute
       path="/shopkeeper/order-chats"
       element={<MinhasConversasLojista />}
     />

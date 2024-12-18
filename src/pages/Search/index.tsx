@@ -1,0 +1,245 @@
+import { useState, useEffect } from "react";
+import { useNavigate } from "react-router-dom";
+import api from '../../services/api';
+import { getUser } from '../../utils/user-token-request';
+import { getToken } from "../../utils/get-cookie";
+import Header from "../../components/Header/Header";
+import Footer from "../../components/Footer/Footer";
+import StoreDefaultImage from "../../assets/storeDefault.svg";
+import ProductDefaultImage from "../../assets/productDefault.svg";
+import {
+  PageWrapper,
+  ContentWrapper,
+  LocationIcon,
+  SearchIcon,
+  CloseIcon,
+  FilterIcon,
+  StarIcon,
+  CategoriesWrapper,
+  CategoryClass,
+  SearchWrapper,
+  ClockIcon
+} from './styles';
+
+function Search() {
+  const [categories, setCategories] = useState<any>([]);
+  const [nearStores, setNearStores] = useState<any>([]);
+  const [nearProducts, setNearProducts] = useState<any>([]);
+  const [user, setUser] = useState<any>();
+  const [addresses, setAddresses] = useState([]);
+  const [selectedAddress, setSelectedAddress] = useState<number>();
+  const [search, setSearch] = useState<string>('');
+  const [type, setType] = useState<'lojas' | 'produtos'>('lojas');
+  const navigate = useNavigate();
+
+  async function getCategories() {
+    api.get('/category', {
+      headers: {
+        Authorization: `Bearer ${getToken()}`
+      }
+    }).then(response => {
+      setCategories(response.data);
+    }).catch(error => {
+      alert('Ops! ocorreu um erro: ' + error);
+    });
+  }
+
+  async function getAddresses() {
+    const tempUser = getUser();
+    api.get(`/user/${tempUser.user_id}/addresses`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    }).then(response => {
+      setAddresses(response.data.addresses);
+      setUser(tempUser);
+    }).catch(error => {
+      alert('Ops! ocorreu um erro: ' + error);
+    });
+  }
+
+  async function getNearStores() {
+    api.get(`/nearStores?lat=-22.014084860157908&long=-47.89230032883634`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    }).then(response => {
+      setNearStores(response.data.store);
+    }).catch(error => {
+      alert('Ops! ocorreu um erro: ' + error);
+    });
+  }
+
+  async function getNearProducts() {
+    api.get(`/product/nearProducts?lat=5&long=5555`, {
+      headers: { Authorization: `Bearer ${getToken()}` }
+    }).then(response => {
+      console.log(response.data);
+      setNearProducts(response.data);
+    }).catch(error => {
+      alert('Ops! ocorreu um erro: ' + error);
+    });
+  }
+
+  useEffect(() => {
+    getCategories();
+    getAddresses();
+    getNearStores();
+    getNearProducts();
+  }, []);
+
+  const translation: any = {
+    restaurant: 'Restaurante',
+    supermarket: 'Supermercado',
+  };
+
+  const handleSelectChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
+    const selectedValue = event.target.value;
+    if (selectedValue === "-2") {
+      navigate('/');
+    } else {
+      setSelectedAddress(parseInt(selectedValue));
+    }
+  };
+
+  let content = <></>;
+
+  // Renderização condicional com base no tipo e busca
+  if (search === '') {
+    content = (
+      <CategoriesWrapper size={categories.length}>
+        {categories.map((category: any, index: number) => (
+          < CategoryClass key={index} index={index} >
+            <p>{category.name}</p>
+          </CategoryClass>
+        ))
+        }
+      </CategoriesWrapper >
+    );
+  } else if (type === 'lojas') {
+
+    // Filtrar lojas com base na busca
+    const filteredStores = nearStores.filter((store: any) =>
+      store.name.toLowerCase().includes(search.toLowerCase())
+
+    );
+
+
+    content = (
+      <SearchWrapper>
+        {filteredStores.map((store: any, index: number) => {
+          // Verifica se a imagem é um link válido do Google Cloud Storage
+          const isValidImage = store.imagePerfil?.startsWith('https://storage.googleapis.com/');
+          return (
+            <div key={index} className="store">
+              <img src={isValidImage ? store.imagePerfil : StoreDefaultImage} alt="Store Profile" />
+              <div className="storeInfo">
+                <section>
+                  <p style={{ fontWeight: 'bold' }}>{store.name}</p>
+                  {store.rating !== null ? (
+                    <p style={{ display: "flex", gap: "5px" }}>
+                      <StarIcon /> {store.rating}
+                    </p>
+                  ) : null}
+                </section>
+                <p>{translation[store.category]}</p>
+                <p style={{ display: "flex", alignItems: "center", gap: '5px' }}>
+                  <ClockIcon /> 23 a 30min - R$ {store.deliveryFee.toFixed(2).replace('.', ',')}
+                </p>
+              </div>
+            </div>
+          );
+        })}
+      </SearchWrapper>
+    );
+  } else if (type === 'produtos') {
+
+    // Filtrar produtos com base na busca
+    const filteredProducts = nearProducts.filter((product: any) =>
+      product.name.toLowerCase().includes(search.toLowerCase())
+    );
+
+    content = (
+      <SearchWrapper>
+        {filteredProducts.map((product: any, index: number) => {
+          // Verifica se a imagem do produto é um link válido do Google Cloud Storage
+          const isValidProductImage = product.image?.startsWith('https://storage.googleapis.com/');
+          return (
+            <div key={index} className="product">
+              <img
+                src={isValidProductImage ? product.image : ProductDefaultImage}
+                alt={`imagem de ${product.name}`}
+              />
+              <div className="productInfo">
+                <h3>{product.storeName}</h3>
+                <h4>{product.name}</h4>
+                <p>{product.description}</p>
+                <p className="productPrice">{`R$ ${product.price.toFixed(2).replace('.', ',')}`}</p>
+              </div>
+            </div>
+          );
+        })}
+      </SearchWrapper>
+    );
+  }
+
+  return (
+    <PageWrapper>
+      <Header transparent={false} />
+      <ContentWrapper>
+        <div className="adressInput">
+          <p>
+            <LocationIcon />
+            <select onChange={handleSelectChange}>
+              {addresses.length > 0 ? (
+                addresses.map((address, index) => (
+                  <option key={index} value={index}>
+                    {address}
+                  </option>
+                ))
+              ) : (
+                <option value="-1">Nenhum endereço cadastrado</option>
+              )}
+              <option value="-2">Adicionar novo endereço</option>
+            </select>
+          </p>
+        </div>
+        <div className="searchBar">
+          <SearchIcon />
+          <input
+            type="text"
+            placeholder="Busque por uma loja"
+            value={search}
+            onChange={(e) => setSearch(e.target.value)}
+          />
+          <CloseIcon onClick={() => setSearch('')} />
+        </div>
+
+        <div className="type">
+          <section className={type === 'lojas' ? 'active' : ''} onClick={() => setType('lojas')}>
+            <p>LOJAS</p>
+            <hr className={type === 'lojas' ? 'active' : ''} />
+          </section>
+          <section className={type === 'produtos' ? 'active' : ''} onClick={() => setType('produtos')}>
+            <p>PRODUTOS</p>
+            <hr className={type === 'produtos' ? 'active' : ''} />
+          </section>
+        </div>
+        <div className="filter">
+          <section>
+            <p>Filtros</p>
+            <FilterIcon />
+          </section>
+          <section>
+            <p>Distância</p>
+            <FilterIcon />
+          </section>
+          <section>
+            <p>Cidade</p>
+            <FilterIcon />
+          </section>
+        </div>
+        {content}
+      </ContentWrapper>
+      <Footer />
+    </PageWrapper>
+  );
+}
+
+export default Search;
