@@ -94,32 +94,33 @@ const AppRoutes = () => (
       <Route path="/Init" element={<Init />} />
       <Route path="/Notificacoes" element={<Notificacoes />} />
       <Route path="/Configs" element={<Configs />} />
-      <PrivateRoute
-        path="/shopkeeper/order-chats"
-        element={<MinhasConversasLojista />}
-      />
+      
       <Route
         path="/shopkeeper/order-chats/:chatId"
         element={<MinhaConversaLojista />}
       />
       <Route path="/shopkeeper/config" element={<ShopkeeperConfig />} />
-      <PrivateRoute path="/client/address/add" element={<ClientAddAddress />} />
-      <PrivateRoute path="/client/address" element={<ClientAddresses />} />
-      <PrivateRoute
-        path="/client/order-chats"
-        element={<MinhasConversasCliente />}
-      />
-      <PrivateRoute
-        path="/client/order-chats/:chatId"
-        element={<MinhaConversaCliente />}
-      />
-      <PrivateRoute
-        path="/DadosBancariosRevisao"
-        element={<DadosBancariosRevisao />}
-      />
-      <PrivateRoute path="/updateshop" element={<UpdateShop />} />
-      <PrivateRoute path="/BankAccount" element={<BankAccount />} />
     </Routes>
+    <PrivateRoute
+        path="/shopkeeper/order-chats"
+        element={<MinhasConversasLojista />}
+    />
+    <PrivateRoute path="/client/address/add" element={<ClientAddAddress />} />
+    <PrivateRoute path="/client/address" element={<ClientAddresses />} />
+    <PrivateRoute
+      path="/client/order-chats"
+      element={<MinhasConversasCliente />}
+    />
+    <PrivateRoute
+      path="/client/order-chats/:chatId"
+      element={<MinhaConversaCliente />}
+    />
+    <PrivateRoute
+      path="/DadosBancariosRevisao"
+      element={<DadosBancariosRevisao />}
+    />
+    <PrivateRoute path="/updateshop" element={<UpdateShop />} />
+    <PrivateRoute path="/BankAccount" element={<BankAccount />} />
   </>
 );
 

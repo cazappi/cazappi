@@ -1,5 +1,4 @@
-import React, { useState, useEffect } from 'react';
-import { useNavigate, useParams } from 'react-router-dom';
+import { useState } from 'react';
 import Footer from "../../components/Footer/Footer";
 import HeaderLojista from '../../components/HeaderLojista/HeaderLojista';
 import InputDesktopLojista from '../../components/InputDesktopLojista/InputDesktopLojista';

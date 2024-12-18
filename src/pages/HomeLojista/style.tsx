@@ -1,7 +1,7 @@
 import styled from 'styled-components';
 import { THEME } from '../../theme';
 import { responsiveWidth as rw, responsiveHeight as rh, responsiveFontSize as rf } from '../../utils/responsive-functions';
-import { Container, IconEdit } from '../ProfileClient/style';
+import { Container } from '../ProfileClient/style';
 
 export const Image = styled.img`
     width: 100%;

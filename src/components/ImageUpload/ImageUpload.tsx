@@ -4,7 +4,7 @@ import {BsFillPencilFill} from 'react-icons/bs'
 
 interface ImageUploadProps {
   defaultImageSrc: string;
-  onImageUpload: (imageFile: File | null) => void;
+  onImageUpload?: (imageFile: File | null) => void;
   onChange?: (newImageSrc: string, file: File) => void;
   altText?: string;
   inputId?: string;
@@ -35,12 +35,17 @@ const ImageUpload: React.FC<ImageUploadProps> = ({
         setImageSrc(newImageSrc);
         // TODO: Devido ao conflito que teve entre os códigos, verificar qual a função correta
         // para ser chamada aqui
-        onImageUpload(file);
+        if (onImageUpload) {
+          onImageUpload(file);
+        }
+        
         // onChange(newImageSrc, file);
       };
       reader.readAsDataURL(file);
     } else {
-      onImageUpload(null);
+      if (onImageUpload) {
+        onImageUpload(null);
+      }      
     }
   };
   const Image = type === 'profile'? ImageProfile : ImageComp;
