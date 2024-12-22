@@ -6,18 +6,11 @@ import {responsiveWidth as rw,
 
 export const Container = styled.div`
   width: 100%;
-  cursor: pointer;
   padding-inline: ${rw(15)};
   padding-block: ${rw(15)};
   border: 1px solid ${THEME.COLORS.GRAY_300};
   border-radius: 8px;
   margin-block: ${rh(50)};
-  transition: 0.2s ease;
-
-  &:hover {
-    border: 1px solid red;
-    transform: scale(1.01);
-  }
 `;
 export const Logo = styled.img`
   width: ${rw(50)};
@@ -59,12 +52,9 @@ export const AvaliarPedido = styled.div`
   margin-block: ${rh(8)};
   padding-block: ${rh(10)};
   cursor: pointer;
-  border: 1px solid transparent;
-  transition: 0.2s ease;
 
   &:hover {
     border: 1px solid #39FF14;  
-    transform: scale(1.01);
   }
 `;
 

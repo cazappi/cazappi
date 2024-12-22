@@ -2,7 +2,6 @@ import React, { useState } from 'react';
 import { AvaliarPedido, Container, GreenIcon, Logo, Mr, OrderStatus, RedIcon, RestaurantInfos, Column, GrayLine, LogoProduct, OrderInfos, Span  } from './style';
 import {BsCheckCircleFill, BsXCircleFill, BsStar} from 'react-icons/bs'
 import ReviewModal from '../ReviewModal/ReviewModal';
-import { useNavigate } from 'react-router-dom';
 
 interface Product {
   productImage:string,
@@ -16,7 +15,7 @@ interface OrderProps {
     restaurantImage: string;
     products: Product[];
     date: string;
-    status: 'Requested' | 'InProgress' | 'Cancelled' | 'InDelivery' | 'Completed';
+    status: 'completed' | 'canceled';
     reviewed: boolean;
   };
 }
@@ -31,10 +30,8 @@ function FormattedPrice(valor:number){
 
 const Order: React.FC<OrderProps> = ({ order }) => {
   const [isReviewModalOpen, setIsReviewModalOpen] = useState(false);
-  const navigate = useNavigate();
 
-  const handleOpenModal = (event: React.MouseEvent) => {
-    event.stopPropagation(); // Prevents navigation when clicking "Review Order"
+  const handleOpenModal = () => {
     setIsReviewModalOpen(true);
   };
 
@@ -44,12 +41,8 @@ const Order: React.FC<OrderProps> = ({ order }) => {
     // necessario fazer a logica de salvar a avaliação e mudar o reviewed para true.
   };
 
-  const handleNavigate = () => {
-    navigate('/OrderResume', { state: order });
-  };
-
   return (
-    <Container onClick={handleNavigate}>
+    <Container>
       <RestaurantInfos>
         {/* INFORMAÇOES DO RESTAURANTE */}
         <Logo src={order.restaurantImage} alt={order.restaurantName} />
@@ -71,7 +64,7 @@ const Order: React.FC<OrderProps> = ({ order }) => {
       <OrderStatus>
         {/* STATUS DO PEDIDO */}
         <Span>Data: {order.date} </Span>
-        {order.status === 'Completed' ? (
+        {order.status === 'completed' ? (
           <OrderStatus>
             <GreenIcon><BsCheckCircleFill/></GreenIcon>
             <span>Pedido concluído</span>
@@ -83,7 +76,7 @@ const Order: React.FC<OrderProps> = ({ order }) => {
           </OrderStatus>
         )} 
       </OrderStatus>
-      {order.status === 'Completed'? order.reviewed ? (
+      {order.status === 'completed'? order.reviewed ? (
         null
       ) : (
         // AVALIAR PEDIDO
