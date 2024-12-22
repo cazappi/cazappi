@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { useNavigate } from 'react-router-dom';
+import { useLocation, useNavigate } from 'react-router-dom';
 import Header from '../../components/Header/Header';
 import Footer from "../../components/Footer/Footer";
 import ResumoPedido from '../../components/ResumoPedido/ResumoPedido';
@@ -9,9 +9,46 @@ import Profile from '../../assets/userProfile.png'
 import SaladaCamarao from '../../assets/SaladaCamarao.png'
 import { FLEXCOLUMN, FLEXROW } from '../Politica/style';
 import Order from '../../components/Order/Order';
+import { Center } from '../ProductView/style';
 
-// AINDA NAO ESTÃO INTEGRADAS COM O BACKEND
+const OrdersStatus = {
+    Requested: 'Requested',
+    InProgress: 'InProgress',
+    Cancelled: 'Cancelled',
+    InDelivery: 'InDelivery',
+    Completed: 'Completed',
+};
+
+const OrderStatusMapping: Record<keyof typeof OrdersStatus, string> = {
+    Requested: 'Pedido confirmado',
+    InProgress: 'Pedido em andamento',
+    Cancelled: 'Pedido cancelado',
+    InDelivery: 'Pedido a caminho',
+    Completed: 'Pedido concluído',
+};
+
+interface Product {
+    productImage: string | undefined;
+    name: string | undefined;
+    price: number | undefined;
+    quantity?: number;
+}
+
+interface OrderData {
+    restaurantName: string;
+    restaurantImage: string;
+    products: Product[];
+    date: string;
+    status: 'Requested' | 'InProgress' | 'Cancelled' | 'InDelivery' | 'Completed';
+    reviewed: boolean;
+  }
+  
 function OrderResume(){
+    const location = useLocation();
+    const navigate = useNavigate();
+
+    console.log(location.state);
+
     function FormattedPrice(valor:number) {
         return valor.toLocaleString('pt-BR', {
             minimumFractionDigits: 2,
@@ -19,41 +56,39 @@ function OrderResume(){
         });
     }
 
-    const user = {
-        icon: Profile,
-        name: 'Antonio Carlos de Almeida',
-    };
-
-    const infoPedidos = [
-        { label: 'Valor do pedido', value: 9.98 },
-        { label: 'Taxa', value: 0.99 },
-        { label: 'Entrega', value: 0.00 },
-        { label: 'Desconto', value: 0.00 },
-    ];
-
     const paymentDetails = {
         isPaid: true, 
         paymentMethod: "Pago no aplicativo",
         paymentType: "Visa",
     };
 
-    const order = {
-        products: [
-            { productImage: SaladaCamarao, name: 'Salada de camarão', price: 4.99, quantity: 1},
-            { productImage: SaladaCamarao, name: 'Salada de camarão', price: 4.99, quantity: 1},
-        ]
+    const order = location.state as OrderData;
+    if (!order) {
+        navigate('/');
+        return null;
     }
-    // sem certeza se são essas as situações do pedido
-    const OrderStatuses = [
-        'Pedido confirmado',
-        'Pedido em andamento',
-        'Pedido a caminho',
-        'Pedido concluído'
+
+    const user = {
+        icon: order.restaurantImage,
+        name: order.restaurantName,
+    };
+
+    const visibleStatuses = ['Requested', 'InProgress', 'InDelivery', 'Completed'];
+    const isCancelled = order.status === 'Cancelled';
+    const currentStep = isCancelled ? -1 : visibleStatuses.indexOf(order.status);
+
+    const totalPrice = order.products.reduce(
+        (acc, product) => acc + (product.price ?? 0) * (product.quantity ?? 1),
+        0
+    );
+
+    const infoPedidos = [
+        { label: 'Valor do pedido', value: totalPrice },
+        { label: 'Taxa', value: 0.99 },
+        { label: 'Entrega', value: 0.00 },
     ];
 
-    // esse indexOf deverá receber o status atual do pedido do cliente, por enquanto fica em pedido confirmado
-    const currentStep = OrderStatuses.indexOf('Pedido em andamento');
-
+    
     return(
         <>
         <Header transparent={false}/>
@@ -65,34 +100,46 @@ function OrderResume(){
                     <UserName>{user.name}</UserName>
                 </UserInfos>
                 <OrderInfos>
-                    <LineContainer>
-                        {OrderStatuses.map((item, index) => (
-                            <>
-                                <Circle key={index} isActive={index <= currentStep} />
-                                {index < OrderStatuses.length-1 && (
-                                    <Line isActive={index < currentStep}>
-                                        <Progress
+                <LineContainer>
+                    {visibleStatuses.map((status, index) => (
+                        <React.Fragment key={index}>
+                            <Circle
+                                isActive={!isCancelled && index <= currentStep} // Inactive for Cancelled
+                            />
+                            {index < visibleStatuses.length - 1 && (
+                                <Line
+                                    isActive={!isCancelled && index < currentStep} // Inactive for Cancelled
+                                >
+                                                                            <Progress
                                         initial={{ width: 0 }}
                                         animate={{ width: '100%' }}
                                         transition={{ duration: 3, repeat: Infinity, repeatType: "loop" }}
                                         isActive={index <= currentStep}
                                         />
-                                    </Line>
-                                )}
-                            </>
-                        ))}
-                    </LineContainer>
+ 
+                                </ Line>
+                            )}
+                        </React.Fragment>
+                    ))}
+                </LineContainer>
                 </OrderInfos>
                 <div>
                     <FLEXROW>
-                        {OrderStatuses.map((item, index) => (
-                            <>
-                                <StatusContainer isActive={currentStep === index}>
+                        {isCancelled ? (
+                            <div className="w-full flex items-center justify-center">
+                                <p>Pedido cancelado</p>
+                            </div>
+                        ) : (
+                            visibleStatuses.map((status, index) => (
+                                <StatusContainer
+                                    key={index}
+                                    isActive={currentStep === index}
+                                >
                                     <VerticalLine />
-                                    <LabelStatus>{OrderStatuses[index]}</LabelStatus>
+                                    <LabelStatus>{OrderStatusMapping[status as keyof typeof OrdersStatus]}</LabelStatus>
                                 </StatusContainer>
-                            </>
-                        ))}
+                            ))
+                        )}
                     </FLEXROW>
                 </div>
             </OrderStatus>
@@ -104,10 +151,10 @@ function OrderResume(){
                         <LogoProduct src={product.productImage} alt={product.name} />
                         <Column>
                             <span>{product.name}</span>
-                            <Span>R$ {FormattedPrice(product.price)}</Span>
+                            <Span>R$ {FormattedPrice(product.price ?? 0)}</Span>
                         </Column>
                     </FLEXROW>
-                    <Quantity>{product.quantity.toString().padStart(2, '0')}</Quantity>
+                    <Quantity>{(product.quantity ?? 1).toString().padStart(2, '0')}</Quantity>
                 </ProductInfos>
                 </>
                 ))}
