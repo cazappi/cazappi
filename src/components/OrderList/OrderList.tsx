@@ -10,7 +10,7 @@ interface OrderData {
   restaurantImage: string;
   products: Product[];
   date: string;
-  status: 'Requested' | 'InProgress' | 'Cancelled' | 'InDelivery' | 'Completed';
+  status: 'completed' | 'canceled';
   reviewed: boolean;
 }
 interface OrderListProps {

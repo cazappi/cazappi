@@ -14,12 +14,12 @@ interface Product {
 }
   
 interface OrderData {
-  restaurantName: string;
-  restaurantImage: string;
-  products: Product[];
-  date: string;
-  status: 'Requested' | 'InProgress' | 'Cancelled' | 'InDelivery' | 'Completed';
-  reviewed: boolean;
+    restaurantName: string;
+    restaurantImage: string;
+    products: Product[];
+    date: string;
+    status: 'completed' | 'canceled';
+    reviewed: boolean;
 }
 // PEDIDOS CONSTANTES, precisa ser integrado.
 const orders: OrderData[] = [
@@ -27,55 +27,31 @@ const orders: OrderData[] = [
       restaurantName: 'Veni - Healthy food',
       restaurantImage: LogoVeni,
       products: [
-        { productImage: SaladaCamarao, name: 'Salada de camarão completa', price: 4.99},
-        { productImage: SaladaCamarao, name: 'Salada de camarão completa', price: 4.99 },
-        { productImage: SaladaCamarao, name: 'Salada de camarão completa', price: 4.99 },
-        { productImage: SaladaCamarao, name: 'Salada de camarão completa', price: 4.99 },
+        { productImage: SaladaCamarao, name: 'Salada de camarão', price: 4.99},
+        { productImage: SaladaCamarao, name: 'Salada de camarão', price: 4.99 },
       ],
       date: '01/01/2020',
-      status: 'Completed',
+      status: 'completed',
       reviewed: false,
     },
 
     {
       restaurantName: 'Veni - Healthy food',
       restaurantImage: LogoVeni,
-      products: [{productImage: SaladaCamarao, name: 'Salada de camarão requested', price: 4.99 }],
+      products: [{productImage: SaladaCamarao, name: 'Salada de camarão', price: 4.99 }],
       date: '01/01/2020',
-      status: 'Requested',
+      status: 'canceled',
       reviewed: false,
     },
     {
         restaurantName: 'Veni - Healthy food',
         restaurantImage: LogoVeni,
         products: [
-          { productImage: SaladaCamarao, name: 'Salada de camarão inprogress', price: 4.99 },
-          { productImage: SaladaCamarao, name: 'Salada de camarão inprogress', price: 4.99 },
+          { productImage: SaladaCamarao, name: 'Salada de camarão', price: 4.99 },
+          { productImage: SaladaCamarao, name: 'Salada de camarão', price: 4.99 },
         ],
         date: '01/01/2020',
-        status: 'InProgress',
-        reviewed: false,
-      },
-    {
-        restaurantName: 'Veni - Healthy food',
-        restaurantImage: LogoVeni,
-        products: [
-          { productImage: SaladaCamarao, name: 'Salada de camarão cancelada', price: 4.99 },
-          { productImage: SaladaCamarao, name: 'Salada de camarão cancelada', price: 4.99 },
-        ],
-        date: '01/01/2020',
-        status: 'Cancelled',
-        reviewed: false,
-      },
-    {
-        restaurantName: 'Veni - Healthy food',
-        restaurantImage: LogoVeni,
-        products: [
-          { productImage: SaladaCamarao, name: 'Salada de camarão indelivery', price: 4.99 },
-          { productImage: SaladaCamarao, name: 'Salada de camarão indelivery', price: 4.99 },
-        ],
-        date: '01/01/2020',
-        status: 'InDelivery',
+        status: 'canceled',
         reviewed: false,
       },
   ];
