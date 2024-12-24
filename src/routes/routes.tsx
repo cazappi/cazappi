@@ -49,6 +49,7 @@ import GerenciarProdutos from "../pages/GerenciarProdutos";
 import Init from "../pages/Init";
 import Notificacoes from "../pages/Notificacoes";
 import Configs from "../pages/Configs";
+import CardData from "../pages/CardData";
 
 const AppRoutes = () => (
   <>
@@ -87,6 +88,7 @@ const AppRoutes = () => (
       <Route path="/profileLojista/gerenciarProdutos/subcategorias" element={<ManageSubCategories />} />
       <Route path="/GerenciarDadosLojista" element={<GerenciarDadosLojista />} />
       <Route path="/GerenciarDadosCadastrais" element={<GerenciarDadosCadastrais />} />
+      <Route path="/CardData" element={<CardData />} />
       {/* private route */}
       <Route path="/shopkeeper/finish" element={<ShopkeeperFinish />} />
       <Route path="/profileLojista/gerenciarProdutos" element={<GerenciarProdutos />} />
