@@ -40,6 +40,18 @@ export const InputsHolder = styled.form`
     flex-wrap: wrap;
   }
 
+  .nameCpfHolder {
+    display: flex;
+    flex-direction: row;
+    width: auto;
+    justify-content: space-between;
+    flex-wrap: wrap;
+
+    .inputWrapper {
+      width: 47%;
+    }
+  }
+
   .submitButton {
     background-color: #33cc12;
     color: white;

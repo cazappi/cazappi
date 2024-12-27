@@ -14,8 +14,11 @@ import { useLocation, useNavigate } from 'react-router-dom';
 import api from '../../services/api';
 import Input from '../../components/Input/Input';
 import { BsChevronDoubleRight } from 'react-icons/bs';
+import { getToken } from '../../utils/get-cookie';
+import { clearToken } from '../../utils/clear-cookie';
 
 const CardData = () => {
+    const navigate = useNavigate();
 
     const [formValues, setFormValues] = useState({
         cardNumber: '',
@@ -24,6 +27,7 @@ const CardData = () => {
         expiryDate: '',
         cvv: '',
         cpfCnpj: '',
+        cardBrand: '',
     });
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement | HTMLSelectElement>) => {
@@ -56,29 +60,43 @@ const CardData = () => {
         }
     };
             
-    const handleSubmit = (e: React.FormEvent) => {
+    const handleSubmit = async (e: React.FormEvent) => {
         e.preventDefault();
     
         const validationErrors: string[] = [];
     
-        const fieldValidations: Record<string, { minLength?: number; required: boolean; label: string; exactDigits?: number }> = {
+        const fieldValidations: Record<string, { minLength?: number; required: boolean; label: string }> = {
             cardNumber: { minLength: 16, required: true, label: 'Número do Cartão' },
             cardHolder: { required: true, label: 'Nome do Titular' },
             cardType: { required: true, label: 'Tipo do Cartão' },
-            expiryDate: { exactDigits: 4, required: true, label: 'Data de Validade' },
+            expiryDate: { required: true, label: 'Data de Validade' },
             cvv: { minLength: 3, required: true, label: 'CVV' },
-            cpfCnpj: { minLength: 11, required: true, label: 'CPF/CNPJ do titular' },
+            cpfCnpj: { required: true, label: 'CPF/CNPJ do titular' },
+            cardBrand: { required: true, label: 'Bandeira do Cartão' },
         };
     
         // Validate each field
         Object.entries(fieldValidations).forEach(([fieldName, rules]) => {
             const value = formValues[fieldName as keyof typeof formValues];
+    
             if (rules.required && !value) {
                 validationErrors.push(`${rules.label} é obrigatório.`);
-            } else if (rules.exactDigits) {
-                const digitsOnly = value.replace(/\D/g, '');
-                if (digitsOnly.length !== rules.exactDigits) {
-                    validationErrors.push(`${rules.label} deve ter exatamente ${rules.exactDigits} dígitos.`);
+            } else if (fieldName === 'cpfCnpj') {
+                const digitsOnly = value.replace(/\D/g, ''); // Remove non-numeric characters
+                if (digitsOnly.length !== 11 && digitsOnly.length !== 14) {
+                    validationErrors.push(`${rules.label} deve ter exatamente 11 ou 14 dígitos.`);
+                }
+            } else if (fieldName === 'expiryDate') {
+                const currentDate = new Date();
+                const [month, year] = value.split('/').map((val) => parseInt(val, 10)); // Convert both to numbers
+    
+                if (!month || !year || month < 1 || month > 12) {
+                    validationErrors.push('Data de Validade deve estar no formato MM/YY.');
+                } else {
+                    const expiryDate = new Date(2000 + year, month - 1); // Ensure year is valid
+                    if (expiryDate < currentDate) {
+                        validationErrors.push('O cartão está expirado.');
+                    }
                 }
             } else if (rules.minLength && value.length < rules.minLength) {
                 validationErrors.push(`${rules.label} deve ter no mínimo ${rules.minLength} caracteres.`);
@@ -90,9 +108,45 @@ const CardData = () => {
             return;
         }
     
-        console.log('Form Values:', formValues);
+        // Prepare the body for the POST request
+        const digitsOnlyCpfCnpj = formValues.cpfCnpj.replace(/\D/g, ''); // Remove non-numeric characters
+        const postBody = {
+            cardNumber: formValues.cardNumber,
+            ownerName: formValues.cardHolder,
+            type: formValues.cardType === 'Débito' ? 'debitCard' : 'creditCard',
+            ownerDocumentType: digitsOnlyCpfCnpj.length === 11 ? 'cpf' : 'cnpj',
+            ownerDocument: digitsOnlyCpfCnpj,
+            securityCode: formValues.cvv,
+            expirationDate: new Date(
+                `20${formValues.expiryDate.split('/')[1]}-${formValues.expiryDate.split('/')[0]}-01T23:59:59.000Z`
+            ).toISOString(),
+            brand: formValues.cardBrand,
+        };
+            
+        // console.log('POST Body:', postBody);
+    
+
+        try {
+            const response = await api.post('/creditCard', postBody, {
+                headers: {
+                    "Authorization": `Bearer ${getToken()}`,
+                },
+            });
+    
+            alert('Dados do cartão salvos com sucesso!');
+            // console.log('Response:', response.data);
+            navigate('/home');
+        } catch (err: any) {
+            if (err.response?.status === 401) {
+                clearToken();
+                navigate("/unauthorized");
+            } else {
+                console.error('Erro ao salvar os dados do cartão:', err);
+                // alert('Ocorreu um erro ao salvar os dados. Tente novamente mais tarde.');
+            }
+        }
     };
-        
+                        
     return (
         <div>
             {/* ----------------------- HEADER ----------------------- */}
@@ -115,15 +169,35 @@ const CardData = () => {
             </InfoPage>
 
             <InputsHolder onSubmit={handleSubmit}>
+
                 <div className='inputWrapper'>
                     <p className="InputTitle">Numero do Cartão</p>
                     <Input name="cardNumber" type="number" value={formValues.cardNumber} onChange={handleChange} placeholder='XXXX.XXXX.XXXX.XXXX' required/>
                 </div>
 
                 <div className='inputWrapper'>
-                    <p className="InputTitle">Nome do Titular</p>
-                    <Input name="cardHolder" type="text" value={formValues.cardHolder} onChange={handleChange} placeholder='NOME DO TITULAR' required/>
+                    <p className="InputTitle">Bandeira do Cartão</p>
+                    <CardTypeSelect
+                        name="cardBrand"
+                        value={formValues.cardBrand}
+                        onChange={handleChange}
+                        aria-placeholder='Escolher'
+                        required
+                    >
+                        <option value="">Selecione a Bandeira</option>
+                        <option value="elo">Elo</option>
+                        <option value="mastercard">Mastercard</option>
+                        <option value="visa">Visa</option>
+                        <option value="amex">Amex</option>
+                        <option value="jcb">JCB</option>
+                        <option value="aura">Aura</option>
+                        <option value="hipercard">Hipercard</option>
+                        <option value="diners">Diners</option>
+                        <option value="unionpay">UnionPay</option>
+                        <option value="discover">Discover</option>
+                    </CardTypeSelect>
                 </div>
+
                 
                 <div className='inputWrapper'>
                     <p className="InputTitle">Tipo do Cartão</p>
@@ -134,6 +208,7 @@ const CardData = () => {
                         aria-placeholder='Escolher'
                         required
                     >
+                        <option value="">Selecione o Tipo do Cartão</option>
                         <option value="Débito">Débito</option>
                         <option value="Crédito">Crédito</option>
                     </CardTypeSelect>
@@ -151,9 +226,16 @@ const CardData = () => {
                     </div>
                 </div>
 
-                <div className='inputWrapper'>
-                    <p className="InputTitle">CPF/CNPJ do titular</p>
-                    <Input name="cpfCnpj" type="number" value={formValues.cpfCnpj} onChange={handleChange} required/>
+                <div className="nameCpfHolder">
+                    <div className='inputWrapper'>
+                        <p className="InputTitle">Nome do Titular</p>
+                        <Input name="cardHolder" type="text" value={formValues.cardHolder} onChange={handleChange} placeholder='NOME DO TITULAR' required/>
+                    </div>
+
+                    <div className='inputWrapper'>
+                        <p className="InputTitle">CPF/CNPJ do titular</p>
+                        <Input name="cpfCnpj" type="number" value={formValues.cpfCnpj} onChange={handleChange} required/>
+                    </div>
                 </div>
 
                 <button type='submit' className='submitButton'>Salvar</button>
