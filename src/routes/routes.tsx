@@ -90,7 +90,7 @@ const AppRoutes = () => (
       <Route path="/GerenciarDadosCadastrais" element={<GerenciarDadosCadastrais />} />
       {/* private route */}
       <Route path="/shopkeeper/finish" element={<ShopkeeperFinish />} />
-      <Route path="/shopkeeper/reports" element={<ShopkeeperReports />} />
+      <Route path="/profileLojista/relatorioVendas" element={<ShopkeeperReports />} />
       <Route path="/profileLojista/gerenciarProdutos" element={<GerenciarProdutos />} />
       <Route path="/search" element={<Search />} />
       <Route path="/Init" element={<Init />} />

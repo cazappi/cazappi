@@ -16,6 +16,12 @@ export const Center = styled.div`
         width: 100%;
         justify-content: space-between;
         align-items: center;
+
+        p {
+            font-family: 'Roboto', sans-serif;
+            font-size: 1.125rem;
+            font-weight: 400;
+        }
     }
 
     .valuesHolder {
@@ -32,6 +38,13 @@ export const Center = styled.div`
             justify-content: center;
             width: 47.5%;
 
+            .infoTitle {
+                font-family: 'Roboto', sans-serif;
+                font-size: 1rem;
+                font-weight: 400;
+                margin: 1.75rem 0;
+            }
+
             .valueWrapper {
                 display: flex;
                 flex-direction: row;
@@ -39,8 +52,16 @@ export const Center = styled.div`
                 justify-content: center;
                 border: 2px solid #2AE812;
                 border-radius: 10px;
-                padding: 19.5px 0;
+                padding: 1.21875rem 0;
                 width: 100%;
+            }
+
+            .lowerTitle {
+                font-family: 'Roboto', sans-serif;
+                font-size: 1.125rem;
+                font-weight: 400;
+
+                margin-top: 1.875rem;
             }
         }
     }
@@ -51,13 +72,15 @@ export const Center = styled.div`
         width: 100%;
         justify-content: space-between;
         align-items: center;
-        margin-top: 30px;
+        margin-top: 1.875rem;
          
         .monthlyRevenue{
             display: flex;
             flex-direction: column;
             align-items: center;
             justify-content: center;
+            width: auto;
+            margin-left: 1.5rem;
         }
 
         .mostSellingProducts {
@@ -72,22 +95,23 @@ export const Center = styled.div`
                 display: flex;
                 flex-direction: column;
                 align-items: center;
+                gap: .6rem;
 
                 .product {
                     display: flex;
                     flex-direction: row;
                     align-items: center;
-                    justify-content: space-around;
+                    justify-content: center;
+                    gap: 1rem;
                     width: 70%;
                     border-radius: 16px;
                     box-shadow: 0px 4px 10px 0px rgba(0, 0, 0, 0.15);
-                    padding: .5rem;
+                    padding: 1rem;
 
                     img {
-                        width: 131.55px;
-                        height: 75.17px;
+                        width: 44%;
+                        height: 4.698125rem;
                         border-radius: 8px;
-                        /* border: 1px solid ${THEME.COLORS.GRAY_300}; */
                     }
 
                     .productInfo {
@@ -96,16 +120,22 @@ export const Center = styled.div`
                         align-items: center;
                         justify-content: center;
 
+                        .stars {
+                            display: flex; 
+                            flex-direction: row;
+                            gap: .625rem;
+                        }
+
                         .productName{
                             font-family: 'Inter', sans-serif;
-                            font-size: 14px;
+                            font-size: .875rem;
                             font-weight: 400;
                             text-align: left;
                         }
 
                         .productSales {
                             font-family: 'Inter', sans-serif;
-                            font-size: 16px;
+                            font-size: 1rem;
                             font-weight: 500;
                             text-align: left;
                         }
@@ -113,6 +143,25 @@ export const Center = styled.div`
                 }
             }
         }
+    }
+
+    .ratingsButton {
+        margin: 4rem 0;
+        border: 1px solid ${THEME.COLORS.PRIMARY};
+        border-radius: 8px;
+        transition: all .2s;
+        padding: .5rem 1rem;
+
+        font-family: 'Roboto', sans-serif;
+        color: ${THEME.COLORS.PRIMARY};
+        font-size: 1.125rem;
+        font-weight: 400;
+        text-align: left;
+
+        &:hover {
+            transform: scale(1.05);
+        }
+
     }
 `;
 
@@ -153,3 +202,9 @@ export const Container = styled.div`
   padding: ${rw(16)};
 `;
 
+export const LoadingCenter = styled.div`
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    width: 100%;
+`
