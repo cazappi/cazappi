@@ -49,6 +49,7 @@ import GerenciarProdutos from "../pages/GerenciarProdutos";
 import Init from "../pages/Init";
 import Notificacoes from "../pages/Notificacoes";
 import Configs from "../pages/Configs";
+import ShopkeeperReports from "../pages/ShopkeeperReports";
 
 const AppRoutes = () => (
   <>
@@ -89,6 +90,7 @@ const AppRoutes = () => (
       <Route path="/GerenciarDadosCadastrais" element={<GerenciarDadosCadastrais />} />
       {/* private route */}
       <Route path="/shopkeeper/finish" element={<ShopkeeperFinish />} />
+      <Route path="/shopkeeper/reports" element={<ShopkeeperReports />} />
       <Route path="/profileLojista/gerenciarProdutos" element={<GerenciarProdutos />} />
       <Route path="/search" element={<Search />} />
       <Route path="/Init" element={<Init />} />
