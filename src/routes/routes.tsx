@@ -50,6 +50,7 @@ import Init from "../pages/Init";
 import Notificacoes from "../pages/Notificacoes";
 import Configs from "../pages/Configs";
 import CardData from "../pages/CardData";
+import HomeCliente from "../pages/HomeCliente";
 
 const AppRoutes = () => (
   <>
@@ -123,6 +124,7 @@ const AppRoutes = () => (
     />
     <PrivateRoute path="/updateshop" element={<UpdateShop />} />
     <PrivateRoute path="/BankAccount" element={<BankAccount />} />
+    <PrivateRoute path="/homeClient" element={<HomeCliente />} />
   </>
 );
 
