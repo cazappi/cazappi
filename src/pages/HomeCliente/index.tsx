@@ -23,6 +23,9 @@ export default function HomeCliente()
         { id: 1, text: "Promoção 1", description: "Desconto de 20%!" },
         { id: 2, text: "Promoção 2", description: "Frete grátis!" },
         { id: 3, text: "Promoção 3", description: "Compre 1, leve 2!" },
+        { id: 4, text: "Promoção 3", description: "Compre 1, leve 2!" },
+        { id: 5, text: "Promoção 3", description: "Compre 1, leve 2!" },
+        { id: 6, text: "Promoção 3", description: "Compre 1, leve 2!" },
     ];
 
 
@@ -50,16 +53,23 @@ export default function HomeCliente()
             <h1 className="text-4xl mb-2">Lojas com  <br></br> <span className="text-bold">entrega grátis!</span></h1>
             </div>
         </div>
-
-        <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 max-w-lg bg-gray-200 bg-opacity-80 rounded-lg p-4">
-        <Slider dots={true} infinite={true} speed={500} slidesToShow={1} slidesToScroll={1}>
-            {carouselItems.map((item) => (
-            <div key={item.id} className="p-4 text-center">
-                <h2 className="text-xl font-semibold text-gray-800">{item.text}</h2>
-                <p className="text-gray-600">{item.description}</p>
+        
+        <div className="relative w-full mt-8">
+            <img
+            src={burgerClient}
+            alt="Second Banner"
+            className="w-full h-full object-cover"
+            />
+            <div className="absolute top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 w-3/4 bg-gray-200 bg-opacity-80 rounded-lg p-4 h-[150px]">
+            <Slider dots={true} infinite={true} speed={500} slidesToShow={5} slidesToScroll={1}>
+                {carouselItems.map((item) => (
+                <div key={item.id} className="p-4 text-center m-2">
+                    <h2 className="text-xl font-semibold text-gray-800">{item.text}</h2>
+                    <p className="text-gray-600">{item.description}</p>
+                </div>
+                ))}
+            </Slider>
             </div>
-            ))}
-        </Slider>
         </div>
 
         <Footer></Footer>
