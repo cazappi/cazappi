@@ -78,15 +78,24 @@ const MinhasConversasCliente = () => {
                 } else {
                   querySnapshot.forEach((doc) => {
                     const data = doc.data();
+                    console.log("Mensagens: ", data)
                     const chat: Chat = {
                       id: data.id,
                       messages: data.messages.map((message: any) => ({
                         id: message.id,
                         text: message.text,
-                        updatedAt: message.updatedAt.toDate(),
+                        updatedAt: message.updatedAt
+                        ? typeof message.updatedAt.toDate === "function"
+                          ? message.updatedAt.toDate()
+                          : new Date(message.updatedAt)
+                        : new Date(),
                         role: message.role,
                       })),
-                      orderDate: data.orderDate.toDate(),
+                      orderDate: data.orderDate
+                      ? typeof data.orderDate.toDate === "function"
+                        ? data.orderDate.toDate()
+                        : new Date(data.orderDate)
+                      : new Date(),
                       storeName: storeMap.get(order.shopkeeperId)?.name,
                       storeImagePerfil: storeMap.get(order.shopkeeperId)?.imagePerfil,
                     };

@@ -5,46 +5,50 @@ import { Chat, MessageRole } from "../../components/ChatCard";
 import { FormEvent, useEffect, useState } from "react";
 import ChatMessage from "../../components/ChatMessage";
 import { db } from "../../App";
-import { doc, getDoc, updateDoc, arrayUnion } from "firebase/firestore";
+import { doc, updateDoc, arrayUnion, onSnapshot } from "firebase/firestore";
 import { v4 as uuidv4 } from "uuid";
 import NoImage from "../../assets/no-image-icon.png";
 
 const MinhaConversaCliente = () => {
   const { chatId } = useParams();
-
   const [chat, setChat] = useState<Chat>({} as Chat);
   const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
-    async function fetchChat() {
-      const chatRef = doc(db, "conversations", chatId!);
-      const chatSnap = await getDoc(chatRef);
+    if (!chatId) return;
 
+    const chatRef = doc(db, "conversations", chatId);
+    const unsubscribe = onSnapshot(chatRef, (chatSnap) => {
       if (chatSnap.exists()) {
         const data = chatSnap.data();
         const chatData: Chat = {
           id: data.id,
-          messages: data.messages.map((message: any) => ({
+          messages: data.messages?.map((message: any) => ({
             id: message.id,
             text: message.text,
-            updatedAt: message.updatedAt.toDate(),
+            updatedAt: message.updatedAt?.toDate
+              ? message.updatedAt.toDate()
+              : new Date(),
             role: message.role,
-          })),
-          orderDate: data.orderDate.toDate(),
+          })) ?? [],
+          orderDate: data.orderDate?.toDate
+            ? data.orderDate.toDate()
+            : new Date(),
+          storeName: data.storeName,
+          storeImagePerfil: data.storeImagePerfil,
         };
         setChat(chatData);
       } else {
         console.log("No such document!");
       }
-    }
+    });
 
-    fetchChat();
+    return () => unsubscribe();
   }, [chatId]);
 
   const formatDate = (date: Date): string => {
     const day = date.getDate().toString().padStart(2, "0");
     const month = (date.getMonth() + 1).toString().padStart(2, "0");
-
     return `${day}/${month}`;
   };
 
@@ -61,7 +65,7 @@ const MinhaConversaCliente = () => {
       id: uuidv4(),
       text: message,
       updatedAt: new Date(),
-      role: MessageRole.client, // Ajustado para client
+      role: MessageRole.client,
     };
 
     const chatRef = doc(db, "conversations", chatId!);
@@ -69,22 +73,6 @@ const MinhaConversaCliente = () => {
     await updateDoc(chatRef, {
       messages: arrayUnion(newMessage),
     });
-
-    const chatSnap = await getDoc(chatRef);
-    if (chatSnap.exists()) {
-      const data = chatSnap.data();
-      const updatedChat: Chat = {
-        id: data.id,
-        messages: data.messages.map((message: any) => ({
-          id: message.id,
-          text: message.text,
-          updatedAt: message.updatedAt.toDate(),
-          role: message.role,
-        })),
-        orderDate: data.orderDate.toDate(),
-      };
-      setChat(updatedChat);
-    }
 
     setMessage("");
   };
@@ -107,9 +95,7 @@ const MinhaConversaCliente = () => {
           <div className="w-full bg-PRIMARY h-[2px]"></div>
           <div className="w-[47.875%] flex flex-col items-center gap-6">
             <p className="text-[#909090] font-normal text-[14px] leading-3 flex flex-row gap-2 items-center">
-              {formattedDate.split(" ")[0] && (
-                <span>{formattedDate.split(" ")[0]}</span>
-              )}
+              {formattedDate && <span>{formattedDate}</span>}
               <span className="w-1 h-1 inline-block rounded-full border-[#909090] border-solid border-[3px]"></span>
               <span>Pedido {chatId}</span>
             </p>
@@ -120,18 +106,16 @@ const MinhaConversaCliente = () => {
           </div>
           <ul className="flex flex-col grow w-full overflow-y-auto">
             {chat?.messages &&
-              chat.messages.map((message) => {
-                return (
-                  <li className="w-full flex flex-col" key={message.id}>
-                    <ChatMessage
-                      text={message.text}
-                      updatedAt={message.updatedAt}
-                      role={message.role}
-                      user={MessageRole.client}
-                    />
-                  </li>
-                );
-              })}
+              chat.messages.map((message) => (
+                <li className="w-full flex flex-col" key={message.id}>
+                  <ChatMessage
+                    text={message.text}
+                    updatedAt={message.updatedAt}
+                    role={message.role}
+                    user={MessageRole.client}
+                  />
+                </li>
+              ))}
           </ul>
           <form onSubmit={handleSubmitMessage} className="flex flex-col w-full">
             <input
