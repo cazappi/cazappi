@@ -1,4 +1,4 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   CONTAINER,
   Image,
@@ -45,6 +45,20 @@ import Button from "../../components/Button/Button";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
 import { Link } from "react-router-dom";
 
+// Integração com a API
+import api from "../../services/api";
+import { getToken } from "../../utils/get-cookie";
+import { getUser } from "../../utils/user-token-request";
+import { useNavigate } from "react-router-dom";
+
+interface Product {
+  id: string;
+  name: string;
+  price: string;
+  quantity: number;
+  image: string;
+}
+
 const data = [
   {
     id: "1",
@@ -65,6 +79,56 @@ const data = [
 ];
 
 const BagList = () => {
+  const [products, setProducts] = useState<Product[]>(data); 
+  const navigate = useNavigate();
+
+  useEffect(() => {
+    const fetchProducts = async () => {
+      try {
+        const user = getUser();
+        // Mudar a URL para a correta
+        const response = await api.get(`/product/Vinícius Guimarães /${user.user_id}/`, {
+          headers: {
+            Authorization: `Bearer ${getToken()}`,
+          },
+        });
+        setProducts(response.data.products);
+        //console.log("Produtos:", response.data.products);
+
+      } catch (error) {
+        console.error("Error fetching products:", error);
+      }
+    };
+
+    fetchProducts();
+  }, []);
+
+  const handleRemoveFromCart = (productId: string) => {
+    // Código para remover o produto do carrinho
+    console.log("Produto removido do carrinho:", productId);
+  };
+
+  function handleAddItem(item: Product) {
+      setProducts((prevProducts) =>
+        prevProducts.map((product) =>
+            product.id === item.id
+                ? { ...product, quantity: product.quantity + 1 } // Update item quantity immutably
+                : product
+        )
+    );
+  }
+
+  function handleRemoveItem(item: Product) {
+    setProducts((prevProducts) =>
+      prevProducts.map((product) =>
+        product.id === item.id && product.quantity > 0
+          ? { ...product, quantity: product.quantity - 1 }
+          : product
+      )
+      // Talvez faça sentido adicionar um filtro aqui para remover o item do array se a quantidade for 0
+    );
+  }
+
   return (
     <div>
       {/* ----------------------- HEADER ----------------------- */}
@@ -87,7 +151,7 @@ const BagList = () => {
 
         <ItemsContainer>
           <ListContainer>
-            {data.map((item) => (
+            {products.map((item) => (
               <ListItemContainer key={item.id}>
                 <ItemImage src={item.image} alt={item.name} />
                 <ItemInfo>
@@ -96,9 +160,9 @@ const BagList = () => {
                     <ItemPrice>{item.price}</ItemPrice>
                   </div>
                   <ItemQuantity>
-                    <MinusIcon />
+                    <MinusIcon onClick={() => handleRemoveItem(item)}/>
                     <QuantityValue>{item.quantity}</QuantityValue>
-                    <PlusIcon />
+                    <PlusIcon onClick={() => handleAddItem(item)}/>
                   </ItemQuantity>
                 </ItemInfo>
               </ListItemContainer>

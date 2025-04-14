@@ -40,7 +40,7 @@ export const Image = styled.img`
 
 export const TitleText = styled.span`
   font-family: Inter;
-  font-size: 24px
+  font-size: 24px;
   font-weight: 400;
   line-height: 15px;
   text-align: left;
@@ -62,7 +62,7 @@ export const CustomDiv = styled.div`
 
 export const Text1 = styled.span`
     font-family: Roboto;
-    font-size: 16px
+    font-size: 16px;
     font-weight: 400;
     line-height: 18.75px;
     text-align: center;
@@ -164,8 +164,8 @@ export const QuantityValue = styled.div`
   margin: 0 8px;
 `;
 
-export const MinusIcon = styled(AiFillMinusCircle)`
-color: #ff0000;
+export const MinusIcon = styled(AiFillMinusCircle, )`
+  color: #ff0000;
   cursor: pointer;
 `;
 
