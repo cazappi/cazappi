@@ -54,7 +54,7 @@ import { useNavigate } from "react-router-dom";
 interface Product {
   id: string;
   name: string;
-  price: string;
+  price: number;
   quantity: number;
   image: string;
 }
@@ -63,7 +63,7 @@ const data = [
   {
     id: "1",
     name: "Salada de Camarão",
-    price: "R$ 4.99",
+    price: 4.99,
     quantity: 2,
     image:
       "https://s3-alpha-sig.figma.com/img/9cf2/5a0b/e4f03b5a846ff4ed671085503f763c28?Expires=1715558400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=J4fvctr3dneE3imFJpYCAtvgOU26qnc9pWNHmlQoQycWInlBaUa4aHVMkiTTtnw8r5XeaYWaIC6FsCRnAYYuA1~bd0y0BdkhcoD~sdZIdiY38hMkaGGsw7uODdlRxB7YfL3Dljw3RjrJ6nX8IsVioV1CnVq6J8sIyjkTvhy~~HdsGof6iIncXan561pVo0PUGSixsTz6cxz5mXyYVEcvB9GJbjROY0dtm5PRqxjXGikMsZgfKJFvCD8wOgC4~3mGDOFlUEiaW~qdhb~GPDBUcCx9xumjxmUuWX93DK3tKr9BrXCL~KmeaqB8cLbDyz0U8-QyFk6-kS7tsNFR-onrGg__",
@@ -71,7 +71,7 @@ const data = [
   {
     id: "2",
     name: "Salada de Camarão",
-    price: "R$ 4.99",
+    price: 4.99,
     quantity: 1,
     image:
       "https://s3-alpha-sig.figma.com/img/9cf2/5a0b/e4f03b5a846ff4ed671085503f763c28?Expires=1715558400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=J4fvctr3dneE3imFJpYCAtvgOU26qnc9pWNHmlQoQycWInlBaUa4aHVMkiTTtnw8r5XeaYWaIC6FsCRnAYYuA1~bd0y0BdkhcoD~sdZIdiY38hMkaGGsw7uODdlRxB7YfL3Dljw3RjrJ6nX8IsVioV1CnVq6J8sIyjkTvhy~~HdsGof6iIncXan561pVo0PUGSixsTz6cxz5mXyYVEcvB9GJbjROY0dtm5PRqxjXGikMsZgfKJFvCD8wOgC4~3mGDOFlUEiaW~qdhb~GPDBUcCx9xumjxmUuWX93DK3tKr9BrXCL~KmeaqB8cLbDyz0U8-QyFk6-kS7tsNFR-onrGg__",
@@ -79,7 +79,7 @@ const data = [
 ];
 
 const BagList = () => {
-  const [products, setProducts] = useState<Product[]>(data); 
+  const [products, setProducts] = useState<Product[]>([]); 
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -87,13 +87,13 @@ const BagList = () => {
       try {
         const user = getUser();
         // Mudar a URL para a correta
-        const response = await api.get(`/product/Vinícius Guimarães /${user.user_id}/`, {
+        const response = await api.get(`/product/Restaurante São Carlos/cb652dde-85da-49ea-a67c-073d48456148`, {
           headers: {
             Authorization: `Bearer ${getToken()}`,
           },
         });
-        setProducts(response.data.products);
-        //console.log("Produtos:", response.data.products);
+        setProducts(response.data);
+        console.log("Produtos:", response.data);
 
       } catch (error) {
         console.error("Error fetching products:", error);
@@ -103,7 +103,18 @@ const BagList = () => {
     fetchProducts();
   }, []);
 
-  const handleRemoveFromCart = (productId: string) => {
+  // Adição e Remoção de Produtos do Carrinho
+  const [totalPrice, setTotalPrice] = useState(0);
+
+  // Define o valor inicial da compra
+  useEffect(() => {
+    const newTotal = products
+      .map((item) => item.price * item.quantity)
+      .reduce((acc, curr) => acc + curr, 0);
+    setTotalPrice(newTotal);
+  }, [products]); 
+
+  const handleRemoveAllFromCart = (productId: string) => {
     // Código para remover o produto do carrinho
     console.log("Produto removido do carrinho:", productId);
   };
@@ -116,6 +127,8 @@ const BagList = () => {
                 : product
         )
     );
+
+    setTotalPrice((prevTotal) => prevTotal + item.price);
   }
 
   function handleRemoveItem(item: Product) {
@@ -127,6 +140,11 @@ const BagList = () => {
       )
       // Talvez faça sentido adicionar um filtro aqui para remover o item do array se a quantidade for 0
     );
+
+    if (item.quantity > 0) {
+      // Evitar subtrair do total se a quantidade for 0
+      setTotalPrice((prevTotal) => prevTotal - item.price);
+    }
   }
 
   return (
@@ -177,7 +195,7 @@ const BagList = () => {
               {/* Linha: Valor do produto */}
               <InfoLine>
                 <span>Valor do produto</span>
-                <span>R$ 4.99</span>
+                <span>R$ {totalPrice.toFixed(2)}</span>
               </InfoLine>
 
               {/* Linha: Taxa */}

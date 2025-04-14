@@ -40,7 +40,7 @@ const Footer: React.FC = () => {
         <a href="" className="ml-1 hover:text-ERROR duration-200">Termos de uso</a>
       </div>
       <div className="w-5/6 text-center flex items-center justify-center">
-        ©. MSE Cazappi - Delivery app | Desenvolvido por CATI Jr.
+        ©. MSE Cazapi - Delivery app | Desenvolvido por CATI Jr.
       </div>
     </div>
   );
