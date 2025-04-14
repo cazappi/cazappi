@@ -11,7 +11,7 @@ import NoImage from "../../assets/no-image-icon.png";
 
 const MinhaConversaCliente = () => {
   const { chatId } = useParams();
-  const [chat, setChat] = useState<Chat>({} as Chat);
+  const [chat, setChat] = useState<Chat | null>(null);
   const [message, setMessage] = useState<string>("");
 
   useEffect(() => {
@@ -77,6 +77,29 @@ const MinhaConversaCliente = () => {
     setMessage("");
   };
 
+  if (chat === null) {
+    return (
+      <div className="min-h-screen w-full flex flex-col overflow-x-hidden">
+        <Header transparent={false} />
+        <div className="w-full flex flex-col items-center p-6 h-[80vh]">
+          <div className="mt-20">
+            <div className="text-center">
+              <p className="text-2xl font-semibold text-PRIMARY">Chat não encontrado!</p>
+              <p className="text-gray-500 mt-2">O chat que você procura não existe ou ocorreu um erro ao carregar.</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-4 bg-PRIMARY text-white py-2 px-4 rounded-lg hover:bg-red-700"
+              >
+                Tentar novamente
+              </button>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
+
   return (
     <div className="min-h-screen w-full flex flex-col overflow-x-hidden">
       <Header transparent={false} />
@@ -92,7 +115,7 @@ const MinhaConversaCliente = () => {
             />
             <h1 className="text-2xl leading-7">{chat.storeName}</h1>
           </div>
-          <div className="w-full bg-PRIMARY h-[2px]"></div>
+          {/* <div className="w-full bg-PRIMARY h-[2px]"></div> */}
           <div className="w-[47.875%] flex flex-col items-center gap-6">
             <p className="text-[#909090] font-normal text-[14px] leading-3 flex flex-row gap-2 items-center">
               {formattedDate && <span>{formattedDate}</span>}

@@ -11,7 +11,7 @@ import { v4 as uuidv4 } from 'uuid';
 const MinhaConversaLojista = () => {
   const { chatId } = useParams();
 
-  const [chat, setChat] = useState<Chat>({} as Chat);
+  const [chat, setChat] = useState<Chat | null>(null);
   const [message, setMessage] = useState<string>("");
 
 
@@ -86,10 +86,35 @@ const MinhaConversaLojista = () => {
         orderDate: data.orderDate.toDate(),
       };
       setChat(updatedChat);
+    } else {
+      console.log("No such document!");
     }
 
     setMessage("");
   };
+
+  if (chat === null) {
+    return (
+      <div className="min-h-screen w-full flex flex-col overflow-x-hidden">
+        <Header transparent={false} />
+        <div className="w-full flex flex-col items-center p-6 h-[80vh]">
+          <div className="mt-20">
+            <div className="text-center">
+              <p className="text-2xl font-semibold text-PRIMARY">Chat não encontrado!</p>
+              <p className="text-gray-500 mt-2">O chat que você procura não existe ou ocorreu um erro ao carregar.</p>
+              <button
+                onClick={() => window.location.reload()}
+                className="mt-4 bg-PRIMARY text-white py-2 px-4 rounded-lg hover:bg-red-700"
+              >
+                Tentar novamente
+              </button>
+            </div>
+          </div>
+        </div>
+        <Footer />
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen w-full flex flex-col overflow-x-hidden">
