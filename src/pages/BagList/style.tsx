@@ -257,7 +257,7 @@ export const TotalPaymentInfo = styled.div`
   font-weight: 500;
   line-height: 19.36px;
   text-align: left;
-  color: #39FF14; /* Cor do texto */
+  color: rgb(47, 204, 14); /* Cor do texto */
 `;
 export const ContinueButton = styled.button`
   width: fit-content; /* Ajusta a largura ao conteúdo */
@@ -265,8 +265,7 @@ export const ContinueButton = styled.button`
   padding: 8px 32px; /* Adiciona padding interno */
   gap: 8px;
   border-radius: 16px; /* Simplificado para aplicar a mesma borda em todos os lados */
-  background: linear-gradient(0deg, #39FF14, #39FF14),
-              linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background: rgb(47, 204, 14);
   font-family: Inter;
   font-size: 16px;
   font-weight: 500;
