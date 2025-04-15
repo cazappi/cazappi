@@ -40,7 +40,7 @@ export const Image = styled.img`
 
 export const TitleText = styled.span`
   font-family: Inter;
-  font-size: 24px
+  font-size: 24px;
   font-weight: 400;
   line-height: 15px;
   text-align: left;
@@ -62,7 +62,7 @@ export const CustomDiv = styled.div`
 
 export const Text1 = styled.span`
     font-family: Roboto;
-    font-size: 16px
+    font-size: 16px;
     font-weight: 400;
     line-height: 18.75px;
     text-align: center;
@@ -164,8 +164,8 @@ export const QuantityValue = styled.div`
   margin: 0 8px;
 `;
 
-export const MinusIcon = styled(AiFillMinusCircle)`
-color: #ff0000;
+export const MinusIcon = styled(AiFillMinusCircle, )`
+  color: #ff0000;
   cursor: pointer;
 `;
 
@@ -257,7 +257,7 @@ export const TotalPaymentInfo = styled.div`
   font-weight: 500;
   line-height: 19.36px;
   text-align: left;
-  color: #39FF14; /* Cor do texto */
+  color: #00FF00; /* Cor do texto */
 `;
 export const ContinueButton = styled.button`
   width: fit-content; /* Ajusta a largura ao conteúdo */
@@ -265,8 +265,7 @@ export const ContinueButton = styled.button`
   padding: 8px 32px; /* Adiciona padding interno */
   gap: 8px;
   border-radius: 16px; /* Simplificado para aplicar a mesma borda em todos os lados */
-  background: linear-gradient(0deg, #39FF14, #39FF14),
-              linear-gradient(0deg, rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2));
+  background: #00FF00;
   font-family: Inter;
   font-size: 16px;
   font-weight: 500;
