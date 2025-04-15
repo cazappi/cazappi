@@ -15,3 +15,18 @@ html,
 *{
   font-family: 'Roboto', sans-serif;
 }
+
+
+/* the slides */
+.slick-slide {
+  margin: 0 10px;
+}
+
+.slick-slider {
+  min-width: 0;
+  height: 200px;
+}
+
+.slick-list {
+  overflow: hidden;
+}
