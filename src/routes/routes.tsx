@@ -40,6 +40,7 @@ import ClientAddSpecificAddress from "../pages/ClientAddresses/ClientAddSpecific
 import ProfileClient from "../pages/ProfileClient";
 import ProfileLojista from "../pages/ProfileLojista";
 import GerenciarDadosLojista from "../pages/GerenciarDadosLojista";
+<<<<<<< HEAD
 import HomeLojista from "../pages/HomeLojista";
 import ManageStock from "../pages/ManageStock";
 import ManageStockItem from "../pages/ManageStockItem";
@@ -50,6 +51,9 @@ import Init from "../pages/Init";
 import Notificacoes from "../pages/Notificacoes";
 import Configs from "../pages/Configs";
 import CardData from "../pages/CardData";
+=======
+import Store from "../pages/Store";
+>>>>>>> feat/ListagemDeProdutos
 
 const AppRoutes = () => (
   <>
@@ -62,6 +66,7 @@ const AppRoutes = () => (
       <Route path="/register" element={<Register />} />
       <Route path="/SignUp" element={<SignUp />} />
       <Route path="/login" element={<Login />} />
+<<<<<<< HEAD
       <Route path="/ProductView" element={<ProductView />} />
       <Route path="/BagPagment" element={<BagPagment />} />
       <Route path="/OrderHistoryClient" element={<OrderHistoryClient />} />
@@ -69,6 +74,16 @@ const AppRoutes = () => (
       <Route path="/EditProduct" element={<EditProduct />} />
       <Route path="/OrderResume" element={<OrderResume />} />
       <Route path="/OrderResumeLojista" element={<OrderResumeLojista />} />
+=======
+      <Route path="/store/:idDaLoja" element={<Store />} />
+      <Route path="/ProductView" element={<ProductView />}/>
+      <Route path="/BagPagment" element={<BagPagment />}/>
+      <Route path="/OrderHistoryClient" element={<OrderHistoryClient />}/>
+      <Route path="/RegisterProduct" element={<RegisterProduct />}/>
+      <Route path="/EditProduct" element={<EditProduct />}/>
+      <Route path="/OrderResume" element={<OrderResume />}/>
+      <Route path="/OrderResumeLojista" element={<OrderResumeLojista />}/>
+>>>>>>> feat/ListagemDeProdutos
       <Route path="/forgetPass" element={<ForgetPass />} />
       <Route path="/resetpass" element={<ResetPass />} />
       <Route path="/EmailVerification/:token" element={<EmailVerification />} />

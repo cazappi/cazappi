@@ -69,7 +69,7 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
           </div>
           {isAuthenticated ? (
             <div className="flex items-center">
-              <a href="/profile" className={`${styleGroup.options} mr-10`}>
+              <a href="/baglist" className={`${styleGroup.options} mr-10`}>
                 <FaShoppingBag color='red'/>
               </a>
               <a href="/profile" className={`${styleGroup.options} mr-10`}>
@@ -112,7 +112,7 @@ const Header: React.FC<HeaderProps> = ({ transparent }) => {
           </div>
           {isAuthenticated ? (
             <div className="flex items-center">
-              <a href="/profile" className={`${styleGroup.options} mr-10`}>
+              <a href="/baglist" className={`${styleGroup.options} mr-10`}>
                 <FaShoppingBag color='red' size={24}/>
               </a>
               <a href="/profile" className={`${styleGroup.options} mr-10`}>

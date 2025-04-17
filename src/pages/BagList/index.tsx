@@ -31,6 +31,8 @@ import {
 import logoText from "../../assets/logoText.svg";
 import mailImg from "../../assets/mail.svg";
 import logoImg from "../../assets/logoImg.png";
+import noProductImage from "../../assets/noProductImage.svg";
+import noStoreImage from "../../assets/noStoreImage.svg";
 import cellphonesHome from "../../assets/cellphonesHome.png";
 import { THEME } from "../../theme/index";
 import { Icon } from "@iconify-icon/react";
@@ -43,6 +45,7 @@ import Header from "../../components/Header/Header";
 import Footer from "../../components/Footer/Footer";
 import Button from "../../components/Button/Button";
 import { AiFillPlusCircle, AiFillMinusCircle } from "react-icons/ai";
+<<<<<<< HEAD
 import { Link } from "react-router-dom";
 
 // Integração com a API
@@ -150,6 +153,54 @@ const BagList = () => {
 
   // Cálculo do valor final
   const finalPrice = totalPrice + 4.99 + 4.99; // Adicionando taxa do app e da entrega fixa
+=======
+import { Link, useNavigate } from "react-router-dom";
+import { useSelector, useDispatch } from "react-redux";
+import { RootState } from "../../redux/store";
+import { increaseQuantity, decreaseQuantity, clearCart } from "../../redux/reducers/cartSlice";
+
+const BagList = () => {
+  const dispatch = useDispatch();
+
+  const navigate = useNavigate();
+
+  const storeInfo = useSelector((state: RootState) => state.cart.storeInfo);
+  const cartItems = useSelector((state: RootState) => state.cart.items);
+  const isValidImage = (url?: string): boolean => {
+    return !!url && url.startsWith('https://storage.googleapis.com');
+  };
+  
+  const deliveryFee = storeInfo ? storeInfo.deliveryFee : 0;
+
+  console.log(storeInfo);
+
+  const totalProductPrice = cartItems.reduce(
+    (acc, item) => acc + item.price * item.quantity,
+    0
+  );
+
+  const handleIncrease = (id: string) => {
+    dispatch(increaseQuantity(id));
+  };
+
+  const handleDecrease = (id: string) => {
+    dispatch(decreaseQuantity(id));
+  };
+
+  const handleNavigateToStore = () => {
+    if (storeInfo) {
+      navigate(`/store/${storeInfo.shopkeeperId}`);
+    }
+    else {
+      navigate(`/`);
+    }
+  };
+
+  const handleClearCart = () => {
+    dispatch(clearCart());
+  };
+
+>>>>>>> feat/ListagemDeProdutos
 
   return (
     <div>
@@ -160,19 +211,21 @@ const BagList = () => {
 
       <MainContainer>
         <CONTAINER className="  ">
-          <Image
-            src="https://s3-alpha-sig.figma.com/img/1799/c416/9213c254b2a50c4579ff6af174d63ad1?Expires=1715558400&Key-Pair-Id=APKAQ4GOSFWCVNEHN3O4&Signature=KdN6Ydk9bZX3NjRqm3OjruhK6oD8r5hPZTuM40pQDJXqWXwW2Pq-PTqmqBrOfjgS7hU6dBS0LczsF4bRtlrQWxqKmbjCSs-F6tVahttzSK34ryPDX5xhxSOHNrb6hB~ImYCMITTWLXi4az4ZH77RQbj~iacFBX23XAfI27eg1nffYUqVQSX8aSBAz7C7U5fRxqz2XcECmtP1hMpSQ6HjpXX4gGv411aElOq8CzIMPQVGhusuiMqn9VatfLw4XiCpvAT4lB0v7fbJmKMQDVtiQWzl--ohq64MaSgWI6fiWc0u5L96c6Pc69Kff4AwiNWlvP1iFSecNTLXBfKvRuihNw__"
-            alt="Descrição da Imagem"
-          />
-          <TitleText>Venni - Health Food</TitleText>
+        <Image
+          src={storeInfo && isValidImage(storeInfo.image) ? storeInfo.image : storeInfo ? noStoreImage : undefined}
+          alt={storeInfo?.name || "No store"}
+          style={{ display: storeInfo ? "block" : "none" }}
+        />
+          <TitleText>{storeInfo ? storeInfo.name : ""}</TitleText>
         </CONTAINER>
         <CustomDiv>
           <Text1>Itens</Text1>
-          <Text2>Esvaziar Sacola</Text2>
+          <Text2 onClick={handleClearCart}>Esvaziar Sacola</Text2>
         </CustomDiv>
 
         <ItemsContainer>
           <ListContainer>
+<<<<<<< HEAD
             {products.map((item) => (
               <ListItemContainer key={item.id}>
                 <ItemImage src={item.image} alt={item.name} />
@@ -190,6 +243,33 @@ const BagList = () => {
               </ListItemContainer>
             ))}
             <AddItens>
+=======
+            {cartItems.length > 0 ? (
+              cartItems.map((item) => (
+                <ListItemContainer key={item.id}>
+                  <ItemImage src={isValidImage(item.image) ? item.image : noProductImage} alt={item.name} />
+                  <ItemInfo>
+                    <div>
+                      <ItemName>{item.name}</ItemName>
+                      <ItemPrice>
+                        R$ {item.price.toFixed(2)}
+                      </ItemPrice>
+                    </div>
+                    <ItemQuantity>
+                      <MinusIcon onClick={() => handleDecrease(item.id)} />
+                      <QuantityValue>{item.quantity}</QuantityValue>
+                      <PlusIcon onClick={() => handleIncrease(item.id)} />
+                    </ItemQuantity>
+                  </ItemInfo>
+                </ListItemContainer>
+              ))
+            ) : (
+              <p>Carrinho vazio! Adicione itens para continuar.</p>
+            )}
+
+            
+            <AddItens onClick={handleNavigateToStore}>
+>>>>>>> feat/ListagemDeProdutos
               <TextAddItens>+ Adicionar mais itens</TextAddItens>
             </AddItens>
 
@@ -199,7 +279,13 @@ const BagList = () => {
               {/* Linha: Valor do produto */}
               <InfoLine>
                 <span>Valor do produto</span>
+<<<<<<< HEAD
                 <span>R$ {totalPrice.toFixed(2)}</span>
+=======
+                <span>
+                R$ {(totalProductPrice).toFixed(2)}
+                </span>
+>>>>>>> feat/ListagemDeProdutos
               </InfoLine>
 
               {/* Linha: Taxa */}
@@ -211,13 +297,23 @@ const BagList = () => {
               {/* Linha: Entrega */}
               <InfoLine>
                 <span>Entrega</span>
+<<<<<<< HEAD
                 <span>R$ 4.99</span>
+=======
+                <span>R$ {deliveryFee.toFixed(2)}</span>
+>>>>>>> feat/ListagemDeProdutos
               </InfoLine>
 
               <TotalPaymentInfo>
                 {/* Conteúdo dentro do TotalPaymentInfo */}
                 <span>Total a pagar</span>
+<<<<<<< HEAD
                 <span>R$ {finalPrice.toFixed(2)}</span>
+=======
+                <span>
+                  R$ {(totalProductPrice + deliveryFee).toFixed(2)}
+                </span>
+>>>>>>> feat/ListagemDeProdutos
               </TotalPaymentInfo>
             </InfoBox>
             <Link to={"/BagWithDraw"}>
