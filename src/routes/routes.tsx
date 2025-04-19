@@ -50,6 +50,7 @@ import Init from "../pages/Init";
 import Notificacoes from "../pages/Notificacoes";
 import Configs from "../pages/Configs";
 import CardData from "../pages/CardData";
+import ShopRatings from "../pages/ShopRatings";
 
 const AppRoutes = () => (
   <>
@@ -78,6 +79,7 @@ const AppRoutes = () => (
       <Route path="/BagList" element={<BagList />} />
       <Route path="/BagWithDraw" element={<BagWithDraw />} />
       <Route path="/DadosBancariosPreenchimento" element={<DadosBancariosPreenchimento />} />
+      <Route path="/store/:shopName/:shopkeeperId/reviews" element={<ShopRatings />} />
 
       {/* vai ser privada (so logado) */}
       <Route path="/ProfileClient" element={<ProfileClient />} />
